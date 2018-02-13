@@ -1,0 +1,39 @@
+<ion-list >
+      <ion-list-header>Autorizzazione per storno<br>
+        <em>
+          Scegli un boss
+        </em>
+      </ion-list-header>
+
+      <ion-item *ngFor="let clerk of clerks" (click)="select(clerk)" [class.active]="(clerk.id==selectedClerk.id)">
+        {{clerk.name}}
+      </ion-item>
+      <ion-item id="login-input-login">
+        <ion-label>
+          Password
+        </ion-label>
+        <ion-input type="password" placeholder=""
+        name="password"
+        [(ngModel)]="password"
+        ></ion-input>
+      </ion-item>
+      <ion-item *ngIf="message.length">
+        <span class="error">{{ message }}</span>
+      </ion-item>
+      <ion-item>
+
+
+    <ion-segment>
+        <ion-segment-button
+          class="button-md-light"
+           (tap)=" close('cancel') ">
+            Annulla
+        </ion-segment-button>
+        <ion-segment-button
+           class="button-md-secondary"
+           (tap)=" close('storno') ">
+            Storno
+        </ion-segment-button>
+      </ion-segment>
+      </ion-item>
+</ion-list>

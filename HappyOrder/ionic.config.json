@@ -1,0 +1,8 @@
+{
+  "name": "HappyOrder",
+  "app_id": "it.happyorder.app",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

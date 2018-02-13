@@ -1,0 +1,18 @@
+
+  <div class="articleButton" (tap)="itemClick(button);"
+      [ngClass]="button.cssClass">
+  <span class="name">
+    {{ button.name }}
+  </span>
+
+  <span class="price" *ngIf="liveService.options.ShowPrice && button.price">
+  {{ button.price }} &euro;
+
+  </span>
+  <span class="price" *ngIf="liveService.options.ShowPrice && button.val">
+    {{ button.val }} &euro;
+    </span>
+
+    &nbsp;
+    <ion-icon name="play" *ngIf="!button.itemType"></ion-icon>
+  </div>

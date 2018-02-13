@@ -1,0 +1,62 @@
+{
+    "orderitems": {
+        "id": 5,
+        "tableid": 11,
+        "userid": 27,
+        "priceList": 1,
+        "currentTurn": 2,
+        "orderitem": [
+            {
+                "id": 481,
+                "qt": 2,
+                "orderid": 10,
+                "dbID": 10,
+                "stateid": 2,
+                "itemType": 1,
+                "defaultTurn": 1,
+                "name": "COPERTO",
+                "price": 0.5
+            },
+            {
+                "id": 2,
+                "qt": 7,
+                "orderid": 11,
+                "dbID": 11,
+                "stateid": 2,
+                "itemType": 1,
+                "defaultTurn": 1,
+                "name": "Margherita",
+                "price": 0.6428571428571429
+            },
+            {
+                "id": 587,
+                "qt": 3,
+                "orderid": 12,
+                "dbID": 12,
+                "stateid": 2,
+                "itemType": 1,
+                "defaultTurn": 1,
+                "name": "Chinotto",
+                "price": 0.6666666666666666
+            }
+        ]
+    },
+    "total": {
+        "id": 5,
+        "nomeveloce": "A",
+        "totale": "39,5",
+        "activeTurn": 2
+    },
+    "orders": [
+        {
+            "order": {
+                "id": 5,
+                "nomeveloce": "A",
+                "totale": "€ 39,50",
+                "stato": 2
+            }
+        }
+    ],
+    "status": "ok",
+    "command": "openTable"
+}

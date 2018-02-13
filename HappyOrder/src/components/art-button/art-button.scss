@@ -1,0 +1,25 @@
+art-button {
+  font-size:1.4rem;
+  font-weight:500;
+  color:white;
+  position:relative;
+  .barticle {
+    background:green ;
+  }
+  .bextra  {
+    background:#AA1164 ;
+    box-shadow:2px 2px 1px red, -2px -2px 1px red;
+  }
+  .barticle, .bextra {
+
+    &.section-1 {background:#666666}
+    &.section-2 {background:#990033}
+    &.section-3 {background:#666699}
+  }
+  .price {
+    color:yellow;
+    position:absolute;
+    right:0;
+    bottom:0;
+  }
+}

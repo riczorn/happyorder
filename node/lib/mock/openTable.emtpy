@@ -1,0 +1,14 @@
+{
+    "total": {
+        "id": -1,
+        "nomeveloce": "",
+        "totale": 0,
+        "activeTurn": 0
+    },
+    "orders": [],
+    "status": "ok",
+    "command": "openTable",
+    "orderitems": {
+        "orderitem": []
+    }
+}

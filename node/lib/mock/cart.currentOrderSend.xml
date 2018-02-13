@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Cart xmlns="unikas.it">
+  <clerkID>29</clerkID>
+  <customerID>-1</customerID>
+  <tableID>60</tableID>
+  <orderID>-1</orderID>
+  <nomeVeloce></nomeVeloce>
+  <action>1</action>
+    <documentType>1</documentType>
+  <tableID2>-1</tableID2>
+  <autoSplitBill>1</autoSplitBill>
+<Items dbID="-1" DefaultTurn="1" ItemType="1" Price="6" ItemName="" ID1="213" Multi="1" Code="0" Fax="" >
+</Items>
+<Items dbID="-1" DefaultTurn="1" ItemType="1" Price="5" ItemName="" ID1="215" Multi="1" Code="0" Fax="" >
+</Items>
+<Items dbID="-1" DefaultTurn="1" ItemType="1" Price="7" ItemName="" ID1="218" Multi="1" Code="0" Fax="" >
+</Items>
+<Items dbID="-1" DefaultTurn="1" ItemType="1" Price="7.5" ItemName="" ID1="223" Multi="1" Code="0" Fax="" >
+</Items>
+<Items dbID="-1" DefaultTurn="1" ItemType="1" Price="7" ItemName="" ID1="236" Multi="1" Code="0" Fax="" >
+</Items>
+<Items dbID="-1" DefaultTurn="1" ItemType="1" Price="6.5" ItemName="" ID1="222" Multi="1" Code="0" Fax="" >
+</Items>
+<Items dbID="-1" DefaultTurn="1" ItemType="1" Price="5.5" ItemName="" ID1="207" Multi="1" Code="0" Fax="" >
+</Items>
+  <selectedIndex>0</selectedIndex>
+  <selectedExtraIndex>-1</selectedExtraIndex>
+  <sconto>0</sconto>
+  <listino>1</listino>
+</Cart>

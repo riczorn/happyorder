@@ -1,0 +1,17 @@
+<unikas action="login">
+    <clerkID id1="25" />
+    <clerkName name="Rudy" />
+    <clientIp ip="192.168.10.1" />
+    <clientId id1="6" />
+    <clerkAuth id1="16777215" />
+    <orderID id1="-1" />
+    <tableID id1="101" />
+    <privileges>
+        <priv fid="bill" val="True" />
+        <priv fid="accounting" val="True" />
+        <priv fid="emptytable" val="True" />
+        <priv fid="transfer" val="True" />
+        <priv fid="storno" val="True" />
+        <priv fid="changeprice" val="True" />
+    </privileges>
+</unikas>

@@ -1,0 +1,25 @@
+<Cart xmlns="unikas.it">
+  <clerkID>27</clerkID>
+  <customerID>-1</customerID>
+  <tableID>22</tableID>
+  <orderID>-1</orderID>
+  <nomeVeloce></nomeVeloce>
+  <action>3</action>
+    <documentType>-1</documentType>
+  <tableID2>-1</tableID2>
+  <autoSplitBill>1</autoSplitBill>
+<Items dbID="-1" DefaultTurn="0" ItemType="1" Price="0" ItemName="" ID1="531" Multi="1" Code="0" Fax="" >
+</Items>
+<Items dbID="-1" DefaultTurn="0" ItemType="1" Price="0" ItemName="" ID1="127" Multi="1" Code="0" Fax="" >
+</Items>
+<Items dbID="-1" DefaultTurn="0" ItemType="1" Price="0" ItemName="" ID1="24" Multi="1" Code="0" Fax="" >
+<Items dbID="-1" DefaultTurn="0" ItemType="2" Price="2.5" ItemName=" funghi porcini" ID1="295" Multi="1" Code="0" Fax="" />
+<Items dbID="-1" DefaultTurn="0" ItemType="2" Price="2.5" ItemName=" funghi porcini" ID1="295" Multi="1" Code="0" Fax="" />
+</Items>
+<Items dbID="-1" DefaultTurn="0" ItemType="1" Price="0" ItemName="" ID1="583" Multi="2" Code="0" Fax="" >
+</Items>
+  <selectedIndex>0</selectedIndex>
+  <selectedExtraIndex>-1</selectedExtraIndex>
+  <sconto>0</sconto>
+  <listino>1</listino>
+</Cart>

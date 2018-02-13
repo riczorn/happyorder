@@ -1,0 +1,15 @@
+{
+    "web": {
+        "port": 8080,
+        "remoteHost": "192.168.10.30",
+        "localMask": "0.0.0.0"
+    },
+    "identification": {
+        "customerId": 0,
+        "updateServer": "http://www.happyorder.it"
+    },
+    "interface": {
+        "title": "HappyOrder",
+        "showComplete": true
+    }
+}

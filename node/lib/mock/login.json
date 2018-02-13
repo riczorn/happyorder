@@ -1,0 +1,22 @@
+{
+    "status": "ok",
+    "command": "login",
+    "clerk": {
+        "id": 25,
+        "name": "Rudy",
+        "privileges": {
+            "bill": true,
+            "accounting": true,
+            "emptytable": true,
+            "transfer": true,
+            "storno": true,
+            "changeprice": true
+        }
+    },
+    "client": {
+        "ip": "192.168.10.1",
+        "id": 6
+    },
+    "tableId": 101,
+    "orderId": -1
+}

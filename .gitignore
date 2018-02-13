@@ -1,3 +1,20 @@
+.atom
+node_modules
+node_modules.zip
+# ignore .js.map files
+*.js.map
+#dist
+index.ts.javascriptey
+*.tgz
+*.zip
+config/id.json
+/Dox
+/resources
+/software
+autossh.sh
+happyorder.keystore
+node/www/slideshow
+
 # Logs
 logs
 *.log

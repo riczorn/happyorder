@@ -1,0 +1,30 @@
+page-tavoli {
+  .tables button {
+    text-transform:none;
+    min-width:3.5em;
+  }
+  .tables button .smaller {
+    display:none;
+  }
+
+  .tables .state-0,
+  .tables .state-6 {
+    background:green;
+  }
+  .tables .state-1 {
+    background:blue;
+  }
+  .tables .state-2 {
+    background:orange;
+  }
+  .tables .state-3 {
+    background:red;
+  }
+  .tables .state-4 {
+    background:brown;
+  }
+  .tables .state-5 {
+    background:black;
+  }
+
+}

@@ -1,0 +1,36 @@
+{
+  "name": "happyorder",
+  "version": "1.0.0",
+  "description": "HappyOrder backend for angular app",
+  "main": "index.ts",
+  "scripts": {
+    "test": "gulp",
+    "xric-start": "npm run build:live",
+    "xric-build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./app.ts",
+    "xric-test": "echo \"Error: no test specified\" && exit 1",
+    "xric-tsc": "tsc",
+    "xric-run": "tsc && node src/js/app.js"
+  },
+  "author": "Riccardo Zorn",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@types/express": "^4.11.1",
+    "body-parser": "^1.18.2",
+    "coffee-script": "^1.12.7",
+    "connect": "^3.6.5",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express.io": "^1.1.13",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^4.0.1",
+    "mime": "^2.2.0",
+    "socket.io": "^2.0.4",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "@types/node": "^8.9.3",
+    "nodemon": "^1.14.12",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.7.1"
+  }
+}

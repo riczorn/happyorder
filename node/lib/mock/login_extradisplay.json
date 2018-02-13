@@ -1,0 +1,23 @@
+{
+    "status": "ok",
+    "command": "login",
+    "clerk": {
+        "id": 12,
+        "name": "fin1",
+        "privileges": {
+            "bill": true,
+            "transfer": true
+        }
+    },
+    "client": {
+        "ip": "192.168.10.1",
+        "id": 11,
+        "display": {
+            "main": false,
+            "display": "tablet",
+            "request": "extra"
+        }
+    },
+    "tableId": 45,
+    "orderId": -1
+}

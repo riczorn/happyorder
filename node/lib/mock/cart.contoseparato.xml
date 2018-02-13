@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<Cart xmlns="unikas.it">
+  <clerkID>29</clerkID>
+  <customerID>-1</customerID>
+  <tableID>42</tableID>
+  <orderID>516</orderID>
+  <nomeVeloce></nomeVeloce>
+  <action>26</action>
+    <documentType>1</documentType>
+  <tableID2>-1</tableID2>
+  <autoSplitBill>1</autoSplitBill>
+<Items dbID="1131" DefaultTurn="0" ItemType="1" Price="0" ItemName="" ID1="138" Multi="1" Code="0" Fax="" >
+</Items>
+  <selectedIndex>0</selectedIndex>
+  <selectedExtraIndex>-1</selectedExtraIndex>
+  <sconto>0</sconto>
+  <listino>-1</listino>
+</Cart>

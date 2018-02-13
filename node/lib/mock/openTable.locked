@@ -1,0 +1,11 @@
+{
+    "action": {
+        "type": "locked"
+    },
+    "status": "ok",
+    "command": "openTable",
+    "orders": [],
+    "orderitems": {
+        "orderitem": []
+    }
+}

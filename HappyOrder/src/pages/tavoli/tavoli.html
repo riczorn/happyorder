@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+        <ion-icon name="ios-keypad-outline"></ion-icon>
+    </button>
+    <ion-title>
+      Tavoli
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content no-padding id="page3" [ngClass]="getStyle()">
+  <ion-buttons class="tables sorted">
+    <button ion-button  *ngFor="let table of tables.table" (tap)="openTable(table)"
+        [ngClass]="'tablebutton state-'+table.state" [ngStyle]="table.style">
+      {{table.descrizione}}
+      <!--div class="smaller">{{ liveService.tableStates[table.state] }}</div-->
+     </button>
+  </ion-buttons>
+</ion-content>

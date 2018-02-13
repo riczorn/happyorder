@@ -1,0 +1,24 @@
+// http://ionicframework.com/docs/v2/theming/
+// Ionic Shared Functions
+// --------------------------------------------------
+// Makes Ionic Sass functions available to your App
+// @import 'globals.core';
+@import "ionicons";
+//$colors: (
+//        primary: #387ef5,
+//        secondary: #32db64,
+//        danger: #f53d3d,
+//        light: #f4f4f4,
+//        dark: #222,
+//        favorite: #69BB7B
+//);
+@import "happyorder-colors";
+
+$colors: (
+        primary: $green,
+        secondary: $blue,
+        danger: $red,
+        light: $lightergrey,
+        dark:  $blackBox,
+        favorite: $lightgreen
+);

@@ -1,0 +1,108 @@
+
+
+<ion-content [ngClass]="cartButtonsViewStyle">
+  <ion-list no-lines>
+    <div *ngFor=" let item of cart.items ">
+      <!--ion-item-sliding-->
+        <!--(hold)=" showContext($event, item) "-->
+        <ion-item
+            (tap)=" select($event, item) "
+            (hold)=" showContext($event, item);"
+            [ngClass]="getItemClass(item)">
+
+            <ion-label>{{ item.descrizione }}</ion-label>
+            <div item-end>
+              {{ item.quantita }} * {{ item.prezzo | number:'1.2' }}
+              <button class="iconButton icon-only" (click)="showContext($event, item)">
+                <ion-icon name="more"></ion-icon>
+              </button>
+            </div>
+
+        </ion-item>
+
+        <!--ion-item-options side="right" >
+          <button
+             *ngIf="item.idStatoRiga<2"
+            ion-button color="primary" (tap)=" changeQt(cart.items, item, +1) ">
+
+               +
+          </button>
+          <button
+             *ngIf="item.idStatoRiga<2"
+            ion-button color="primary" (tap)=" changeQt(cart.items, item, -1) ">
+
+               -
+          </button>
+          <button
+             *ngIf="item.idStatoRiga<2"
+            ion-button color="primary" (tap)=" deleteChild(cart.items, item) ">
+              <ion-icon name="trash"></ion-icon>
+
+          </button>
+          <button
+             *ngIf="item.idStatoRiga==2"
+            ion-button color="primary" (tap)=" storno(cart.items, item) ">
+
+               Storno
+          </button>
+        </ion-item-options>
+      </ion-item-sliding-->
+
+      <div *ngIf="item.children?.length">
+
+          <ion-item
+            *ngFor=" let child of item.children "
+            (tap)=" select( $event, child ) "
+            (hold)=" showContext($event, item, child);"
+            [ngClass]="getItemClass(child)"
+            >
+
+            <ion-label>{{ child.descrizione }}</ion-label>
+            <div item-end>
+              {{ child.quantita }} * {{ child.prezzo | number:'1.2' }}
+              <button class="iconButton" icon-only (click)="showContext($event, child, item)">
+                <ion-icon name="more"></ion-icon>
+              </button>
+            </div>
+
+
+
+
+          </ion-item>
+
+          <!--ion-item-options side="right" *ngIf="item.idStatoRiga<2">
+            <button ion-button color="primary" (tap)=" deleteChild(item.children, child) ">
+              <ion-icon name="trash-b"></ion-icon>
+              x
+            </button>
+          </ion-item-options>
+        </ion-item-sliding-->
+
+      </div>
+    </div>
+
+    <div *ngFor=" let payment of cart.payments ">
+      <!--{ id: 8, itype: 7, name: "2WC", val: 2, fidelity: false, cssClass: "bpayment" } -->
+        <ion-item
+            (tap)=" removePayment($event, payment) "
+            class="payment">
+
+            <ion-label>{{ payment.name }}</ion-label>
+            <div item-end>
+              {{ -1 * payment.val | number:'1.2' }}
+            </div>
+
+        </ion-item>
+      </div>
+
+  </ion-list>
+
+  <ion-buttons>
+    <button
+        ion-button
+        *ngFor=" let button of functionButtons "
+        (tap)=" sendCartCommand($event, button) " >
+        {{ button?.name }}
+    </button>
+  </ion-buttons>
+</ion-content>
