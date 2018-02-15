@@ -1,17 +1,25 @@
 # happyorder
 A node typescript server to communicate with an old xml backend; an Ionic app to use it.
 
-# node server
-Obviously in the node folder, this is written for node 6 to 9 and tested on both Windows and Linux.
+This is only part of a project, you need the HappyOrder, uniKAS or compatible servers to power it.  Without it, you won't even get to the login screen.
+But it's fairly well commented, and has several neat feats.
 
-The main feature is communicating with the backend of the HappyOrder/uniKas server, which can be either local or remote.
+# Node 6 / typescript server:
 
-It can be configured for basic security through the file in the node/config folder.
+This module connects to a HappyOrder/uniKAS server on the IP specified in the
+config/id.json file.
 
-# ionic client
-This is in the HappyOrder folder, for legacy reasons.
+Node.js / socket / express.io for syncronization and communication,
+the main purpose of this module is currently to translate the
+/pocket/web_unikas.exe xml GET api to a json implementation
+for ease of consumption by the app.
+
+# Ionic 3 app:
+Starts in ./HappyOrder
+
 Started with Ionic 3 / Angular 4, it is very basic.
 Some weird choices were made to 
+
 - speed up the app
 - accomodate customer requests
 

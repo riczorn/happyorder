@@ -9,7 +9,7 @@ config/config.json file.
 
 Node.js / socket / express.io for syncronization and communication,
 the main purpose of this module is currently to translate the
-/pocket/web_unikas.exe xml GET api to a RESTful json implementation
+/pocket/web_unikas.exe xml GET api to a json implementation
 for ease of consumption by the app.
 
 Folder layout
