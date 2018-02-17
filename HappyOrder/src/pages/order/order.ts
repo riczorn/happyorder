@@ -72,8 +72,11 @@ export class OrderPage implements OnInit {
     if (event && event.stopPropagation) {
       event.stopPropagation();
     }
-
-
+    if (self.cart.items.length == 0 || !self.cart.hasNewItemsThatNeedSending())
+    {
+      self.navCtrl.setRoot(TavoliPage);
+      return false;
+    }
 
       if (event && event.target) {
         event.target.disabled = true;

@@ -1,30 +1,52 @@
 page-tavoli {
-  .tables button {
-    text-transform:none;
-    min-width:3.5em;
-  }
-  .tables button .smaller {
-    display:none;
-  }
-
-  .tables .state-0,
-  .tables .state-6 {
-    background:green;
-  }
-  .tables .state-1 {
-    background:blue;
-  }
-  .tables .state-2 {
-    background:orange;
-  }
-  .tables .state-3 {
-    background:red;
-  }
-  .tables .state-4 {
-    background:brown;
-  }
-  .tables .state-5 {
-    background:black;
-  }
-
+    .tables button {
+        text-transform: none;
+        min-width: 3.5em;
+    }
+    .tables button .smaller {
+        display: none;
+    }
+    $table-empty: green;
+    $table-menu: blue;
+    $table-ordered: orange;
+    $table-paid: red;
+    $table-suspended: brown;
+    $table-deleted: black;
+    .tables .state-0,
+    .tables .state-6 {
+        background: $table-empty;
+        &:hover {
+            background: lighten($table-empty, 20%);
+        }
+    }
+    .tables .state-1 {
+        background: $table-menu;
+        &:hover {
+            background: lighten($table-menu, 20%);
+        }
+    }
+    .tables .state-2 {
+        background: $table-ordered;
+        &:hover {
+            background: lighten($table-ordered, 20%);
+        }
+    }
+    .tables .state-3 {
+        background: $table-paid;
+        &:hover {
+            background: lighten($table-paid, 20%);
+        }
+    }
+    .tables .state-4 {
+        background: $table-suspended;
+        &:hover {
+            background: lighten($table-suspended, 20%);
+        }
+    }
+    .tables .state-5 {
+        background: $table-deleted;
+        &:hover {
+            background: lighten($table-deleted, 20%);
+        }
+    }
 }

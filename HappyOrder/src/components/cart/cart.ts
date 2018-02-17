@@ -46,8 +46,8 @@ export class CartComponent {
       event.stopPropagation();
     }
 
-    // console.log('select',item);
-    if (item.itemType) {
+    //console.log('select',item);
+    if (item.itemType || item.idTipoArticolo) {
       this.cart.selectItem(item);
     }
 
@@ -232,6 +232,15 @@ export class CartComponent {
     if (event && event.stopPropagation) {
       event.stopPropagation();
     }
+    switch (button.link) {
+      case "Fpageup": 
+          console.log('pageup');
+          
+          return;
+      case "Fpagedown":
+        console.log('pagedown');
+        return;
+    }
 
     if (self.cart.items.length >= 0) {
       if (event && event.target) {
@@ -239,6 +248,7 @@ export class CartComponent {
       }
       // getAction also sets the cart.doc.tipoDocumento according to the function.
       let action = self.cart.getAction(button.link);
+    
 
       self.cartService.sendCart(self.cart, action, function(data:any) {
         console.log('Cart Sent!', data);

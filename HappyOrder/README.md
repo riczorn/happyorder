@@ -109,3 +109,10 @@ id: app.happyorder.it
 1.1.4
     Forever batch updated for Windows drive auto-detection.
     CORS support added to add support for Chrome developer tools.
+    
+1.1.5
+    Slightly modified style for readability
+    
+1.2.1
+    Move table 
+    Spostatavolo

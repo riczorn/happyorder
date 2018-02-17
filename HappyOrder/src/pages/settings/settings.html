@@ -1,178 +1,160 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+    <ion-navbar>
+        <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>
-      Impostazioni
-    </ion-title>
-  </ion-navbar>
+        <ion-title>
+            Impostazioni
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 <ion-content padding id="settingspage">
-  <div class="happyorder-logo ho-right">
-    <p>
-      <ion-icon name="ios-cube-outline"></ion-icon>
-      HappyOrder app v. {{liveService.versionNumber}} </p>
-  </div>
+    <div class="happyorder-logo ho-right">
+        <p>
+            <ion-icon name="ios-cube-outline"></ion-icon>
+            HappyOrder app v. {{liveService.versionNumber}} </p>
+    </div>
 
-  <form id="settings-form" (ngSubmit)="handleSettingsSubmit()">
+    <form id="settings-form" (ngSubmit)="handleSettingsSubmit()">
 
-    <ion-card>
-      <button ion-button color="positive" block icon-right
-        (click)="downloadSettings()">
+        <ion-card>
+            <button ion-button color="positive" block icon-right (click)="downloadSettings()">
         <ion-icon name="ios-download-outline"></ion-icon>
           Aggiorna configurazione
       </button>
-    </ion-card>
+        </ion-card>
 
-    <ion-card >
-      <ion-card-header>
-        <ion-icon name="ios-options-outline"></ion-icon>
-        Opzioni di visualizzazione</ion-card-header>
-      <ion-list>
+        <ion-card>
+            <ion-card-header>
+                <ion-icon name="ios-options-outline"></ion-icon>
+                Opzioni di visualizzazione</ion-card-header>
+            <ion-list>
 
-        <ion-item>
-          <ion-label>
-            <ion-icon name="ios-compass-outline"></ion-icon>
-            Pagine verticali</ion-label>
-          <ion-checkbox name="PagesVertical" [(ngModel)]="liveService.options.PagesVertical"
-          (click)=" loginService.saveStorageSettings() "></ion-checkbox>
-        </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="ios-compass-outline"></ion-icon>
+                        Pagine verticali</ion-label>
+                    <ion-checkbox name="PagesVertical" [(ngModel)]="liveService.options.PagesVertical" (click)=" loginService.saveStorageSettings() "></ion-checkbox>
+                </ion-item>
 
-        <ion-item>
-          <ion-label>
-            <ion-icon name="ios-keypad-outline"></ion-icon>
-            Tavoli grafici</ion-label>
-          <ion-checkbox name="GraphicalTables"
-            [(ngModel)]="liveService.options.GraphicalTables"
-          (click)=" loginService.saveStorageSettings() "></ion-checkbox>
-        </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="ios-keypad-outline"></ion-icon>
+                        Tavoli grafici</ion-label>
+                    <ion-checkbox name="GraphicalTables" [(ngModel)]="liveService.options.GraphicalTables" (click)=" loginService.saveStorageSettings() "></ion-checkbox>
+                </ion-item>
 
-        <ion-item>
-          <ion-label>
-            <ion-icon name="ios-keypad-outline"></ion-icon>
-            Mostra Prezzi</ion-label>
-          <ion-checkbox name="ShowPrice"
-            [(ngModel)]="liveService.options.ShowPrice"
-          (click)=" loginService.saveStorageSettings() "></ion-checkbox>
-        </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="ios-keypad-outline"></ion-icon>
+                        Mostra Prezzi</ion-label>
+                    <ion-checkbox name="ShowPrice" [(ngModel)]="liveService.options.ShowPrice" (click)=" loginService.saveStorageSettings() "></ion-checkbox>
+                </ion-item>
 
-        <ion-item >
-          <ion-label>
-            <ion-icon name="ios-grid-outline"></ion-icon>
-            Colonne
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="ios-grid-outline"></ion-icon>
+                        Colonne
 
-          </ion-label>
-          <ion-input name="ColumnCount" type="text" [(ngModel)]="liveService.options.ColumnCount"
-          (change)=" loginService.saveStorageSettings() ">
-          </ion-input>
+                    </ion-label>
+                    <ion-input name="ColumnCount" item-end type="text" [(ngModel)]="liveService.options.ColumnCount" (change)=" loginService.saveStorageSettings() ">
+                    </ion-input>
 
-          <plus-minus-button item-end [(controlVar)]="liveService.options.ColumnCount"
-            (onMyValueChange)="liveService.options.ColumnCount = $event.result; loginService.saveStorageSettings()"  ></plus-minus-button>
+                    <plus-minus-button item-end [(controlVar)]="liveService.options.ColumnCount" (onMyValueChange)="liveService.options.ColumnCount = $event.result; loginService.saveStorageSettings()"></plus-minus-button>
 
-        </ion-item>
-        <ion-item>
-          <ion-label>
-            <ion-icon name="ios-crop-outline"></ion-icon>
-            Altezza bottoni articoli</ion-label>
-          <ion-input name="ButtonHeight" type="text" [(ngModel)]="liveService.options.ButtonHeight"
-          (change)=" loginService.saveStorageSettings() "></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="ios-crop-outline"></ion-icon>
+                        Altezza bottoni articoli</ion-label>
+                    <ion-input name="ButtonHeight" item-end type="text" [(ngModel)]="liveService.options.ButtonHeight" (change)=" loginService.saveStorageSettings() "></ion-input>
 
-          <plus-minus-button item-end [(controlVar)]="liveService.options.ButtonHeight"
-            (onMyValueChange)="liveService.options.ButtonHeight = $event.result; loginService.saveStorageSettings()"  ></plus-minus-button>
+                    <plus-minus-button item-end [(controlVar)]="liveService.options.ButtonHeight" (onMyValueChange)="liveService.options.ButtonHeight = $event.result; loginService.saveStorageSettings()"></plus-minus-button>
 
-        </ion-item>
-        <ion-item>
-          <ion-label>
-            <ion-icon name="ios-appstore-outline"></ion-icon>
-            Dimensioni carattere</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="ios-appstore-outline"></ion-icon>
+                        Dimensioni carattere</ion-label>
 
-            <ion-input name='FontSize' type="text" [(ngModel)]="liveService.options.FontSize"
-            (change)=" loginService.saveStorageSettings() "></ion-input>
+                    <ion-input name='FontSize' item-end type="text" [(ngModel)]="liveService.options.FontSize" (change)=" loginService.saveStorageSettings() "></ion-input>
 
-            <plus-minus-button item-end [(controlVar)]="liveService.options.FontSize"
-              (onMyValueChange)="liveService.options.FontSize = $event.result; loginService.saveStorageSettings()"  ></plus-minus-button>
+                    <plus-minus-button item-end [(controlVar)]="liveService.options.FontSize" (onMyValueChange)="liveService.options.FontSize = $event.result; loginService.saveStorageSettings()"></plus-minus-button>
 
-        </ion-item>
-      </ion-list>
-    </ion-card>
+                </ion-item>
+            </ion-list>
+        </ion-card>
 
-    <div class="error" *ngIf=" !! liveService.user.errorMessage ">
-        <ion-icon name="ios-warning"></ion-icon> {{ liveService.user.errorMessage }}
-    </div>
+        <div class="error" *ngIf=" !! liveService.user.errorMessage ">
+            <ion-icon name="ios-warning"></ion-icon> {{ liveService.user.errorMessage }}
+        </div>
 
 
 
-    <ion-card >
-      <ion-item id="login-input-serverurl" >
-        <ion-label [ngClass]="liveService.connected ? 'primary' : 'bar-danger'">
-          <ion-icon name="logo-nodejs"></ion-icon> Server
-        </ion-label>
-        <ion-input type="text" placeholder=""
-        name="serverUrl"
-        [(ngModel)]="liveService.user.serverUrl"
-        (change)=" loginService.saveStorageSettings() "
-        ></ion-input>
-      </ion-item>
+        <ion-card>
+            <ion-item id="login-input-serverurl">
+                <ion-label [ngClass]="liveService.connected ? 'primary' : 'bar-danger'">
+                    <ion-icon name="logo-nodejs"></ion-icon> Server
+                </ion-label>
+                <ion-input type="text" placeholder="" name="serverUrl" [(ngModel)]="liveService.user.serverUrl" (change)=" loginService.saveStorageSettings() "></ion-input>
+            </ion-item>
 
-      <button disabled ion-button color="light" block icon-right>
+            <button disabled ion-button color="light" block icon-right>
         Trova server
         <ion-icon name="ios-search-outline"></ion-icon>
       </button>
-    </ion-card>
+        </ion-card>
 
 
 
 
-  <ion-card >
+        <ion-card>
 
 
-    <button ion-button color="light" icon-right
-      (click)="findUpdate(true)">
+            <button ion-button color="light" icon-right (click)="findUpdate(true)">
       Aggiornamento online
       <ion-icon name="ios-cloud-download-outline"></ion-icon>
 
     </button>
-    <button ion-button color="light" icon-right
-      (click)="findUpdate(false)">
+            <button ion-button color="light" icon-right (click)="findUpdate(false)">
       Aggiornamento locale
       <ion-icon name="ios-code-download-outline"></ion-icon>
 
     </button>
-  </ion-card>
+        </ion-card>
 
-  <ion-card *ngIf=" liveService.user.defaultTableId > 0 ">
-    <ion-item>
-        Questo terminale supporta il display cliente
-    </ion-item>
+        <ion-card *ngIf=" liveService.user.defaultTableId > 0 ">
+            <ion-item>
+                Questo terminale supporta il display cliente
+            </ion-item>
 
-      <ion-item *ngIf=" ! liveService.user.extraDisplay ">
-        Uso corrente: cameriere banco
+            <ion-item *ngIf=" ! liveService.user.extraDisplay ">
+                Uso corrente: cameriere banco
 
 
-        <button ion-button color="danger" (click)="changeRole(false)">
+                <button ion-button color="danger" (click)="changeRole(false)">
           <ion-icon name="ios-tablet-landscape-outline"></ion-icon>
           Passa a display cliente</button>
-      </ion-item>
+            </ion-item>
 
-      <ion-item *ngIf=" liveService.user.extraDisplay ">
-          Uso corrente: display cliente (prezzo/foto)
-          <button ion-button color="danger" (click)="changeRole(true)">
+            <ion-item *ngIf=" liveService.user.extraDisplay ">
+                Uso corrente: display cliente (prezzo/foto)
+                <button ion-button color="danger" (click)="changeRole(true)">
             <ion-icon name="ios-grid-outline"></ion-icon>
             Passa a banco</button>
-      </ion-item>
-  </ion-card>
+            </ion-item>
+        </ion-card>
 
-  <ion-card *ngIf="false">
-    <br><br><br>
-    <ion-icon name="ios-grid-outline"></ion-icon>     ?
-    <ion-icon name="ios-map-outline"></ion-icon>      Order
-    <ion-icon name="ios-keypad-outline"></ion-icon>   Tables
-    <ion-icon name="ios-cart-outline"></ion-icon>     Cart
-    <ion-icon name="ios-contacts-outline"></ion-icon> Login
-    <ion-icon name="ios-options-outline"></ion-icon>  Impostazioni
+        <ion-card *ngIf="false">
+            <br><br><br>
+            <ion-icon name="ios-grid-outline"></ion-icon> ?
+            <ion-icon name="ios-map-outline"></ion-icon> Order
+            <ion-icon name="ios-keypad-outline"></ion-icon> Tables
+            <ion-icon name="ios-cart-outline"></ion-icon> Cart
+            <ion-icon name="ios-contacts-outline"></ion-icon> Login
+            <ion-icon name="ios-options-outline"></ion-icon> Impostazioni
 
-  </ion-card>
+        </ion-card>
 
     </form>
 </ion-content>

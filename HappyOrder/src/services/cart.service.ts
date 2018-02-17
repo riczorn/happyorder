@@ -79,6 +79,8 @@ export class CartService {
             message = 'Documento stampato';
           } else if (cartActionStorno ) {
             message = 'Storno ok';
+          } else if (cart.action ==16 ) {
+            message = 'Tavolo spostato';
           }
           self.toastAndVibrate(message,false);
 

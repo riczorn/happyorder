@@ -21,7 +21,7 @@ import { OrderPage } from '../pages/order/order';
 
 import { LoginPage } from '../pages/login/login';
 import { LiveService } from  '../services/live.service';
-// import {CartService} from  '../services/cart.service';
+import {CartService} from  '../services/cart.service';
 
 
 @Component({
@@ -32,7 +32,10 @@ export class HappyOrderApp {
   @ViewChild(Nav) navCtrl: Nav;
     rootPage:any = LoginPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, liveService: LiveService) {
+  constructor(platform: Platform, 
+    statusBar: StatusBar, splashScreen: SplashScreen, 
+    private liveService: LiveService,
+    private cartService:CartService) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -64,6 +67,10 @@ export class HappyOrderApp {
   }
   goToOrder(params){
     if (!params) params = {};
-    this.navCtrl.setRoot(OrderPage);
+    if (this.liveService.user && this.liveService.user.table) {
+      this.navCtrl.setRoot(OrderPage);
+    } else {
+      this.cartService.toastAndVibrate('Prima scegli un tavolo',true);
+    }
   }
 }

@@ -442,6 +442,7 @@ private cartToXML(cart: any) {
   		'  <clerkID>'+cart.clerkId+'</clerkID>\n'+
   		'  <customerID>'+cart.idCliente+'</customerID>\n'+
   		'  <tableID>'+cart.idTavolo+'</tableID>\n'+
+  		'  <tableID2>'+cart.idTavolo2+'</tableID2>\n'+
   		'  <orderID>'+cart.idOrdine+'</orderID>\n'+
   		'  <nomeVeloce>'+cart.nomeVeloce+'</nomeVeloce>\n'+
   		'  <action>'+(cart.action)+'</action>\n'+

@@ -1,28 +1,28 @@
 <ion-menu [content]="mainContent">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>
-        HappyOrder
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content id="side-menu21">
-    <ion-list id="menu-list1">
-      <ion-item color="none" menuClose="" on-click="goToLogin()" id="menu-list-item1">
-        <ion-icon name="ios-contacts-outline"></ion-icon> Login
-      </ion-item>
-      <ion-item color="none" menuClose="" on-click="goToTavoli()" id="menu-list-item3">
-        <ion-icon name="ios-keypad-outline"></ion-icon> Tavoli
-      </ion-item>
-      <ion-item color="none" menuClose="" on-click="goToOrder()" id="menu-list-item20">
-        <ion-icon name="ios-map-outline"></ion-icon> Ordina
-      </ion-item>
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>
+                HappyOrder
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content id="side-menu21">
+        <ion-list id="menu-list1">
+            <ion-item color="none" menuClose="" tap="goToLogin()" id="menu-list-item1">
+                <ion-icon name="ios-contacts-outline"></ion-icon> Login
+            </ion-item>
+            <ion-item color="none" menuClose="" on-click="goToTavoli()" id="menu-list-item3">
+                <ion-icon name="ios-keypad-outline"></ion-icon> Tavoli
+            </ion-item>
+            <ion-item color="none" menuClose="" on-click="goToOrder()" id="menu-list-item20">
+                <ion-icon name="ios-map-outline"></ion-icon> Ordina
+            </ion-item>
 
-      <ion-item color="none" menuClose="" on-click="goToSettings()" id="menu-list-item2">
-        <ion-icon name="ios-options-outline"></ion-icon> Impostazioni
-      </ion-item>
-    </ion-list>
-  </ion-content>
+            <ion-item color="none" menuClose="" on-click="goToSettings()" id="menu-list-item2">
+                <ion-icon name="ios-options-outline"></ion-icon> Impostazioni
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-menu>
 
 <ion-nav #mainContent [root]="rootPage"></ion-nav>

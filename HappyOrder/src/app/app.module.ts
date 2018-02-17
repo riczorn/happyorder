@@ -43,6 +43,7 @@ import { PopoverCartComponent } from '../components/popover-cart/popover-cart';
 import { BackSlidesComponent } from '../components/back-slides/back-slides';
 import { PopoverSudoComponent } from '../components/popover-sudo/popover-sudo';
 import { PlusMinusButtonComponent } from '../components/plus-minus-button/plus-minus-button';
+import { AbsoluteDrag } from '../directives/absolute-drag/absolute-drag';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { PlusMinusButtonComponent } from '../components/plus-minus-button/plus-m
     PopoverCartComponent,
     BackSlidesComponent,
     PopoverSudoComponent,
-    PlusMinusButtonComponent
+    PlusMinusButtonComponent,
+    AbsoluteDrag
   ],
   imports: [
     // CoreModule,

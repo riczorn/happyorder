@@ -44,8 +44,7 @@ https://blog.pusher.com/use-typescript-with-node/
 1.1.4
     Forever batch updated for Windows drive auto-detection.
 
-1.2.0
+1.2.1
     Updated all packages (a full distro is required to update);
     Improved (slightly) the style of the buttons;
-
     

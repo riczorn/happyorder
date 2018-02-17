@@ -37,7 +37,7 @@ class Options {
 export class LiveService {
     // occhio: variabile aggiornata dal processo di build, build.sh nella root:
     // (lievemente meglio che usare il plugin appVersion che - detto tra noi - manco funzionava!)
-    public versionNumber : string ='1.1.3';
+    public versionNumber : string ='1.2.2';
     public teamListElement:any;
     public user:User;
     public login:any; // the login data
