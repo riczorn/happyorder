@@ -1,8 +1,9 @@
 {
     "name": "HappyOrder",
-    "version": "1.0.10",
+    "version": "1.3.0",
     "author": "Riccardo Zorn",
     "homepage": "http://fasterweb.net/",
+    "description": "HappyOrder Android app",
     "private": true,
     "scripts": {
         "clean": "ionic-app-scripts clean",
@@ -45,7 +46,6 @@
         "@ionic/app-scripts": "2.0.1",
         "typescript": "2.3.4"
     },
-    "description": "HappyOrder app",
     "cordova": {
         "plugins": {
             "cordova-plugin-console": {},

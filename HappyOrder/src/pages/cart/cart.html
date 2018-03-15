@@ -1,21 +1,22 @@
 <ion-header [hidden]>
 
 </ion-header>
-<ion-content id="cartPage" ><!-- [ngStyle]="getSlideshow()" -->
-  <back-slides></back-slides>
-  <div class="cart-content" *ngIf="visible.showCart && cart.totals.totale">
-    <cart cartButtonsViewStyle="none"></cart>
-    <ion-item class="totals">
-      <ion-label class="itemno" >Summe <em>({{ cart.totals.count }} Artikel)</em></ion-label>
-      <div class="totale" item-end>{{ cart.totals.totale | number:'1.2' }} €</div>
-    </ion-item>
-  </div>
-  <div class="cart-content" *ngIf=" visible.showCartTotalsDelayed && (!visible.showCart || cart.totals.totale==0) && lastTotal>0">
-    <div class="totals">
-      <div class="itemno" >Letzte Bestellung</div>
-      <div class="totale">{{ lastTotal | number:'1.2' }} €</div>
+<ion-content id="cartPage" [ngClass]="liveService.options.Style">
+    <!-- [ngStyle]="getSlideshow()" -->
+    <back-slides></back-slides>
+    <div class="cart-content" *ngIf="visible.showCart && cart.totals.totale">
+        <cart cartButtonsViewStyle="none"></cart>
+        <ion-item class="totals">
+            <ion-label class="itemno">Summe <em>({{ cart.totals.count }} Artikel)</em></ion-label>
+            <div class="totale" item-end>{{ cart.totals.totale | number:'1.2' }} €</div>
+        </ion-item>
     </div>
-  </div>
+    <div class="cart-content" *ngIf=" visible.showCartTotalsDelayed && (!visible.showCart || cart.totals.totale==0) && lastTotal>0">
+        <div class="totals">
+            <div class="itemno">Letzte Bestellung</div>
+            <div class="totale">{{ lastTotal | number:'1.2' }} €</div>
+        </div>
+    </div>
 
 
 

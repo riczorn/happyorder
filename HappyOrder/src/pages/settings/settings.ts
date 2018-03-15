@@ -48,12 +48,12 @@ export class SettingsPage {
       fullscreen : 'yes',//Windows only
   };
 
-
+  
   constructor(public navCtrl: NavController,
                 private liveService:LiveService,
                 private loginService:LoginService,
                 private theInAppBrowser: InAppBrowser) {
-
+      
   }
   goToLogin(){
     this.navCtrl.push(LoginPage);

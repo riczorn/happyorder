@@ -1,4 +1,4 @@
-<ion-menu [content]="mainContent">
+<ion-menu [content]="mainContent" [ngClass]="liveService.options.Style">
     <ion-header>
         <ion-toolbar>
             <ion-title>
@@ -8,17 +8,17 @@
     </ion-header>
     <ion-content id="side-menu21">
         <ion-list id="menu-list1">
-            <ion-item color="none" menuClose="" tap="goToLogin()" id="menu-list-item1">
+            <ion-item color="none" menuClose="" on-tap="goToLogin()" id="menu-list-item1">
                 <ion-icon name="ios-contacts-outline"></ion-icon> Login
             </ion-item>
-            <ion-item color="none" menuClose="" on-click="goToTavoli()" id="menu-list-item3">
+            <ion-item color="none" menuClose="" on-tap="goToTavoli()" id="menu-list-item3">
                 <ion-icon name="ios-keypad-outline"></ion-icon> Tavoli
             </ion-item>
-            <ion-item color="none" menuClose="" on-click="goToOrder()" id="menu-list-item20">
+            <ion-item color="none" menuClose="" on-tap="goToOrder()" id="menu-list-item20">
                 <ion-icon name="ios-map-outline"></ion-icon> Ordina
             </ion-item>
 
-            <ion-item color="none" menuClose="" on-click="goToSettings()" id="menu-list-item2">
+            <ion-item color="none" menuClose="" on-tap="goToSettings()" id="menu-list-item2">
                 <ion-icon name="ios-options-outline"></ion-icon> Impostazioni
             </ion-item>
         </ion-list>

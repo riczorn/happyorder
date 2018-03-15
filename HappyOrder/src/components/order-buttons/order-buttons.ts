@@ -70,4 +70,35 @@ export class OrderButtons {
       console.log('a section button?',button.action, button.link);
     }
   }
+
+  swipeEvent(e:any) {
+    //console.log('swipe:',e);
+
+    if (e.stopPropagation) {
+      e.stopPropagation();
+    }
+    
+    let minSwipeLength=150;
+    let maxSwipeHeight=50;
+    if (Math.abs(e.deltaX)>minSwipeLength 
+        && Math.abs(e.deltaY)<maxSwipeHeight) {
+      this.handleSwipeLeftRight(e.deltaX<0);
+      //this.handleSwipe(e.direction==2) http://www.ionicsync.com/2018/02/how-to-implement-gestures-in-ionic-2.html
+    }
+  }
+
+  handleSwipeLeftRight(goRight:boolean) {
+    //console.log('handleSwipe',this.pages.length);
+    for (var i=0;i<this.pages.length; i++) {
+      if (this.pages[i].page.active) {
+        //console.log('i1',i,'newindex',newIndex);
+        var newIndex = goRight?i+1:i-1;
+        newIndex+=this.pages.length ;
+        newIndex %= this.pages.length;
+        //console.log('i2',i,'newindex',newIndex);
+        let res= this.showTab(this.pages[newIndex].page);
+        return res;
+      } 
+    }
+  }
 }

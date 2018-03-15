@@ -1,3 +1,7 @@
+page-order ion-content[no-scroll] cart>ion-content>.scroll-content {
+    overflow: hidden;
+}
+
 cart .scroll-content {
     display: flex;
     // the cart component
@@ -71,4 +75,9 @@ cart .content.none .scroll-content {
             width: 100%;
         }
     }
+}
+
+.dark .article.saved,
+.dark .extra.saved {
+    background: #444444;
 }

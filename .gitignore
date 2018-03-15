@@ -1,5 +1,6 @@
 .atom
 node_modules
+electron/HappyOrder-linux-x64
 node_modules.zip
 # ignore .js.map files
 *.js.map

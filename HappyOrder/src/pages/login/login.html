@@ -1,69 +1,59 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+<ion-header [ngClass]="liveService.options.Style">
+    <ion-navbar>
+        <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>
-      Login HappyOrder
-    </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="gotoSettings()">
+        <ion-title>
+            Login HappyOrder
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="gotoSettings()">
         <ion-icon name="settings"></ion-icon>
       </button>
-    </ion-buttons>
-  </ion-navbar>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
-<ion-content padding id="loginPage">
-  <div>
-    <img src="assets/img/splash.png" class="loginLogo" />
-  </div>
-  <form id="login-form2" (ngSubmit)="handleLoginSubmit()">
-    <ion-card [hidden]="!liveService.connected">
-      <ion-item id="login-input-login">
-        <ion-label>
-          Login
-        </ion-label>
-        <ion-input type="text" placeholder=""
-        name="login"
-        [(ngModel)]="liveService.user.login"
-        (change)=" loginService.saveStorageSettings() "
-        ></ion-input>
-      </ion-item>
-      <ion-item id="login-input-password">
-        <ion-label>
-          Password
-        </ion-label>
-        <ion-input type="password" name="password" placeholder=""
-        [(ngModel)]="liveService.user.password"
-        (change)=" loginService.saveStorageSettings() "></ion-input>
-      </ion-item>
-      <!--ion-item id="login-toggle2">
+<ion-content padding id="loginPage" [ngClass]="liveService.options.Style">
+    <div>
+        <img src="assets/img/splash.png" class="loginLogo" />
+    </div>
+    <form id="login-form2" (ngSubmit)="handleLoginSubmit()">
+        <ion-card [hidden]="!liveService.connected">
+            <ion-item id="login-input-login">
+                <ion-label>
+                    Login
+                </ion-label>
+                <ion-input type="text" placeholder="" name="login" [(ngModel)]="liveService.user.login" (change)=" loginService.saveStorageSettings() "></ion-input>
+            </ion-item>
+            <ion-item id="login-input-password">
+                <ion-label>
+                    Password
+                </ion-label>
+                <ion-input type="password" name="password" placeholder="" [(ngModel)]="liveService.user.password" (change)=" loginService.saveStorageSettings() "></ion-input>
+            </ion-item>
+            <!--ion-item id="login-toggle2">
         <ion-label>
           Ricorda login
         </ion-label>
         <ion-toggle color="positive" checked="false" ></ion-toggle>
       </ion-item-->
-      <button id="login-button-submit" type="submit" ion-button color="positive" block >
+            <button id="login-button-submit" type="submit" ion-button color="positive" block>
          Accedi &nbsp;&nbsp;  <ion-icon name="log-in"></ion-icon>
       </button>
-    </ion-card>
+        </ion-card>
 
 
-    <div class="error" *ngIf=" !! liveService.user.errorMessage ">
-        {{ liveService.user.errorMessage }}
-    </div>
+        <div class="error" *ngIf=" !! liveService.user.errorMessage ">
+            {{ liveService.user.errorMessage }}
+        </div>
 
-    <ion-card [hidden]="liveService.connected">
-      <ion-item id="login-input-serverurl" >
-        <ion-label ng-class="liveService.connected ? 'primary' : 'bar-danger'">
-          Server
-        </ion-label>
-        <ion-input type="text" placeholder=""
-        name="serverUrl"
-        [(ngModel)]="liveService.user.serverUrl"
-        (change)=" loginService.saveStorageSettings() "
-        ></ion-input>
-      </ion-item>
-    </ion-card>
-  </form>
+        <ion-card [hidden]="liveService.connected">
+            <ion-item id="login-input-serverurl">
+                <ion-label ng-class="liveService.connected ? 'primary' : 'bar-danger'">
+                    Server
+                </ion-label>
+                <ion-input type="text" placeholder="" name="serverUrl" [(ngModel)]="liveService.user.serverUrl" (change)=" loginService.saveStorageSettings() "></ion-input>
+            </ion-item>
+        </ion-card>
+    </form>
 </ion-content>

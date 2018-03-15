@@ -46,5 +46,6 @@ https://blog.pusher.com/use-typescript-with-node/
 
 1.2.1
     Updated all packages (a full distro is required to update);
-    Improved (slightly) the style of the buttons;
     
+1.3.0
+    New electron version for Linux desktops

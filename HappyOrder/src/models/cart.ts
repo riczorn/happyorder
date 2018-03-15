@@ -174,12 +174,14 @@ export class Cart {
 
   flagsToAction(doConferma, doElimina, doScontrino) {
     /*
-    var orderConfirm = 1
-    var orderPrint = 2
-    var orderDelete = 4
-    var printDocument = 8
-    var orderSplit = 16
-    var orderStorno = 32;
+    this.cartActions = {
+      orderConfirm: 1,
+      orderPrint: 2,
+      orderDelete: 4,
+      printDocument: 8,
+      orderSplit: 16,
+      orderStorno: 32
+    };
     */
 
     var iAction = this.cartActions.orderPrint;
@@ -265,9 +267,7 @@ export class Cart {
           this.action = this.flagsToAction(true, false, false);
           break;
       }
-
     } else {
-
       this.action = this.flagsToAction(true, false, false);
       console.log('button function N/A', this.action);
     }

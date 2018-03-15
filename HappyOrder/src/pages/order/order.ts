@@ -38,7 +38,7 @@ export class OrderPage implements OnInit {
               public navCtrl: NavController,
               public platform: Platform  ) {
       this.cart = this.liveService.cart;
-      this.visible = {cart:1, order:1, cssClass:'', active:1};
+      this.visible = {cart:1, order:1, cssClass:'default', active:1};
   }
   ngOnInit() {
     let selfOrder = this;
@@ -84,6 +84,7 @@ export class OrderPage implements OnInit {
       let action = self.cart.getAction();
       if   (self.liveService.user.defaultTableId == self.liveService.user.tableId) {
         // su asporto, conferma elimina è il default.
+        // quindi, il primo getAction senza parametri invoca flagsToAction(true,false,false)
         action = self.cart.flagsToAction(true, true, false);
       }
       self.cartService.sendCart(self.cart, action, function(data:any) {
@@ -122,10 +123,9 @@ export class OrderPage implements OnInit {
     // } else if (cart) {
     //   this.visible.active = 2;
     // }
+    this.visible.cssClass = this.liveService.options.Style;
     if ((order+cart)>=2) {
-      this.visible.cssClass = 'half';
-    } else {
-      this.visible.cssClass = '';
+      this.visible.cssClass += ' half';
     }
     // redundant, using css queries for flex-direction on #orderPage
       // if (this.platform.isPortrait()) {

@@ -12,41 +12,43 @@ page-tavoli {
     $table-paid: red;
     $table-suspended: brown;
     $table-deleted: black;
-    .tables .state-0,
-    .tables .state-6 {
-        background: $table-empty;
-        &:hover {
-            background: lighten($table-empty, 20%);
+    .tables button.tablebutton {
+        &.state-0,
+        &.state-6 {
+            background: $table-empty;
+            &:hover {
+                background: lighten($table-empty, 20%);
+            }
         }
-    }
-    .tables .state-1 {
-        background: $table-menu;
-        &:hover {
-            background: lighten($table-menu, 20%);
+        &.state-1 {
+            background: $table-menu;
+            &:hover {
+                background: lighten($table-menu, 20%);
+            }
         }
-    }
-    .tables .state-2 {
-        background: $table-ordered;
-        &:hover {
-            background: lighten($table-ordered, 20%);
+        &.state-2 {
+            background: $table-ordered;
+            &:hover {
+                background: lighten($table-ordered, 20%);
+            }
         }
-    }
-    .tables .state-3 {
-        background: $table-paid;
-        &:hover {
-            background: lighten($table-paid, 20%);
+        &.state-3 {
+            background: $table-paid;
+            &:hover {
+                background: lighten($table-paid, 20%);
+            }
         }
-    }
-    .tables .state-4 {
-        background: $table-suspended;
-        &:hover {
-            background: lighten($table-suspended, 20%);
+        &.state-4 {
+            background: $table-suspended;
+            &:hover {
+                background: lighten($table-suspended, 20%);
+            }
         }
-    }
-    .tables .state-5 {
-        background: $table-deleted;
-        &:hover {
-            background: lighten($table-deleted, 20%);
+        &.state-5 {
+            background: $table-deleted;
+            &:hover {
+                background: lighten($table-deleted, 20%);
+            }
         }
     }
 }

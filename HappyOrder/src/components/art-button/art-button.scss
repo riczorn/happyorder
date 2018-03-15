@@ -1,8 +1,103 @@
 art-button {
     font-size: 1.4rem;
     font-weight: 500;
-    color: white;
     position: relative;
+    .price {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        font-weight: 100;
+    }
+}
+
+.default art-button {
+    color: #333;
+    &>* {
+        border-bottom: 2px solid rgb(197, 197, 197);
+    }
+    .bfunction {
+        background: orange;
+    }
+    .bpayment {
+        background: #26adc5;
+    }
+    .bsection {
+        background-color: #666666;
+        color: white;
+        font-weight: 300;
+    }
+    .barticle {
+        background: white;
+    }
+    .bextra {
+        //background: #AA1164;
+        font-style: oblique;
+        // box-shadow: 2px 2px 1px red, -2px -2px 1px red;
+    }
+    .barticle,
+    .bextra {
+        &.section-1 {
+            // background: #464646
+            border-color: #787196;
+        }
+        &.section-2 {
+            border-color: #ddb67c
+        }
+        &.section-3 {
+            border-color: #5f8866
+        }
+    }
+    .price {
+        color: #170996;
+    }
+}
+
+.dark art-button {
+    color: white;
+    .bfunction {
+        background: rgb(139, 94, 10);
+    }
+    .bpayment {
+        background: #202060;
+    }
+    .barticle {
+        background: rgb(7, 13, 49);
+    }
+    .bextra {
+        background: rgb(31, 4, 19);
+        box-shadow: 2px 2px 1px rgb(248, 125, 125), -2px -2px 1px rgb(248, 125, 125);
+    }
+    .barticle,
+    .bextra {
+        &.section-1 {
+            background: #1b1818
+        }
+        &.section-2 {
+            background: #1f0405
+        }
+        &.section-3 {
+            background: #0e0e1f
+        }
+    }
+    .price {
+        color: #d1d18f;
+    }
+}
+
+.classic art-button {
+    color: white;
+    &.bsection {
+        background: transparent;
+        cursor: default;
+        box-shadow: none;
+        color: gray;
+    }
+    .bfunction {
+        background: orange;
+    }
+    .bpayment {
+        background: #202060;
+    }
     .barticle {
         background: green;
     }
@@ -24,9 +119,5 @@ art-button {
     }
     .price {
         color: #e0e020;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        font-weight: 100;
     }
 }

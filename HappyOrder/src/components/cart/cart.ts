@@ -371,4 +371,34 @@ export class CartComponent {
       // this.content.find('cart').scrollToBottom();
     }
   }
+
+
+  swipeEvent(e, item:any) {
+    //console.log('swipe:',e);
+    let minSwipeLength=80;
+    let maxSwipeHeight=30;
+    if (Math.abs(e.deltaX)>minSwipeLength 
+        && Math.abs(e.deltaY)<maxSwipeHeight) {
+
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+
+      console.log('swipe ', e.deltaX<0, e.target);
+      this.handleSwipeLeftRight(e.deltaX<0, item);
+      
+      //this.handleSwipe(e.direction==2) http://www.ionicsync.com/2018/02/how-to-implement-gestures-in-ionic-2.html
+    }
+  }
+
+  handleSwipeLeftRight(goRight:boolean, item:any) {
+    //console.log('handleSwipeLeftRight',item);
+    if (item.add && item.idStatoRiga<2) {
+      item.add(goRight?-1:1);
+      this.updateTotals(item);
+    }    
+    if (item.quantita==0) {
+      // remove?
+    }
+  }
 }

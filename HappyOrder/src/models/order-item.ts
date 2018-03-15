@@ -83,12 +83,14 @@
    }
 
    add(quantita: number) {
-     if (this.quantita + quantita <= 0) {
+     console.log('increase quantita by ', quantita)
+     if (this.quantita + quantita < 0) {
        if (this.idRigaOrdine > 0) {
          // this.storno();
        }
-     }
-     this.quantita += quantita;
+     } else {
+      this.quantita += quantita;
+      }
    }
 
  }

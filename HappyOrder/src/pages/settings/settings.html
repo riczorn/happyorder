@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [ngClass]="liveService.options.Style">
     <ion-navbar>
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -8,11 +8,11 @@
         </ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding id="settingspage">
+<ion-content padding id="settingspage" [ngClass]="liveService.options.Style">
     <div class="happyorder-logo ho-right">
         <p>
             <ion-icon name="ios-cube-outline"></ion-icon>
-            HappyOrder app v. {{liveService.versionNumber}} </p>
+            HappyOrder app v. {{liveService.versionNumber}} <em>running on {{liveService.appType}}</em></p>
     </div>
 
     <form id="settings-form" (ngSubmit)="handleSettingsSubmit()">
@@ -29,6 +29,16 @@
                 <ion-icon name="ios-options-outline"></ion-icon>
                 Opzioni di visualizzazione</ion-card-header>
             <ion-list>
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="ios-keypad-outline"></ion-icon>
+                        Stile interfaccia</ion-label>
+                    <ion-select name="Style" [(ngModel)]="liveService.options.Style" (ngModelChange)=" loginService.saveStorageSettings() ">
+                        <ion-option value="default">white</ion-option>
+                        <ion-option value="dark">dark</ion-option>
+                        <ion-option value="classic">classic</ion-option>
+                    </ion-select>
+                </ion-item>
 
                 <ion-item>
                     <ion-label>
@@ -108,7 +118,7 @@
 
 
 
-        <ion-card>
+        <ion-card *ngIf="appType=='cordova'">
 
 
             <button ion-button color="light" icon-right (click)="findUpdate(true)">

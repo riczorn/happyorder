@@ -7,112 +7,150 @@
 @import '../components/popover-cart/popover-cart';
 @import '../components/popover-sudo/popover-sudo';
 @import '../components/plus-minus-button/plus-minus-button';
-
 @import '../pages/cart/cart';
 @import '../pages/login/login';
 @import '../pages/order/order';
 @import '../pages/settings/settings';
 @import '../pages/tavoli/tavoli';
 // http://ionicframework.com/docs/v2/theming/
-.barticle,.bextra, .bsection, .bfunction {
-  text-transform:none !important;
+.barticle,
+.bextra,
+.bsection,
+.bfunction {
+    text-transform: none !important;
 }
 
-
-.bsection  {
-  background:transparent ;
-  cursor: default;
-  box-shadow:none;
-  color:gray;
+.bfunction {
+    background: orange;
 }
 
-.bfunction  {
-  background:orange ;
+.bpayment {
+    background: #202060;
 }
-.bpayment  {
-  background:#202060 ;
-}
-.article, .extra {
-  border:3px solid transparent !important;
-  transition: 0.3s ease all;
-  font-weight:500;
-}
-.article {
-  /*border:1px dashed red;*/
-}
-.article.saved, .extra.saved {
-  background:#cccccc;
-}
+
+.article,
 .extra {
-  /* border:2px dashed green;*/
-  background:transparent;
+    border: 3px solid transparent !important;
+    transition: 0.3s ease all;
+    font-weight: 500;
 }
-.article.selected, .extra.selected {
-  font-weight:bold;
-  border:3px solid orange !important;
+
+.article {
+    /*border:1px dashed red;*/
 }
+
+.article.saved,
+.extra.saved {
+    background: #cccccc;
+}
+
+.extra {
+    /* border:2px dashed green;*/
+    background: transparent;
+}
+
+.article.selected,
+.extra.selected {
+    font-weight: bold;
+    border: 3px solid orange !important;
+}
+
 button.iconButton {
-  border-radius:15px;
-  padding:0;
-  width:1.6em;height:1.6em;
-  margin:-5px 0;
-  font-size:1.6em;
-  vertical-align:middle;
-  ion-icon {
-    font-size:1.6em;
-  }
-}
-.item.extra  {
-  padding-left:2em;
-  font-weight:lighter;
+    border-radius: 15px;
+    padding: 0;
+    width: 1.6em;
+    height: 1.6em;
+    margin: -5px 0;
+    font-size: 1.6em;
+    vertical-align: middle;
+    ion-icon {
+        font-size: 1.6em;
+    }
 }
 
-
+.item.extra {
+    padding-left: 2em;
+    font-weight: lighter;
+}
 
 .head .tav {
-  display:block;
-  // font-size:80%;
-}
-.head .tav-name {
-  display:block;
+    display: block;
+    // font-size:80%;
 }
 
-i, ion-icon, .ion-icon {
-  // color:blue;
-  &:first-child {
-    margin-right:1rem;
-  }
+.head .tav-name {
+    display: block;
 }
-button.icon-only,
-ion-segment-button.icon-only {
-  i, ion-icon, .ion-icon {
+
+i,
+ion-icon,
+.ion-icon {
     // color:blue;
     &:first-child {
-      margin-right:0;
+        margin-right: 1rem;
     }
-  }
 }
+
+button.icon-only,
+ion-segment-button.icon-only {
+    i,
+    ion-icon,
+    .ion-icon {
+        // color:blue;
+        &:first-child {
+            margin-right: 0;
+        }
+    }
+}
+
 .bar-buttons-md.float-left {
-  order:1;
+    order: 1;
 }
+
 .toast-md .toast-message {
-  font-weight:500;
-  text-align:center;
+    font-weight: 500;
+    text-align: center;
 }
+
 .error {
-  color:red;
-  font-style:oblique;
+    color: red;
+    font-style: oblique;
 }
 
 .happyorder-logo {
-  background-image:url(../assets/img/splash.png);
-  background-size:cover;
-  min-height:3em;
-  background-attachment:fixed;
-  background-size:100px auto;
-  background-repeat:no-repeat;
-  background-position:100% -15px;
-  .ho-right {
-
-  }
+    background-image: url(../assets/img/splash.png);
+    background-size: cover;
+    min-height: 3em;
+    background-attachment: fixed;
+    background-size: 100px auto;
+    background-repeat: no-repeat;
+    background-position: 100% -15px;
+    .ho-right {}
 }
+
+.content.default {}
+
+.content.dark {
+    background: black;
+    color: white;
+    .card-md,
+    .item-md,
+    .content-md,
+    .button-md,
+    .fixed-content,
+    .card-header-md {
+        background-color: black;
+        color: white;
+    }
+    .button-md {
+        background-color: #333;
+    }
+}
+
+.header.header-md.dark,
+.header.dark .toolbar-background-md {
+    background-color: black;
+    color: white;
+}
+
+.content.classic {}

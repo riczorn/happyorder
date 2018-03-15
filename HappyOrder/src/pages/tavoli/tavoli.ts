@@ -175,10 +175,10 @@ export class TavoliPage  implements OnInit  {
   
 
   getStyle() {
-    let style='';
+    let style=this.liveService.options.Style;
     let opts = this.liveService.options;
     if (opts.GraphicalTables) { //PagesVertical) {
-      style = 'graphical';
+      style += ' graphical';
     }
 
     style += ' cols-'+opts.ColumnCount;

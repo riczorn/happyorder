@@ -1,68 +1,66 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header [ngClass]="liveService.options.Style">
+    <ion-toolbar>
 
-  <ion-buttons start class="float-left">
-    <!--button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </<button-->
+        <ion-buttons start class="float-left">
+            <!--button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </<button-->
+            <!--button
+          ion-button ion-danger
+          (tap)="askempty()"
+          >X</button-->
+            <button ion-button (tap)='sendCart($event)'>
+        <ion-icon *ngIf="cart.items.length==0" name="ios-arrow-dropleft-outline"></ion-icon>
+        <ion-icon *ngIf="cart.items.length>0" name="ios-print-outline"></ion-icon>
 
-    <button ion-button (tap)='sendCart($event)'>
-      <ion-icon *ngIf="cart.items.length==0" name="ios-arrow-dropleft-outline"></ion-icon>
-      <ion-icon *ngIf="cart.items.length>0" name="ios-print-outline"></ion-icon>
+        <span class="tav-name">
+          {{ liveService.user.table.descrizione }}
+        </span>
+      </button>
 
-      <span class="tav-name">
-        {{ liveService.user.table.descrizione }}
-      </span>
-    </button>
-    <!--button
-        ion-button ion-danger
-        (tap)="askempty()"
-        >X</button-->
-</ion-buttons>
-        <ion-segment [(ngModel)]="visible.active" >
+        </ion-buttons>
+        <ion-segment [(ngModel)]="visible.active">
             <ion-segment-button value="0" (tap)="doFlex(1,0)">
-              <ion-icon name="ios-map-outline"></ion-icon>
+                <ion-icon name="ios-map-outline"></ion-icon>
             </ion-segment-button>
             <ion-segment-button value="1" (tap)="doFlex(1,1)">
-              <ion-icon name="ios-code-outline"></ion-icon>
+                <ion-icon name="ios-code-outline"></ion-icon>
             </ion-segment-button>
             <ion-segment-button value="2" (tap)="doFlex(0,1)">
-              <span class="count" *ngIf="cart.totals.count>0">{{ cart.totals.count }}</span>
-              <ion-icon name="ios-cart-outline"></ion-icon>
+                <span class="count" *ngIf="cart.totals.count>0">{{ cart.totals.count }}</span>
+                <ion-icon name="ios-cart-outline"></ion-icon>
             </ion-segment-button>
-          </ion-segment>
+        </ion-segment>
 
-    <!--button
-        ion-button ion-danger
-        (tap)="doFlex(1,0)"
-        ><ion-icon name="pizza" md="pizza"></ion-icon></button>
+        <!--button
+          ion-button ion-danger
+          (tap)="doFlex(1,0)"
+          ><ion-icon name="pizza" md="pizza"></ion-icon></button>
 
-    <button
-        ion-button ion-danger
-        (tap)="doFlex(1,1)"
-        ><ion-icon name="android-star-half" md="android-star-half"></ion-icon></button>
-    <button
+      <button
+          ion-button ion-danger
+          (tap)="doFlex(1,1)"
+          ><ion-icon name="android-star-half" md="android-star-half"></ion-icon></button>
+      <button
         ion-button
         (tap)="doFlex(0,1)"
         ><ion-icon name="cart" md="ios-cart-outline"></ion-icon></button-->
 
-      <!--button ion-button icon-left>
+        <!--button ion-button icon-left>
         <ion-icon name="arrow-round-back"></ion-icon>
         T:{{ liveService.user.table.descrizione }}/{{ liveService.user.table.id }}
         T {{ liveService.cart.idTavolo }}/C {{ liveService.cart.clerkId }}
       </button-->
 
-    <ion-buttons end>
+        <ion-buttons end>
             <span class="totale" item-end>{{ cart.totals.totale | number:'1.2' }} €</span>
-    </ion-buttons>
-  </ion-toolbar>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content [ngClass]="visible.cssClass" id="orderPage" no-scroll >
+<ion-content [ngClass]="visible.cssClass" id="orderPage" no-scroll>
 
-    <order-buttons [hidden]="visible.order==0"
-      class="{{ getStyle() }}"></order-buttons>
-    <cart [hidden]="visible.cart==0"
-    cartButtonsViewStyle="split"></cart>
+    <order-buttons [hidden]="visible.order==0" class="{{ getStyle() }}"></order-buttons>
+    <cart [hidden]="visible.cart==0" cartButtonsViewStyle="split"></cart>
 
 </ion-content>

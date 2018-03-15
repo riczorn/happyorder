@@ -109,10 +109,22 @@ id: app.happyorder.it
 1.1.4
     Forever batch updated for Windows drive auto-detection.
     CORS support added to add support for Chrome developer tools.
-    
+
 1.1.5
     Slightly modified style for readability
-    
+
 1.2.1
     Move table 
     Spostatavolo
+
+1.2.3
+    Choose your style
+
+1.2.4
+    Swipe on the order buttons left and right to change page;
+    Swipe left on the cart items to descrease/increase qt; no drop below zero.
+    items at zero will still show in case of an error, but after Confirm
+    they will be gone.
+
+1.3.0
+    New electron version for Linux desktops

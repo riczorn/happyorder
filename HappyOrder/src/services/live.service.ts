@@ -28,7 +28,7 @@ class Options {
   public ColumnCount: number; // 2..10
   public ButtonHeight: number; // 1,2,3 rem
   public FontSize: number; // 1,2,3 rem
-
+  public Style: string;
 }
 
 /**
@@ -37,7 +37,7 @@ class Options {
 export class LiveService {
     // occhio: variabile aggiornata dal processo di build, build.sh nella root:
     // (lievemente meglio che usare il plugin appVersion che - detto tra noi - manco funzionava!)
-    public versionNumber : string ='1.2.2';
+    public versionNumber : string ='1.2.5';
     public teamListElement:any;
     public user:User;
     public login:any; // the login data
@@ -54,6 +54,7 @@ export class LiveService {
     public  connected: boolean;
     public  clientId:  number;
     public lastUpdate: number;
+    public appType : string;
 
     constructor() {
       // console.log('building liveService');;
@@ -62,8 +63,17 @@ export class LiveService {
         this.cart = new Cart();
         this.socket = null;
 
+        
+        if (process && process.versions && process.versions["electron"]) {
+            this.appType = 'electron';
+          } else if (window["cordova"]) {
+            this.appType =  'cordova';
+          } else {
+            this.appType =  'browser';
+          }
+
         // this.tableInnerStates_unused = ['n/a','Libero', 'Prenotato', 'Occupato', 'Scaduto', 'Messaggio']
-        this.tableStates = ['Vuoto','Menu', 'Ordinato', 'Mangia', 'Pagato', 'Eliminato','Libero'];
+        this.tableStates = ['Vuoto', 'Menu', 'Ordinato', 'Mangia', 'Pagato', 'Eliminato','Libero'];
         this.slideshow = new Array();
         /*
          The debug, test, baseUrl are overridden in the main app.ts config private var.
@@ -83,6 +93,7 @@ export class LiveService {
           ColumnCount: 4,
           ButtonHeight: 2,
           FontSize: 2,
+          Style: "default"
         }
 
         this.urlNames = ['login',

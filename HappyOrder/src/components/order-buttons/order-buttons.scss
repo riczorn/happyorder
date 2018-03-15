@@ -3,181 +3,222 @@ $buttonHeightMin:3.2rem;
 $buttonHeightMid:4.5rem;
 $buttonHeightMax:7.6rem;
 @mixin flexWidth($max-width-perc) {
-  flex-basis:calc(  #{$max-width-perc} - #{$marginButtons} );
-  max-width:calc( #{$max-width-perc} - #{$marginButtons} );
+    flex-basis:calc( #{$max-width-perc} - #{$marginButtons});
+    max-width:calc( #{$max-width-perc} - #{$marginButtons});
 }
 
 order-buttons {
-  box-sizing:border-box;
-  position:relative;
-  // the orderButtons component
-  ion-buttons.bar-buttons {
-    display:flex;
-    position:fixed !important;
-    z-index:1000;
-    width:100%;
-    left:0;
-    top:56px;
-    align-items:stretch;
-    background:white;
-    margin-left:0;
-    button {
-      font-size:1.2rem;
-      height:3.2rem;
-
-      margin:1px;
-      padding:0 0.2rem;
-      background:#401020;
-      &.active {
-        // il bottone di sezione correntemente attivo
-        background:#803040;
-      }
-      span.button-inner {
-        display:block;
-        line-height:3rem;
-        text-overflow:clip;
-        overflow:hidden;
-        white-space: nowrap;
-      }
-    }
-  }
-  .itemButtonsDiv {
-    width:100%;
-  }
-  .itemButtons {
-    flex-wrap: wrap;
-    display:flex;
-    align-items:flex-start;
-    align-content:stretch;
-
-    art-button {
-      @include flexWidth(25%);
-      height:3.8rem;
-      margin:1px;
-
-      & > * {
-        padding:0.35rem 0.35rem;
-        height:100%;
-        border-radius:2px;
-        text-align:left;
-        overflow:hidden;
-        // display: flex;
-        // align-items:center;
-        // flex-direction: column;
-        // justify-content: center;
-      }
-
-      span {
-        // display:block;
-        //  overflow:hidden;
-        // line-height:3rem;
-        // text-overflow:clip;
-
-        // white-space: nowrap;
-      }
-    }
-  }
-
-  &.cols-2 .itemButtons art-button {
-    @include flexWidth(50%);
-  }
-  &.cols-3 .itemButtons art-button {
-    @include flexWidth(33.33%);
-  }
-  &.cols-4 .itemButtons art-button {
-    @include flexWidth( 25% );
-  }
-  &.cols-5 .itemButtons art-button {
-    @include flexWidth( 20% );
-  }
-  &.cols-6 .itemButtons art-button {
-    @include flexWidth( 16.66% );
-  }
-  &.cols-7 .itemButtons art-button {
-    @include flexWidth( 14.28% );
-  }
-  &.cols-8 .itemButtons art-button {
-    @include flexWidth( 12.50% );
-  }
-  &.cols-9 .itemButtons art-button {
-    @include flexWidth( 11.11% );
-  }
-  &.cols-10 .itemButtons art-button {
-    @include flexWidth( 10% );
-  }
-
-  .itemButtonsDiv {
-    overflow:auto;
-
-  }
-
-  &.bheight-1 {
-    .itemButtonsDiv {
-      margin-top:#{$buttonHeightMin};
-    }
-    .itemButtons art-button,
-    ion-buttons.bar-buttons button {
-      height:#{$buttonHeightMin};
-    }
-  }
-  &.bheight-2  {
-    .itemButtonsDiv {
-      margin-top:#{$buttonHeightMid};
-    }
-    .itemButtons art-button,
-    ion-buttons.bar-buttons button {
-      height:#{$buttonHeightMid};
-    }
-  }
-  &.bheight-3 {
-    .itemButtonsDiv {
-      margin-top:#{$buttonHeightMax};
-    }
-    .itemButtons art-button,
-    ion-buttons.bar-buttons button {
-      height:#{$buttonHeightMax};
-    }
-  }
-  &.font-1 {
-    .itemButtons art-button,
-    ion-buttons.bar-buttons button {
-      font-size:1.2rem;
-    }
-  }
-  &.font-2 {
-    .itemButtons art-button,
-    ion-buttons.bar-buttons button {
-      font-size:1.6rem;
-    }
-  }
-  &.font-3 {
-    .itemButtons art-button,
-    ion-buttons.bar-buttons button {
-      font-size:2.2rem;
-    }
-  }
-  &.vertical {
-
+    box-sizing: border-box;
+    position: relative;
+    // the orderButtons component
     ion-buttons.bar-buttons {
-      max-width:15%;
-      width:15%;
-      left:0;
-      overflow:hidden;
-      display:inline-block;
+        display: flex;
+        position: fixed !important;
+        z-index: 1000;
+        width: 100%;
+        left: 0;
+        top: 56px;
+        align-items: stretch;
+        margin-left: 0;
+        button {
+            font-size: 1.2rem;
+            height: 3.2rem;
+            margin: 1px;
+            box-shadow: none;
+            border-radius: 2px 2px 0 0;
+            padding: 0 0.2rem;
+            &.active {
+                // il bottone di sezione correntemente attivo
+            }
+            span.button-inner {
+                display: block;
+                line-height: 3rem;
+                text-overflow: clip;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+    }
+    .itemButtonsDiv {
+        width: 100%;
+    }
+    .itemButtons {
+        flex-wrap: wrap;
+        display: flex;
+        align-items: flex-start;
+        align-content: stretch;
+        art-button {
+            @include flexWidth(25%);
+            height: 3.8rem;
+            margin: 1px;
+            &>* {
+                padding: 0.35rem 0.35rem;
+                height: 100%;
+                text-align: left;
+                overflow: hidden;
+                // display: flex;
+                // align-items:center;
+                // flex-direction: column;
+                // justify-content: center;
+            }
+            span {
+                // display:block;
+                //  overflow:hidden;
+                // line-height:3rem;
+                // text-overflow:clip;
+                // white-space: nowrap;
+            }
+        }
+    }
+    &.cols-2 .itemButtons art-button {
+        @include flexWidth(50%);
+    }
+    &.cols-3 .itemButtons art-button {
+        @include flexWidth(33.33%);
+    }
+    &.cols-4 .itemButtons art-button {
+        @include flexWidth( 25%);
+    }
+    &.cols-5 .itemButtons art-button {
+        @include flexWidth( 20%);
+    }
+    &.cols-6 .itemButtons art-button {
+        @include flexWidth( 16.66%);
+    }
+    &.cols-7 .itemButtons art-button {
+        @include flexWidth( 14.28%);
+    }
+    &.cols-8 .itemButtons art-button {
+        @include flexWidth( 12.50%);
+    }
+    &.cols-9 .itemButtons art-button {
+        @include flexWidth( 11.11%);
+    }
+    &.cols-10 .itemButtons art-button {
+        @include flexWidth( 10%);
+    }
+    .itemButtonsDiv {
+        overflow: auto;
+    }
+    &.bheight-1 {
+        .itemButtonsDiv {
+            margin-top:#{$buttonHeightMin};
+        }
+        .itemButtons art-button,
+        ion-buttons.bar-buttons button {
+            height:#{$buttonHeightMin};
+        }
+    }
+    &.bheight-2 {
+        .itemButtonsDiv {
+            margin-top:#{$buttonHeightMid};
+        }
+        .itemButtons art-button,
+        ion-buttons.bar-buttons button {
+            height:#{$buttonHeightMid};
+        }
+    }
+    &.bheight-3 {
+        .itemButtonsDiv {
+            margin-top:#{$buttonHeightMax};
+        }
+        .itemButtons art-button,
+        ion-buttons.bar-buttons button {
+            height:#{$buttonHeightMax};
+        }
+    }
+    &.font-1 {
+        .itemButtons art-button,
+        ion-buttons.bar-buttons button {
+            font-size: 1.2rem;
+        }
+    }
+    &.font-2 {
+        .itemButtons art-button,
+        ion-buttons.bar-buttons button {
+            font-size: 1.6rem;
+        }
+    }
+    &.font-3 {
+        .itemButtons art-button,
+        ion-buttons.bar-buttons button {
+            font-size: 2.2rem;
+        }
+    }
+    &.vertical {
+        ion-buttons.bar-buttons {
+            max-width: 15%;
+            width: 15%;
+            left: 0;
+            overflow: hidden;
+            display: inline-block;
+            flex-direction: column;
+            button {
+                width: 100%;
+                height: auto;
+                flex: 1;
+            }
+        }
+        ion-card.itemButtonsDiv {
+            display: inline-block;
+            width: 82.5%;
+            max-width: 82.5%;
+            width: calc( 83% - 2px);
+            max-width: calc( 83% - 2px);
+        }
+    }
+}
 
-      flex-direction:column;
-      button {
-        width:100%;
-        height:auto;
-        flex:1;
-      }
+// the orderButtons component, i.e.
+// the section names on top of the order page.
+.default order-buttons {
+    ion-buttons.bar-buttons {
+        background: white;
+        border: 1px solid transparent;
+        border-bottom: 0;
+        button {
+            background: white;
+            color: #333;
+            border: 1px solid transparent;
+            border-bottom: 1px solid #666;
+            &.active {
+                // il bottone di sezione correntemente attivo
+                //border-color: #803040;
+                border-color: #666;
+                border-bottom: 1px solid transparent;
+            }
+            &:hover {
+                background: white;
+                color: #999;
+            }
+        }
     }
-    ion-card.itemButtonsDiv {
-      display: inline-block;
-      width: 82.5%;
-      max-width: 82.5%;
-      width:  calc( 83% - 2px );
-      max-width: calc( 83% - 2px );
+}
+
+.dark order-buttons {
+    ion-buttons.bar-buttons {
+        background: #333;
+        color: white;
+        border: 1px solid transparent;
+        button {
+            background: #333;
+            &.active {
+                // il bottone di sezione correntemente attivo
+                background: #666;
+            }
+        }
     }
-  }
+}
+
+.classic order-buttons {
+    ion-buttons.bar-buttons {
+        background: white;
+        button {
+            background: #401020;
+            &.active {
+                // il bottone di sezione correntemente attivo
+                background: #803040;
+            }
+        }
+    }
 }

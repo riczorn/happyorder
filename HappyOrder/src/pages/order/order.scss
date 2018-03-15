@@ -1,98 +1,98 @@
 page-order {
-  ion-header {
-    ion-icon {
-      font-size:2.6em;
-    }
-    .tav-name, .totale {
-      font-size:2.6rem;
-      font-weight:500 !important;
-    }
-  }
-
-  .segment-md .segment-button ion-icon {
-    font-size:2.6em;
-  }
-
-  /* icona ordine */
-  .ion-ios-print-outline {
-    color:red;
-  }
-
-  ion-content#orderPage {
-    &> div.scroll-content  {
-      display:flex;
-      flex-direction: row;
-      height:calc( 100% - 56px );
-      max-height:calc( 100% - 56px );
-      width:100%;
-      & > *,
-      & > order-buttons {
-        flex:1;
-        height:100%;
-        max-height:100%;
-        width:100%;
-      }
-    }
-
-    &.half > div.scroll-content {
-      flex-direction:row;
-      &> * {
-        flex:5;
-      }
-      & > order-buttons {
-        flex:8;
-      }
-    }
-  }
-
-  @media screen and (orientation:portrait) {
-    ion-content#orderPage  {
-      &.half > div.scroll-content {
-        flex-direction:column;
-        &> * {
-          flex:4;
-          max-height:38.5%;
+    ion-header {
+        ion-icon {
+            font-size: 2.6em;
         }
-        & > order-buttons {
-          flex:8;
-          max-height:61.5%;
-          ion-buttons.bar-buttons {
-            max-width:100%;
-
-          }
+        .tav-name,
+        .totale {
+            font-size: 2.6rem;
+            font-weight: 500 !important;
         }
-      }
     }
-  }
-
-
-  /* landscape phones */
-  @media screen and (orientation:landscape) {
-    ion-content#orderPage  {
-      &.half > div.scroll-content {
-        & > order-buttons {
-          flex:9;
-          ion-buttons.bar-buttons {
-            max-width:61.5%;
-          }
+    .segment-md .segment-button ion-icon {
+        font-size: 2.6em;
+    }
+    /* icona ordine */
+    .ion-ios-print-outline {
+        color: red;
+    }
+    ion-content[no-scroll] div.scroll-content {
+        overflow: auto;
+    }
+    ion-content#orderPage {
+        &>div.scroll-content {
+            display: flex;
+            flex-direction: row;
+            height: calc( 100% - 56px);
+            max-height: calc( 100% - 56px);
+            width: 100%;
+            &>*,
+            &>order-buttons {
+                flex: 1;
+                height: 100%;
+                max-height: 100%;
+                width: 100%;
+            }
         }
-      }
-    }
-  }
-
-
-  /* landscape tablets and desktops: */
-  @media screen and (orientation:landscape) and (min-width:800px) {
-    ion-content#orderPage  {
-      &.half > div.scroll-content {
-        & > order-buttons {
-          flex:11;
-          ion-buttons.bar-buttons {
-            max-width:67.75%;
-          }
+        &.half>div.scroll-content {
+            flex-direction: row;
+            &>* {
+                flex: 5;
+            }
+            &>order-buttons {
+                flex: 8;
+            }
         }
-      }
     }
-  }
+    @media screen and (orientation:portrait) {
+        ion-content#orderPage {
+            &.half>div.scroll-content {
+                flex-direction: column;
+                &>* {
+                    flex: 4;
+                    max-height: 38.5%;
+                }
+                &>order-buttons {
+                    flex: 8;
+                    max-height: 61.5%;
+                    ion-buttons.bar-buttons {
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    /* landscape phones */
+    @media screen and (orientation:landscape) {
+        ion-content#orderPage {
+            &.half>div.scroll-content {
+                &>order-buttons {
+                    flex: 9;
+                    ion-buttons.bar-buttons {
+                        max-width: 61.5%;
+                    }
+                }
+            }
+        }
+    }
+    /* landscape tablets and desktops: */
+    @media screen and (orientation:landscape) and (min-width:800px) {
+        ion-content#orderPage {
+            &.half>div.scroll-content {
+                &>order-buttons {
+                    flex: 11;
+                    ion-buttons.bar-buttons {
+                        max-width: 68.75%;
+                    }
+                }
+            }
+        }
+    }
+}
 
+.default page-order,
+.classic page-order,
+.dark page-order {
+    // custom styles here, but most are defined in the 
+    // components: order-buttons, art-button
 }
