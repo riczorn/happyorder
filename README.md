@@ -1,4 +1,6 @@
 # HappyOrder
+![HappyOrder][logo]
+
 
 A node typescript server to communicate with an old win32-based xml backend; an Ionic app + electron app to use it.
 
@@ -36,3 +38,5 @@ Starts in ./electron
 Build in ./electron/HappyOrder-linux-x64
 
 The app is also published as a .tar.gz on https://happyorder.it/files/happyorder-linux-1.3.1.tar.gz
+
+[logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"
