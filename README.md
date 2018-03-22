@@ -14,7 +14,7 @@ the main purpose of this module is currently to translate the
 /pocket/web_unikas.exe xml GET api to a json implementation
 for ease of consumption by the app, and marshaling data + serving the app updates.
 
-Libs: Node 6+, Typescript 2
+[HappyOrder Ionic 3 Readme](HappyOrder/README.md)
 
 # Ionic 3 app (Android):
 

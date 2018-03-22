@@ -1,8 +1,7 @@
 HappyOrder node backend for angular app (desk and mobile)
-copyright (c) 2002-2017 code@fasterjoomla.com
+copyright (c) 2002-2018 code@fasterjoomla.com
 
-
-Architecture overview:
+# Architecture overview:
 
 This module connects to a HappyOrder/uniKAS server on the IP specified in the
 config/config.json file.
@@ -12,7 +11,7 @@ the main purpose of this module is currently to translate the
 /pocket/web_unikas.exe xml GET api to a json implementation
 for ease of consumption by the app.
 
-Folder layout
+# Folder layout
 
 <root>    node project, all node, gulp, ts configuration files
 ./dist    the transpiled javascript.
@@ -21,9 +20,13 @@ Folder layout
 ../HappyOrder     source of the app code (ionic 3/angular 4)
 ./start ./forever startup scripts.
 
+Libs: Node 6+, Typescript 2
+
 Readings:
 Setup and initial configuration
 https://blog.pusher.com/use-typescript-with-node/
+
+# Changelog
 
 1.0.56 Node release: server.listen to wildcard.
        Linux defaults server.listen(port) to server.listen(port,'0.0.0.0')
@@ -33,11 +36,13 @@ https://blog.pusher.com/use-typescript-with-node/
 1.0.57
   fixed bug ordini aperti senza extra.
   Distribuito con HappyOrder 1.9.8.14
+
 1.0.58
   Ristampa scontrino:   Premendo il tasto scontrino, si ristampa
     lo scontrino oppure il bewirtungsbelegt dell'ultimo ordine,
     ma solo se l'ultimo ordine
     era stato chiuso con "Conferma elimina"
+
 1.1.1
   Pagamento con Gutschein / buoni a importo fisso
   

@@ -1,6 +1,9 @@
-Project HappyOrder Cordova App by
-Riccardo Zorn code@fasterjoomla.com
+# Project HappyOrder Cordova App
+[Main Project Readme](../README.md)
+by Riccardo Zorn code@fasterjoomla.com
 id: app.happyorder.it
+
+# Changelog
 
 17/8/2017
 1.0.12 First on play store
