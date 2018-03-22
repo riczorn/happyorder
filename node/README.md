@@ -3,7 +3,7 @@
 ![HappyOrder][logo]
 
 [Main Project Readme](../README.md)
-copyright (c) 2002-2018 code@fasterjoomla.com
+copyright (c) 2002-2018 fasterweb.net
 
 # Architecture overview:
 

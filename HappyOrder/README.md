@@ -3,7 +3,6 @@
 ![HappyOrder][logo]
 
 [Main Project Readme](../README.md)
-by Riccardo Zorn code@fasterjoomla.com
 id: app.happyorder.it
 
 # Changelog
