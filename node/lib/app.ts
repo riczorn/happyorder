@@ -235,8 +235,9 @@ class App {
                     let sdata:string = <string>data;
                     console.log('----SDATA----',sdata,'---------');
 
-                    sdata = sdata.replace('http://localhost:8080/update',
-                        'http://192.168.11.31:8080/update');
+                    //sdata = sdata.replace('http://localhost:8080/update',
+                    //    'http://192.168.11.31:8080/update');
+                    console.log('@TODO: unfinished needs real IP')
                     res.writeHead(200);
                     res.end(sdata);
                   }

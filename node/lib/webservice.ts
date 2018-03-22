@@ -9,6 +9,7 @@
 var http = require("http");
 var querystring = require('querystring');
 var io = require('socket.io');
+var path = require('path');
 var fs = require('fs');
 import hOConfigModule = require('../lib/config');
 // var express = require("express");
@@ -151,15 +152,28 @@ public status (this:WebService, res:any): number {
 */
 public update(this:WebService, res:any): void {
 //  console.log('inside new update',__dirname);
-    var file = "android-release.apk",
-        filePath = __dirname+"../apk";
-    let sourceFolder = __dirname.split('/');
-    if (sourceFolder && sourceFolder.length) {
-      sourceFolder[sourceFolder.length-1] = 'apk';
-    }
-    filePath = sourceFolder.join('/')+'/';
+// __dirname == 
+
+    let file = "android-release.apk",
+        filePath: string,
+        sourceFolder = __dirname.split(path.sep);
+        if (sourceFolder.length) {
+          sourceFolder.pop();
+          sourceFolder.push('apk');
+        } else {
+          sourceFolder = ['..','apk'];
+        }
+      
+    // let sourceFolder = __dirname.split('/');
+    // console.log('sF', sourceFolder, 'fP', filePath);
+    // if (sourceFolder && sourceFolder.length) {
+    //   sourceFolder[sourceFolder.length-1] = 'apk';
+    // }
+    filePath = sourceFolder.join(path.sep)+path.sep;
+    console.log('sF', sourceFolder, 'fP', filePath);
+    
     console.log('inside new update',filePath+ file);
-    fs.exists(filePath, function(exists: any){
+    fs.exists(filePath+file, function(exists: any){
         if (exists) {
           res.writeHead(200, {
             // "Content-Type": "application/octet-stream",
@@ -168,7 +182,7 @@ public update(this:WebService, res:any): void {
           fs.createReadStream(filePath + file).pipe(res);
         } else {
           res.writeHead(400, {"Content-Type": "text/plain"});
-          res.end("ERROR File does NOT Exists.apk");
+          res.end("ERROR File "+filePath+file+" does NOT Exists.apk");
         }
       });
 

@@ -1,4 +1,4 @@
-Project HappyOrder App by
+Project HappyOrder Cordova App by
 Riccardo Zorn code@fasterjoomla.com
 id: app.happyorder.it
 
@@ -126,5 +126,8 @@ id: app.happyorder.it
     items at zero will still show in case of an error, but after Confirm
     they will be gone.
 
-1.3.0
+1.3.0 14/03/2018
     New electron version for Linux desktops
+
+1.3.1 15/03/2018
+    App update fixed on node server running on Windows 

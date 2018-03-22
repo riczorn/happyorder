@@ -49,3 +49,6 @@ https://blog.pusher.com/use-typescript-with-node/
     
 1.3.0
     New electron version for Linux desktops
+
+1.3.1
+    Fixed update compatibility issue on Windows.
