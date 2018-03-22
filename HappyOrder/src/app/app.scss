@@ -3,6 +3,7 @@
 @import '../components/cart/cart';
 @import '../components/art-button/art-button';
 @import '../components/order-buttons/order-buttons';
+@import '../components/order-page/order-page';
 @import '../components/back-slides/back-slides';
 @import '../components/popover-cart/popover-cart';
 @import '../components/popover-sudo/popover-sudo';
@@ -131,7 +132,7 @@ ion-segment-button.icon-only {
 .content.default {}
 
 .content.dark {
-    background: black;
+    background: #303030;
     color: white;
     .card-md,
     .item-md,
@@ -149,7 +150,7 @@ ion-segment-button.icon-only {
 
 .header.header-md.dark,
 .header.dark .toolbar-background-md {
-    background-color: black;
+    background-color: #303030;
     color: white;
 }
 

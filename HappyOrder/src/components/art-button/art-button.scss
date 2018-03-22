@@ -86,8 +86,8 @@ art-button {
 
 .classic art-button {
     color: white;
-    &.bsection {
-        background: transparent;
+    .bsection {
+        background-color: #211e25;
         cursor: default;
         box-shadow: none;
         color: gray;

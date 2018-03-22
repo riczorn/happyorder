@@ -60,7 +60,8 @@
 
 <ion-content [ngClass]="visible.cssClass" id="orderPage" no-scroll>
 
-    <order-buttons [hidden]="visible.order==0" class="{{ getStyle() }}"></order-buttons>
+    <!--order-buttons [hidden]="true || (visible.order==0)" class="{{ getStyle() }}"></order-buttons-->
+    <order-page-buttons [hidden]="visible.order==0" class="{{ getStyle() }}"></order-page-buttons>
     <cart [hidden]="visible.cart==0" cartButtonsViewStyle="split"></cart>
 
 </ion-content>

@@ -27,7 +27,8 @@ page-order {
             max-height: calc( 100% - 56px);
             width: 100%;
             &>*,
-            &>order-buttons {
+            &>order-buttons,
+            &>order-page-buttons {
                 flex: 1;
                 height: 100%;
                 max-height: 100%;
@@ -39,7 +40,8 @@ page-order {
             &>* {
                 flex: 5;
             }
-            &>order-buttons {
+            &>order-buttons,
+            &>order-page-buttons {
                 flex: 8;
             }
         }
@@ -52,7 +54,8 @@ page-order {
                     flex: 4;
                     max-height: 38.5%;
                 }
-                &>order-buttons {
+                &>order-buttons,
+                &>order-page-buttons {
                     flex: 8;
                     max-height: 61.5%;
                     ion-buttons.bar-buttons {
@@ -66,7 +69,8 @@ page-order {
     @media screen and (orientation:landscape) {
         ion-content#orderPage {
             &.half>div.scroll-content {
-                &>order-buttons {
+                &>order-buttons,
+                &>order-page-buttons {
                     flex: 9;
                     ion-buttons.bar-buttons {
                         max-width: 61.5%;
@@ -79,7 +83,8 @@ page-order {
     @media screen and (orientation:landscape) and (min-width:800px) {
         ion-content#orderPage {
             &.half>div.scroll-content {
-                &>order-buttons {
+                &>order-buttons,
+                &>order-page-buttons {
                     flex: 11;
                     ion-buttons.bar-buttons {
                         max-width: 68.75%;
@@ -94,5 +99,5 @@ page-order {
 .classic page-order,
 .dark page-order {
     // custom styles here, but most are defined in the 
-    // components: order-buttons, art-button
+    // components: order-buttons, order-page-buttons, art-button
 }

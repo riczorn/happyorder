@@ -44,6 +44,7 @@ import { BackSlidesComponent } from '../components/back-slides/back-slides';
 import { PopoverSudoComponent } from '../components/popover-sudo/popover-sudo';
 import { PlusMinusButtonComponent } from '../components/plus-minus-button/plus-minus-button';
 import { AbsoluteDrag } from '../directives/absolute-drag/absolute-drag';
+import { OrderPageButtons } from '../components/order-page/order-page';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { AbsoluteDrag } from '../directives/absolute-drag/absolute-drag';
     BackSlidesComponent,
     PopoverSudoComponent,
     PlusMinusButtonComponent,
-    AbsoluteDrag
+    AbsoluteDrag,
+    OrderPageButtons
   ],
   imports: [
     // CoreModule,

@@ -15,7 +15,7 @@ import { LiveService } from  '../../services/live.service';
 import { CartService } from  '../../services/cart.service';
 
 import { TavoliPage } from '../../pages/tavoli/tavoli';
-import { OrderButtons } from '../../components/order-buttons/order-buttons';
+import { OrderPageButtons } from '../../components/order-page/order-page';
 import { CartComponent } from '../../components/cart/cart';
 
 // import { OrderButtons } from '../../components/order-buttons/order-buttons';
@@ -28,7 +28,7 @@ import {Cart} from  '../../models/cart';
 })
 export class OrderPage implements OnInit {
   @ViewChild(Content) content: Content;
-  @ViewChild(OrderButtons) orderButtons: OrderButtons;
+  @ViewChild(OrderPageButtons) orderButtons: OrderPageButtons;
   @ViewChild(CartComponent) cartComponent: CartComponent;
   // debugText: string;
   private cart: Cart;
