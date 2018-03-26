@@ -241,6 +241,9 @@ id: app.happyorder.it
    
     New order buttons display, based on continuous scroll, in order to address a memory bug which severely affected performance on older processors.
     
+- 1.3.4 (26/03/2018)
 
+    Ripristinato il tasto Aggiorna locale per Android.
+    
 
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"
