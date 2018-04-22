@@ -60,7 +60,7 @@ export class OrderButtons {
       try {
         this.liveService.cart.add( button );
       } catch (e) {
-        this.cartService.toastAndVibrate('ERROR 7 '+e.message,true);
+        this.cartService.toastAndVibrate('ERROR 7 '+e.message,this.liveService.messageTypes.localError);
       }
     } else if ( button.link ) { //}cssClass=='bfunction') {
       console.log('richiesta azione: ',button.action, button.link);
@@ -91,11 +91,9 @@ export class OrderButtons {
     //console.log('handleSwipe',this.pages.length);
     for (var i=0;i<this.pages.length; i++) {
       if (this.pages[i].page.active) {
-        //console.log('i1',i,'newindex',newIndex);
         var newIndex = goRight?i+1:i-1;
         newIndex+=this.pages.length ;
         newIndex %= this.pages.length;
-        //console.log('i2',i,'newindex',newIndex);
         let res= this.showTab(this.pages[newIndex].page);
         return res;
       } 

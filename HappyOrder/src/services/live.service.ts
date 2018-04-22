@@ -29,15 +29,15 @@ class Options {
   public ButtonHeight: number; // 1,2,3 rem
   public FontSize: number; // 1,2,3 rem
   public Style: string;
+  public Feedback: string;
 }
-
 /**
  * The actual service.
  */
 export class LiveService {
     // occhio: variabile aggiornata dal processo di build, build.sh nella root:
     // (lievemente meglio che usare il plugin appVersion che - detto tra noi - manco funzionava!)
-    public versionNumber : string ='1.3.4';
+    public versionNumber : string ='1.3.6';
     public teamListElement:any;
     public user:User;
     public login:any; // the login data
@@ -55,6 +55,15 @@ export class LiveService {
     public  clientId:  number;
     public lastUpdate: number;
     public appType : string;
+    public messageTypes: {
+        tick: string,
+        localError: string,
+        send: string,
+        remoteError: string,
+        whipLeft:string,
+        whipRight:string,
+        success: string,
+    };
 
     constructor() {
       // console.log('building liveService');;
@@ -63,6 +72,15 @@ export class LiveService {
         this.cart = new Cart();
         this.socket = null;
 
+        this.messageTypes = {
+            tick: "tick",
+            localError: "localError",
+            send: "send",
+            remoteError: "remoteError",
+            whipLeft:"whipLeft",
+            whipRight:"whipRight",
+            success: "success"
+        };
         
         if (process && process.versions && process.versions["electron"]) {
             this.appType = 'electron';
@@ -93,12 +111,13 @@ export class LiveService {
           ColumnCount: 4,
           ButtonHeight: 2,
           FontSize: 2,
-          Style: "default"
+          Style: "default",
+          Feedback: "vibrate",  
         }
 
         this.urlNames = ['login',
             /*  1- 5 */ 'settings', 'tables', 'cart', 'table', 'status',
-            /*  6-10 */ 'update',   'slideshow',
+            /*  6-10 */ 'update',   'slideshow', 'get-last-orders', 'printdoc'
         ];
         this.urls = {
             local: [
@@ -112,6 +131,8 @@ export class LiveService {
 
                 {id: 6, url: 'mock/update.xml'},
                 {id: 7, url: 'mock/slides.json'},
+                {id: 8, url: 'mock/table.json'},
+                {id: 9, url: 'mock/table.json'},
             ],
             remote: [
                 {id: 0, url: '/login'},
@@ -124,6 +145,8 @@ export class LiveService {
 
                 {id: 6, url: '/update'},
                 {id: 7, url: '/slideshow/slides.json'},
+                {id: 8, url: '/get-last-orders'},
+                {id: 9, url: '/printdoc'},
             ]
         }
         this.lastUpdate = new Date().getTime();

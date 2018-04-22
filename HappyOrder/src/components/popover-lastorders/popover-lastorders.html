@@ -1,0 +1,31 @@
+<button ion-button (tap)="close('cancel',-1)">Chiudi</button>
+<ion-list *ngIf="orders?.orders?.length > 0 ">
+
+    <ion-item class="reprint-list reprint-header">
+        <span class="table">
+          Tavolo
+        </span>
+        <span class="time">
+          Ora
+        </span>
+        <span class="total">
+          Totale
+        </span>
+
+    </ion-item>
+    <ion-item *ngFor=" let order of orders.orders " class="reprint-list" (tap)="close('print',order.id)">
+        <span class="table">
+          t.{{order.tableName}}
+        </span>
+        <span class="time">
+          {{order.time}}
+        </span>
+        <span class="total">
+          {{ order.total }}€
+        </span>
+
+    </ion-item>
+</ion-list>
+<ion-card *ngIf="! (orders?.orders?.length > 0) ">
+    Nessun ordine!
+</ion-card>

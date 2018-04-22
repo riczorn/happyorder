@@ -71,4 +71,8 @@ https://blog.pusher.com/use-typescript-with-node/
 
     Fixed update compatibility issue on Windows.
     
+- 1.3.6
+
+    Reprint last order, now showing list.
+    
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

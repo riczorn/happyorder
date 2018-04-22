@@ -14,6 +14,7 @@ import { CartService } from  '../../services/cart.service';
 import { TavoliPage } from '../../pages/tavoli/tavoli';
 import { PopoverCartComponent } from '../../components/popover-cart/popover-cart';
 import { PopoverSudoComponent } from '../../components/popover-sudo/popover-sudo';
+import { PopoverLastordersComponent } from '../../components/popover-lastorders/popover-lastorders';
 import { List } from 'ionic-angular';
 
 @Component({
@@ -60,7 +61,7 @@ export class CartComponent {
   }
 
   removePayment(event, payment) {
-    console.log('removePayment',payment)
+    //console.log('removePayment',payment)
     if (payment.itype) {
       this.cart.payments.splice(0,this.cart.payments.length);
     }
@@ -74,7 +75,7 @@ export class CartComponent {
   showContext(event, item, childParentItem:any) {
     let self = this;
     let cart = self.cart;
-    if (event.stopPropagation) {
+    if (event && event.stopPropagation) {
       event.stopPropagation();
     }
 
@@ -102,6 +103,34 @@ export class CartComponent {
 
     // angular.element(event.target).parent().css('transform',
     //   'translate3d(-70px,0,0)');
+
+    return false;
+  }
+
+  showLastOrders(data:any) {
+    let self = this;
+    let event = {status:'useless'};
+    let popoverLastOrders = this.popoverCtrl.create(PopoverLastordersComponent, {
+      orders:data});
+
+      popoverLastOrders.present({
+      ev: event
+    });
+
+    popoverLastOrders.onDidDismiss ( (popoverData) => {
+      // console.log('AHA '  + JSON.stringify(popoverData));
+      if (popoverData && (popoverData.action=='print')) {
+        //alert('print ' + popoverData.docId);
+        self.cartService.printDoc(popoverData.orderId,
+            function(data:any) {
+              //console.log('printDoc returned',data);
+              self.cartService.toastAndVibrate('Stampato', 
+                self.liveService.messageTypes.success);
+            }
+        );
+        // send as docID (capital D)
+      }
+    });
 
     return false;
   }
@@ -178,7 +207,7 @@ export class CartComponent {
     // ];
     let clerks = this.liveService.settings.clerks.byPrivilege('storno');
     if (clerks.length == 0) {
-      self.cartService.toastAndVibrate('Nessun cameriere ha il privilegio storno',true);
+      self.cartService.toastAndVibrate('Nessun cameriere ha il privilegio storno',this.liveService.messageTypes.localError);
       return false;
     } // else
     // console.log('222', clerks);
@@ -228,6 +257,7 @@ export class CartComponent {
   }
 
   sendCartCommand(event, button) {
+    //console.log('sendCartCommand');
     let self = this;
     if (event && event.stopPropagation) {
       event.stopPropagation();
@@ -242,7 +272,25 @@ export class CartComponent {
         return;
     }
 
-    if (self.cart.items.length >= 0) {
+    /*
+     * note: a cart with length 0 will reprint 
+     * a previous order.
+     * Now we move on to:
+     * - if the cart is empty, show a popup and lazy-load
+     *   the list of older orders on the current table, 
+     *   (eventually filtering on non-existing orders)
+     * - cart full, as usual.
+     */
+    if (self.cart.items.length === 0) {
+      // cart is empty, get a list of orders:
+      // window.alert('cart is empty');
+      self.cartService.getLastOrders(-1,function(data:any) {
+        //console.log('getLastOrders returned',data);
+        self.showLastOrders(data);
+      });
+      
+    } 
+    else if (self.cart.items.length > 0) {
       if (event && event.target) {
         event.target.disabled = true;
       }
@@ -384,7 +432,7 @@ export class CartComponent {
         e.stopPropagation();
       }
 
-      console.log('swipe ', e.deltaX<0, e.target);
+      //console.log('swipe ', e.deltaX<0, e.target);
       this.handleSwipeLeftRight(e.deltaX<0, item);
       
       //this.handleSwipe(e.direction==2) http://www.ionicsync.com/2018/02/how-to-implement-gestures-in-ionic-2.html
@@ -393,12 +441,15 @@ export class CartComponent {
 
   handleSwipeLeftRight(goRight:boolean, item:any) {
     //console.log('handleSwipeLeftRight',item);
+    let self = this;
     if (item.add && item.idStatoRiga<2) {
       item.add(goRight?-1:1);
       this.updateTotals(item);
     }    
     if (item.quantita==0) {
-      // remove?
+      item.timeout = setTimeout(function() {
+        self.cart.delete(item);
+      }, 2000);
     }
   }
 }

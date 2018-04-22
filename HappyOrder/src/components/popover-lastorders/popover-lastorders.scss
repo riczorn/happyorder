@@ -1,0 +1,23 @@
+popover-lastorders {
+    .list-md .reprint-list {
+        padding-left: 0;
+        .input-wrapper {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    }
+    .list-md .reprint-list ion-label {
+        display: flex;
+        margin: 0 0 0.3rem 0 !important;
+        &>* {
+            flex-basis: 32%;
+            font-weight: 300;
+            text-align: right;
+        }
+    }
+    .list-md .reprint-list.reprint-header ion-label {
+        &>* {
+            font-weight: bold;
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import { Directive, Input, Output, ElementRef, Renderer, EventEmitter } from '@angular/core';
 import { DomController } from 'ionic-angular';
- 
+import { LiveService } from  '../../services/live.service';
+
 @Directive({
   selector: '[absolute-drag]'
 })
@@ -21,12 +22,15 @@ export class AbsoluteDrag {
     private y:number;
  
     constructor(public element: ElementRef, 
-      public renderer: Renderer, public domCtrl: DomController) {
+      public renderer: Renderer, public domCtrl: DomController,
+    private liveService: LiveService) {
  
     }
  
     ngAfterViewInit() {
-
+      if (!this.liveService.options.GraphicalTables) {
+        return false;
+      }
         this.renderer.setElementStyle(this.element.nativeElement, 'position', 'absolute');
         this.renderer.setElementStyle(this.element.nativeElement, 'left', this.startLeft + 'px');
         this.renderer.setElementStyle(this.element.nativeElement, 'top', this.startTop + 'px');

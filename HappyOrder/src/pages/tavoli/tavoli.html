@@ -11,7 +11,7 @@
 <ion-content no-padding id="page3" [ngClass]="getStyle()">
     <ion-buttons class="tables sorted">
         <button ion-button *ngFor="let table of tables.table" absolute-drag (dropEvent)="dropTable($event, table)" [dragTop]="containerTop" (tap)="openTable(table)" [ngClass]="'tablebutton state-'+table.state" [ngStyle]="table.style">
-      {{table.descrizione}}
+          {{table.descrizione}}
       <!--div class="smaller">{{ liveService.tableStates[table.state] }}</div-->
      </button>
     </ion-buttons>

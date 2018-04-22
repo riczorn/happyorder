@@ -24,7 +24,6 @@ export class OrderPageButtons {
   constructor(private liveService: LiveService,
     private cartService:CartService) {
     for (let page of this.liveService.settings.buttons.client.page) {
-
       page.page.active = false;
     }
     this.pages = this.liveService.settings.buttons.client.page;
@@ -43,11 +42,10 @@ export class OrderPageButtons {
       try {
         this.liveService.cart.add( button );
       } catch (e) {
-        this.cartService.toastAndVibrate('ERROR 7 '+e.message,true);
+        this.cartService.toastAndVibrate('ERROR 7 tasto non atteso'+e.message,this.liveService.messageTypes.localError);
       }
     } else if ( button.link ) { //}cssClass=='bfunction') {
       console.log('richiesta azione: ',button.action, button.link);
-
     } else {
       console.log('button',button);
       console.log('a section button?',button.action, button.link);
@@ -80,8 +78,10 @@ export class OrderPageButtons {
         newIndex+=this.pages.length ;
         newIndex %= this.pages.length;
         //console.log('i2',i,'newindex',newIndex);
+        this.cartService.toastAndVibrate(null,
+          goRight?this.liveService.messageTypes.whipRight:this.liveService.messageTypes.whipLeft);
         this.showTab(this.pages[newIndex].page);
-        break;
+        return;
       } 
     }
   }

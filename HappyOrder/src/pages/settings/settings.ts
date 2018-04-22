@@ -20,8 +20,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { InAppBrowser , InAppBrowserOptions } from '@ionic-native/in-app-browser';
-import {LiveService} from  '../../services/live.service';
-import {LoginService} from  '../../services/login.service';
+import { LiveService } from  '../../services/live.service';
+import { LoginService } from  '../../services/login.service';
 import { PlusMinusButtonComponent } from '../../components/plus-minus-button/plus-minus-button';
 
 
@@ -47,13 +47,13 @@ export class SettingsPage {
       presentationstyle : 'pagesheet',//iOS only
       fullscreen : 'yes',//Windows only
   };
-
+  process: any;
   
   constructor(public navCtrl: NavController,
                 private liveService:LiveService,
                 private loginService:LoginService,
                 private theInAppBrowser: InAppBrowser) {
-      
+      this.process = process;
   }
   goToLogin(){
     this.navCtrl.push(LoginPage);
@@ -111,5 +111,30 @@ export class SettingsPage {
   }
   updateValue(event:any) {
     console.log('updateValue',event);
+  }
+
+  /**
+   * Android e electron: shut the app down.
+   */
+  closeApp(restart: boolean) {
+    //@TODO try again to get this working.
+    console.log('closeApp @TODO',process);
+    /*let electron = '';
+    try {
+      electron = require('electron');
+      console.log('electron:',electron);  
+      if (electron) {
+        //let w = electron.remote.getCurrentWindow()
+        window.close();
+        // w.close();
+        // console.log ('YES electron');
+      } else {
+        console.log ('NOT electron');
+      }
+    } catch (e) {
+      console.error('closeApp', 'electron not found',e);
+    }
+    window.close();
+    */
   }
 }

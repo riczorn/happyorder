@@ -70,7 +70,8 @@ export class HappyOrderApp {
     if (this.liveService.user && this.liveService.user.table) {
       this.navCtrl.setRoot(OrderPage);
     } else {
-      this.cartService.toastAndVibrate('Prima scegli un tavolo',true);
+      this.cartService.toastAndVibrate('Prima scegli un tavolo',
+        this.liveService.messageTypes.localError);
     }
   }
 }

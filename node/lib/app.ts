@@ -245,6 +245,26 @@ class App {
             }
           });
     });
+    router.get('/get-last-orders', (req:any, res:any, next:any) => {
+        console.log('enter get-last-orders', req.query);
+        if (webservice) {
+          webservice.getLastOrders(res, req.query);
+        }
+        else {
+          this.error(res, 'get-last-orders not initialized');
+        }
+    });
+
+    router.get('/printdoc', (req:any, res:any, next:any) => {
+      console.log('enter printdoc', req.query);
+      if (webservice) {
+        webservice.printDoc(res, req.query);
+      }
+      else {
+        this.error(res, 'printdoc not initialized');
+      }
+  });
+
     this.express.use('/', router);
   }
 

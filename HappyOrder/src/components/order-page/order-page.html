@@ -1,6 +1,6 @@
 <ion-content no-padding>
     <ion-buttons>
-        <button ion-button *ngFor=" let page of pages " (tap)=" showTab(page.page) " [class.active]="(page.page.active)">
+        <button ion-button *ngFor=" let page of pages " (click)=" showTab(page.page) " [class.active]="(page.page.active)">
       {{ page.name }}
   </button>
     </ion-buttons>

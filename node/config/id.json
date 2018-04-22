@@ -1,7 +1,7 @@
 {
     "web": {
         "port": 8080,
-        "remoteHost": "192.168.10.30",
+        "remoteHost": "192.168.1.121",
         "localMask": "0.0.0.0"
     },
     "identification": {

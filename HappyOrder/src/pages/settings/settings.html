@@ -42,6 +42,17 @@
 
                 <ion-item>
                     <ion-label>
+                        <ion-icon name="ios-keypad-outline"></ion-icon>
+                        Feedback tocco</ion-label>
+                    <ion-select name="Feedback" [(ngModel)]="liveService.options.Feedback" (ngModelChange)=" loginService.saveStorageSettings() ">
+                        <ion-option value="none">nessuno</ion-option>
+                        <ion-option value="vibrate">vibrazione</ion-option>
+                        <ion-option value="sound">vibrazione+suono</ion-option>
+                    </ion-select>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>
                         <ion-icon name="ios-compass-outline"></ion-icon>
                         Pagine verticali</ion-label>
                     <ion-checkbox name="PagesVertical" [(ngModel)]="liveService.options.PagesVertical" (click)=" loginService.saveStorageSettings() "></ion-checkbox>
@@ -60,6 +71,7 @@
                         Mostra Prezzi</ion-label>
                     <ion-checkbox name="ShowPrice" [(ngModel)]="liveService.options.ShowPrice" (click)=" loginService.saveStorageSettings() "></ion-checkbox>
                 </ion-item>
+
 
                 <ion-item>
                     <ion-label>
@@ -162,6 +174,10 @@
             <ion-icon name="ios-options-outline"></ion-icon> Impostazioni
 
         </ion-card>
-
+        <!--ion-card>
+            <button ion-button color="light" (click)="closeApp(true)">
+                    Close electron
+                    </button> {{ process.versions | json }}
+        </ion-card-->
     </form>
 </ion-content>

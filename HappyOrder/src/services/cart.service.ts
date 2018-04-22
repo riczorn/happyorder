@@ -82,11 +82,12 @@ export class CartService {
           } else if (cart.action ==16 ) {
             message = 'Tavolo spostato';
           }
-          self.toastAndVibrate(message,false);
+          self.toastAndVibrate(message,
+            this.liveService.messageTypes.success);
 
           return true;
         } else {
-          self.toastAndVibrate(`Errore `+JSON.stringify(res),true);
+          self.toastAndVibrate(`Errore `+JSON.stringify(res),this.liveService.messageTypes.localError);
           return false; // ERROR in cart response!
           //return this.response.status == 'ok';
         }
@@ -98,16 +99,28 @@ export class CartService {
     }
   }
 
+  /**
+   * Show a toast, and if appropriate, vibrate and play audio
+   * based on the user settings.
+   * Each message type (liveService.messageTypes) has a 
+   * different sound, except for tick that has 5.
+   * 
+   * @param toastMessage 
+   * @param messageKind 
+   */
   toastAndVibrate(
     toastMessage: string,
-    isError: boolean) {
+    messageKind: string) {
       let self = this;
+      let isError = messageKind == this.liveService.messageTypes.localError
+        || messageKind == this.liveService.messageTypes.remoteError;
 
       // console.log('toastAndVibrate', toastMessage);;
 
       let toastTimeout: number =1200,
           toastPosition: string='top',
           vibrations: Array<number> = [0,0,50];
+
       if  (isError) {
         toastTimeout = 2200;
         toastPosition = 'top';//s'middle';
@@ -131,9 +144,10 @@ export class CartService {
 
         toast.present();
       }
+
       try {
 
-// console.log('  toastAndVibrate vibrate', vibrations);;
+        // console.log('  toastAndVibrate vibrate', vibrations);;
         // self.toast.show(toastMessage, toastTimeout, toastPosition).subscribe(
         //   toast => {
         //     console.log('t err',toast);
@@ -142,11 +156,28 @@ export class CartService {
 
         // setTimeout(() => {if (toast) {toast.dismiss();}},2000);
         // console.log('toast presented',rtoast,toast);
+
         if (self.platform.is('cordova') &&
+            (this.liveService.options.Feedback=='vibrate' ||
+            this.liveService.options.Feedback=='sound') &&
             self.vibration &&
             self.vibration.vibrate) {
           self.vibration.vibrate(vibrations);
         }
+
+        if ( //self.platform.is('cordova')  &&
+          (this.liveService.options.Feedback=='sound')
+            //&& self.audioEnabled
+          ) {
+         // console.log('toastAndVibrate: now make sound.');
+          if (messageKind == this.liveService.messageTypes.tick) {
+            messageKind = messageKind + "" + (Math.trunc(Math.random()*50)%5+1);
+          }
+          var audio = new Audio("./assets/sounds/"+messageKind+".wav");
+          audio.play();
+          //self.makeTickSound();
+          
+        }        
       } catch(e) {
         console.error('toasting',e);
       }
@@ -272,4 +303,107 @@ export class CartService {
       }
 
     }
+
+   /**
+    *  download a list of latest orders
+    */
+   getLastOrders(table, successCallback) {
+    //let cart = this.liveService.cart;
+    let self = this;
+    
+
+    try {
+      let url = self.liveService.getUrl('get-last-orders', {tableId: table.id, clerkId: self.liveService.user.clerkId});
+      return self.http.get(url)
+      .map(res => self.liveService.parseResponse(res))
+      .subscribe(
+        res => {
+          //console.log('getLastOrders response from server: ', res);
+          if (res)
+          {
+            if (res.status=='ok') {
+              // console.log('Risultato ok');
+            }
+          }
+
+          if (typeof successCallback == "function") {
+            // console.log('status self',self,'this',this);
+            successCallback(res);
+          }
+        },
+        err=>{
+          console.error('FAIL getLastOrders response from server: ', err);
+          // errore principale se il server node non è raggiungibile:
+          successCallback({status:'ko',error:'Impossibile recuperare ultimi ordini'});
+          //+"\n"+JSON.stringify(err)});
+        },
+        ()=>{
+          // console.log('FINISH status response from server 2')
+        }
+      );
+
+    } catch (e) {
+      // self.error('Richiesta status al server fallita ' + JSON.stringify(e));
+      console.error('Richiesta getLastOrders al server fallita - Error spawning getLastOrders request', e);
+      if (typeof successCallback == "function") {
+        successCallback(self.liveService.connected, {status:'ko',error:'Server non disponibile'});
+      }
+    }
   }
+  
+  /**
+   * Print a copy of a non-printed document (quittung etc.)
+   * @param orderId 
+   * @param successCallback 
+   */
+  printDoc(orderId, successCallback) {
+    let self = this;
+    try {
+      //, {tableId: table.id} trova modo di aggiungere i parametri.
+      // in post li mettiamo altrove ma qui sta a getUrl la responsabilità?
+      let url = self.liveService.getUrl('printdoc', {
+          orderId: orderId, 
+          tableId: this.liveService.cart.idTavolo, 
+          clerkId: self.liveService.user.clerkId});
+      // console.log('url table', url);
+      return self.http.get(url)
+      .map(res => self.liveService.parseResponse(res))
+      .subscribe(
+        res => {
+          //console.log('printDoc response from server: ', res);
+          if (res)
+          {
+            if (res.status=='ok') {
+               console.log('Risultato ok');
+            }
+          }
+
+          // self.liveService.cart.idOrdine = res.orderitems.id?res.orderitems.id:-1;
+
+
+          if (typeof successCallback == "function") {
+            // console.log('status self',self,'this',this);
+            successCallback(res);
+          }
+        },
+        err=>{
+          console.error('FAIL printDoc response from server: ', err);
+          // errore principale se il server node non è raggiungibile:
+          successCallback({status:'ko',error:'Impossibile ristampare documento'});
+          //+"\n"+JSON.stringify(err)});
+        },
+        ()=>{
+          // console.log('FINISH status response from server 2')
+        }
+      );
+
+    } catch (e) {
+      // self.error('Richiesta status al server fallita ' + JSON.stringify(e));
+      console.error('Richiesta getLastOrders al server fallita - Error spawning getLastOrders request', e);
+      if (typeof successCallback == "function") {
+        successCallback(self.liveService.connected, {status:'ko',error:'Server non disponibile'});
+      }
+    }
+  }
+  
+}

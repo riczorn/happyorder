@@ -1,9 +1,9 @@
-<div class="articleButton" (tap)="itemClick(button);" [ngClass]="button.cssClass">
+<div class="articleButton" (click)="itemClick(button)" [ngClass]="button.cssClass">
     <span class="name">
     {{ button.name }}
   </span>
 
-    <span class="price" *ngIf="liveService.options.ShowPrice && button.price">
+    <span class="price" *ngIf="liveService.options.ShowPrice && (button.price && (button.price !== '0,00'))">
   {{ button.price }}
 
   </span>

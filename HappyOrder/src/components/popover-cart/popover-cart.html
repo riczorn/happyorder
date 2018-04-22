@@ -1,54 +1,39 @@
 <ion-list *ngIf="item.idTipoArticolo==1">
-      <!--ion-list-header>Modifica articolo</ion-list-header-->
-      <ion-item>
+    <!--ion-list-header>Modifica articolo</ion-list-header-->
+    <ion-item>
         {{ item.descrizione }}
-      </ion-item>
+    </ion-item>
 
-      <ion-segment>
-        <ion-segment-button *ngIf="item.idStatoRiga<2"
-            color="primary"
-            class="icon-only"
-            (tap)=" close('add') ">
+    <ion-segment>
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (tap)=" close('add') " value="">
             <ion-icon name="ios-add-circle-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button   *ngIf="item.idStatoRiga<2"
-            color="primary"
-            class="icon-only"
-            (tap)=" close('remove') ">
-          <ion-icon name="ios-remove-circle-outline"></ion-icon>
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (tap)=" close('remove') " value="">
+            <ion-icon name="ios-remove-circle-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button  *ngIf="item.idStatoRiga<2"
-            color="primary"
-           class="icon-only"
-           (tap)=" close('delete') ">
-           <ion-icon name="ios-trash-outline"></ion-icon>
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (tap)=" close('delete') " value="">
+            <ion-icon name="ios-trash-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button *ngIf="item.idStatoRiga==2"
-            color="primary"
-            (tap)=" close('storno') ">
-             <ion-icon name="ios-remove-circle-outline"></ion-icon>
-             &nbsp;
-             Storno
+        <ion-segment-button *ngIf="item.idStatoRiga==2" color="primary" (tap)=" close('storno') " value="">
+            <ion-icon name="ios-remove-circle-outline"></ion-icon>
+            &nbsp; Storno
         </ion-segment-button>
-      </ion-segment>
+    </ion-segment>
 
 </ion-list>
 <ion-list *ngIf="item.idTipoArticolo>1">
-        <ion-list-header>Modifica extra</ion-list-header>
-        <ion-item>
-          {{ item.descrizione }}
-        </ion-item>
+    <ion-list-header>Modifica extra</ion-list-header>
+    <ion-item>
+        {{ item.descrizione }}
+    </ion-item>
 
-        <ion-segment>
-          <ion-segment-button   *ngIf="item.idStatoRiga<2 "
-             color="primary"
-             class="icon-only"
-             (tap)=" close('deleteChild')  ">
-              <ion-icon name="trash-b"></ion-icon>
-          </ion-segment-button>
-        </ion-segment>
+    <ion-segment>
+        <ion-segment-button *ngIf="item.idStatoRiga<2 " color="primary" class="icon-only" (tap)=" close('deleteChild')  " value="">
+            <ion-icon name="trash-b"></ion-icon>
+        </ion-segment-button>
+    </ion-segment>
 
 </ion-list>

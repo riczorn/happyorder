@@ -83,7 +83,7 @@
    }
 
    add(quantita: number) {
-     console.log('increase quantita by ', quantita)
+     //console.log('increase quantita by ', quantita)
      if (this.quantita + quantita < 0) {
        if (this.idRigaOrdine > 0) {
          // this.storno();

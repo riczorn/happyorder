@@ -45,6 +45,7 @@ import { PopoverSudoComponent } from '../components/popover-sudo/popover-sudo';
 import { PlusMinusButtonComponent } from '../components/plus-minus-button/plus-minus-button';
 import { AbsoluteDrag } from '../directives/absolute-drag/absolute-drag';
 import { OrderPageButtons } from '../components/order-page/order-page';
+import { PopoverLastordersComponent } from '../components/popover-lastorders/popover-lastorders';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { OrderPageButtons } from '../components/order-page/order-page';
     PopoverSudoComponent,
     PlusMinusButtonComponent,
     AbsoluteDrag,
-    OrderPageButtons
+    OrderPageButtons,
+    PopoverLastordersComponent
   ],
   imports: [
     // CoreModule,
@@ -80,7 +82,8 @@ import { OrderPageButtons } from '../components/order-page/order-page';
     OrderPage,
     CartPage,
     PopoverCartComponent,
-    PopoverSudoComponent
+    PopoverSudoComponent,
+    PopoverLastordersComponent
   ],
   providers: [
     LiveService,

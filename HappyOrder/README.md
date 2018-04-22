@@ -245,5 +245,20 @@ id: app.happyorder.it
 
     Ripristinato il tasto Aggiorna locale per Android.
     
+- 1.3.5 (11/04/2018)
+
+    Opzione suono: attiva suoni di feedback ed errore. (tutte le piattaforme)
+    La vibrazione (android) è ora disattivabile.
+    Il suono deve essere abilitato nelle opzioni.
+
+    Feedback visivo, vibrazione e suono sugli eventi principali.
+
+- 1.3.6 (21/4/2018)
+
+    Ristampa ultimo scontrino: ora il tasto Scontrino / Kassazettel mostra un elenco degli ultimi 20 ordini, 
+    in ordine decrescente.
+    Cliccandone uno questo verrà stampato.
+
+    Molteplici ottimizzazioni di codice per velocizzare l'interfaccia.    
 
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

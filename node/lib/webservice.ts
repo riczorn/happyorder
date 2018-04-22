@@ -584,6 +584,88 @@ openTable(this:WebService, res:any, tableId: number, clerkId: number) {
   return 0;
 }
 
+getLastOrders(this:WebService, res:any, query:any) {
+  console.log('>getLastOrders', query);
+  let self = this;
+  query.action = 'getlastorders';
+  this.doGetJSON(
+    res, 
+    query,
+    function (data:any) {
+      console.log('received getLastOrders callback',typeof data);
+      //console.log(data);
+
+      self.decodeXML(res, data, function (err:any, result:any) {
+        //console.log('decoded result',result);
+        if (err) {
+          self.error(res, 'Errore nel server remoto getLastOrders ' + (typeof err.message==="string"?err.message:JSON.stringify(err)) + "; contenuto della risposta: " + JSON.stringify(data));
+        } else {
+          // header('Access-Control-Allow-Origin: *');
+          // header('Content-Type: application/json');
+          // header('Access-Control-Allow-Headers: Content-Type');
+          console.log(result);
+          var status = 'ok';
+          var command = 'getLastOrders';
+          var oResponse = {
+            status: status,
+            command: command,
+            orders: self.makeSureItsAnArray(result.elencoOrdini.elencoOrdine)
+          };
+          oResponse.orders.splice( 20 );
+          
+          
+          res.json(oResponse);
+
+          res.end();
+        }
+      })
+    },
+    function (err: any) {
+      self.error(res, 'Errore getLastOrders ' + (typeof err.message==="string"?err.message:JSON.stringify(err)));
+    }
+  );
+}
+
+
+printDoc(this:WebService, res:any, query:any) {
+  console.log('>printDoc', query);
+  let self = this;
+  query.action = 'printDoc';
+  this.doGetJSON(
+    res, 
+    query,
+    function (data:any) {
+      console.log('received printDoc callback',typeof data);
+      //console.log(data);
+
+      self.decodeXML(res, data, function (err:any, result:any) {
+        //console.log('decoded result',result);
+        if (err) {
+          self.error(res, 'Errore nel server remoto getLastOrders ' + (typeof err.message==="string"?err.message:JSON.stringify(err)) + "; contenuto della risposta: " + JSON.stringify(data));
+        } else {
+          //           header('Access-Control-Allow-Origin: *');
+          // header('Content-Type: application/json');
+          // header('Access-Control-Allow-Headers: Content-Type');
+          console.log(result);
+          var status = 'ok';
+          var command = 'printDoc';
+          var oResponse = {
+            status: status,
+            command: command
+          };
+          
+          res.json(oResponse);
+          res.end();
+        }
+      })
+    },
+
+    function (err: any) {
+      self.error(res, 'Errore openTable ' + (typeof err.message==="string"?err.message:JSON.stringify(err)));
+    }
+  );
+}
+
 fixItem(item:any) {
   item.itemType = item.atype;
   delete(item.atype);
@@ -604,8 +686,9 @@ fixItem(item:any) {
 getTablesStates(this:WebService, res:any, clerkId: number) {
   // console.log('getTablesStates 101', clerkId);
   let self: WebService = this;
-  this.doGetJSON(res, {action:'readtablesstates',
-                  clerkID: clerkId},
+  this.doGetJSON(res, {
+          action:'readtablesstates',
+          clerkID: clerkId},
     function (data:any) {
       // console.log('received getTablesStates callback',typeof data);
       // console.log(data);

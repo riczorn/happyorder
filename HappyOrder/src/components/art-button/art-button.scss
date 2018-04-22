@@ -2,11 +2,22 @@ art-button {
     font-size: 1.4rem;
     font-weight: 500;
     position: relative;
+    .barticle {
+        transition: 0.3s all ease-out;
+    }
+    .bextra {
+        font-style: oblique;
+        font-weight: 300;
+    }
+    .justclicked {
+        background: rgba(75, 75, 75, 0.35) !important;
+    }
     .price {
         position: absolute;
         right: 0;
         bottom: 0;
         font-weight: 100;
+        font-style: normal;
     }
 }
 
@@ -28,11 +39,6 @@ art-button {
     }
     .barticle {
         background: white;
-    }
-    .bextra {
-        //background: #AA1164;
-        font-style: oblique;
-        // box-shadow: 2px 2px 1px red, -2px -2px 1px red;
     }
     .barticle,
     .bextra {
@@ -65,7 +71,7 @@ art-button {
     }
     .bextra {
         background: rgb(31, 4, 19);
-        box-shadow: 2px 2px 1px rgb(248, 125, 125), -2px -2px 1px rgb(248, 125, 125);
+        box-shadow: 1px 1px 0.3px rgba(248, 125, 125, 0.3), -1px -1px 0.3px rgba(248, 125, 125, 0.3);
     }
     .barticle,
     .bextra {
@@ -78,6 +84,9 @@ art-button {
         &.section-3 {
             background: #0e0e1f
         }
+    }
+    .justclicked {
+        background: rgba(255, 255, 255, .45) !important;
     }
     .price {
         color: #d1d18f;

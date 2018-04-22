@@ -20,10 +20,10 @@ export class PlusMinusButtonComponent {
     // console.log('plusMinus',this.controlVar);
   }
   changeQt(num: number) {
-    console.log('changeQt',num, this.controlVar);
+    //('changeQt',num, this.controlVar);
     // this.controlVar = 1*num + 1*this.controlVar;
     let res = {result:1*num + 1*this.controlVar};
-    console.log('cQt2',res);
+    //console.log('cQt2',res);
     this.onMyValueChange.next(res);
   }
 }

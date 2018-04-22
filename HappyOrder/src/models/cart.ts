@@ -54,7 +54,7 @@ export class Cart {
     this.idTavolo = -1;
     this.clerkId = -1;
     this.totals = { totale: 0, sconto: 0, totaleScontato: 0, count: 0 };
-    this.doc = { tipoDocumento: 1, intestato: 1 };
+    this.doc =    { tipoDocumento: 1, intestato: 1 };
     this.cartActions = {
       orderConfirm: 1,
       orderPrint: 2,
@@ -298,6 +298,10 @@ export class Cart {
     return false;
   }
 
+  /**
+   *  After any changes in the order we need to 
+   *  update the total counters & price
+   */
   updateTotals(itemComponent?) {
     let totale = 0;
     let count = 0;
@@ -352,6 +356,17 @@ export class Cart {
     }
   }
 
+  delete(item) {
+    
+    console.log('deleting');
+    let self = this;
+    for (let i = 0; i< self.items.length; i++) {
+        if (self.items[i] == item) {
+          self.items.splice(i,1);
+        }
+    }    
+  }
+
   doStorno(idRigaOrdine, shouldReload) {
     //  this.doConfirm(false, false, false, idRigaOrdine, 'storno');
     //document.location.href='?unikas_storno?id='+ idRigaOrdine // n.b. shouldReload serve solo al palmare.
@@ -373,7 +388,11 @@ export class Cart {
   hasNewItemsThatNeedSending() {
     let result = false;
     for (let item of this.items) {
-      if (item.idStatoRiga<2) {
+      if (
+        (item.idStatoRiga<2)
+        && 
+        (item.quantita !== 0)
+      ) {
         result = true;
       }
     }

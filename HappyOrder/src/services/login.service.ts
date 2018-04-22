@@ -19,6 +19,7 @@ import {Observable} from 'rxjs/Observable';
 // import { AppUpdate } from '@ionic-native/app-update';
 
 import {LiveService} from  '../services/live.service';
+//import { TavoliPage } from '../pages/tavoli/tavoli';
 
 @Injectable()
 
@@ -28,7 +29,7 @@ export class LoginService {
 
     constructor(private http: Http,
                 private liveService:LiveService,
-                public storage: Storage,
+                public storage: Storage
                 // private appUpdate:AppUpdate
               ) {
                   // console.log('building liveService');;
@@ -270,11 +271,8 @@ export class LoginService {
       this.storage.set('user', this.liveService.stringify(this.liveService.user));
       this.normalizeOptions();
       this.storage.set('options', this.liveService.stringify(this.liveService.options));
-      console.log('options saved: ',this.liveService.options);
-      // console.log('storageSaved options',this.liveService.options);
-        // .then(saveResult => {
-        //console.log('saved user in localStorage ');//,saveResult);
-
+      //console.log('options saved: ',this.liveService.options);
+      
     }
 
     normalizeOptions() {

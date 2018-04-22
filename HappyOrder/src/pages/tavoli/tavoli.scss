@@ -52,3 +52,14 @@ page-tavoli {
         }
     }
 }
+
+.graphical .tablebutton {
+    boxSizing: border-box;
+    position: absolute;
+}
+
+.non-graphical .tablebutton {
+    left: auto;
+    top: auto;
+    position: relative;
+}

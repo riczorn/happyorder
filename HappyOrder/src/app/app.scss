@@ -134,7 +134,9 @@ ion-segment-button.icon-only {
 .content.dark {
     background: #303030;
     color: white;
-    .card-md,
+    .card-md {
+        background-color: #303030;
+    }
     .item-md,
     .content-md,
     .button-md,
@@ -145,6 +147,7 @@ ion-segment-button.icon-only {
     }
     .button-md {
         background-color: #333;
+        box-shadow: 1px 0px 0px black;
     }
 }
 

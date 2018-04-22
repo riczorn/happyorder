@@ -111,7 +111,7 @@ export class LoginPage {
           // let sysclerk = self.liveService.settings.clerks.byId(data.clerk.id);
           // let item = self.liveService.settings.items.byId(78);
           // console.log('SYSCLERK',sysclerk,'ITEM',item);
-          console.log('Loggato (login.ts callback)!', data);
+         // console.log('Loggato (login.ts callback)!', data);
           if (data.tableId>0 ) {
             self.liveService.user.tableId = data.tableId;
             self.liveService.user.defaultTableId = data.tableId;

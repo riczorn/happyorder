@@ -7,7 +7,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-import { Component, ViewChild, OnInit, EventEmitter } from '@angular/core';
+import { Component, ViewChild, OnInit, EventEmitter } from '@angular/core'; //
 import { NavController, Content, Platform, AlertController } from 'ionic-angular';
 
 import { LiveService } from  '../../services/live.service';
@@ -22,7 +22,7 @@ import {Cart} from  '../../models/cart';
 })
 export class TavoliPage  implements OnInit  {
   @ViewChild(Content) content: Content;
-
+  private graphicalTables: boolean;
   public containerTop : number;
 
   public tables:any;
@@ -51,9 +51,12 @@ export class TavoliPage  implements OnInit  {
     // console.log('TavoliPage init');
   }
 
-// ngAfterContentInit() {
-//   console.log('tavoli ngAfterContentInit');
-// }
+ngAfterContentInit() {
+  //console.log('tavoli ngAfterContentInit');
+  if (this.graphicalTables !== this.liveService.options.GraphicalTables) {
+    this.updateTablePos({});
+  }
+}
 // ngAfterContentChecked() {
 //   console.log('tavoli ngAfterContentChecked');
 // }
@@ -71,11 +74,15 @@ export class TavoliPage  implements OnInit  {
       // console.log('openTable 2 callback',tableData);
       self.navCtrl.setRoot(OrderPage);
     });
+    this.cartService.toastAndVibrate(null,this.liveService.messageTypes.tick);
     // self.navCtrl.setRoot(OrderPage);
   }
 
   updateTablePos(event:any) { //EventEmitter<Event>):any {
-    // console.log('updateTablePos');
+       //console.log('updateTablePos');
+    // this.graphicalTables is necessary so we don't repeat the update unless
+    // the options are changed.
+    this.graphicalTables = this.liveService.options.GraphicalTables;
     for (let table of this.liveService.settings.tables.table) {
       table.style = this.getTableStyle(table);
     }
@@ -118,11 +125,12 @@ export class TavoliPage  implements OnInit  {
 
   moveTable(sourceTable, destinationTable, event) {
     if (!this.liveService.user.hasPrivilege('transfer')) {
-      this.cartService.toastAndVibrate('Non hai il privilegio spostatavolo',true);
+      this.cartService.toastAndVibrate('Non hai il privilegio spostatavolo',this.liveService.messageTypes.localError);
       return false;
     }
     if (destinationTable.state!=="0") {
-      this.cartService.toastAndVibrate('Sposta su un tavolo vuoto!',true);
+      this.cartService.toastAndVibrate('Sposta su un tavolo vuoto!',
+      this.liveService.messageTypes.whipLeft);
       return false;
     }
     let cart: Cart;
@@ -155,7 +163,7 @@ export class TavoliPage  implements OnInit  {
         {
           text: 'No',
           handler: () => {
-            console.log('Spostatavolo annullato');
+           // console.log('Spostatavolo annullato');
           }
         },
         {
@@ -179,6 +187,8 @@ export class TavoliPage  implements OnInit  {
     let opts = this.liveService.options;
     if (opts.GraphicalTables) { //PagesVertical) {
       style += ' graphical';
+    } else {
+      style += ' non-graphical';
     }
 
     style += ' cols-'+opts.ColumnCount;
@@ -192,14 +202,11 @@ export class TavoliPage  implements OnInit  {
     let tS    = this.liveService.settings.tables.tableSizes;
     if (!opts.GraphicalTables) { //PagesVertical) {
       return {
-        width:'auto',height:'3.6rem',left:'auto',top:'auto',
-        position:'relative'
+        width:'auto',height:'3.6rem'
       }
     }
     // console.log('getTableStyle', table.left, table.width, table.top, table.height);
     let style = {
-      boxSizing: 'border-box',
-      position:'absolute',
       width  : this.getWidthPx(table.width),
       height : this.getHeightPx(table.height),
       left   : this.getWidthPx(table.left-tS.left),
