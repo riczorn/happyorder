@@ -51,8 +51,8 @@ export class ArtButtonComponent {
           console.log('now,2 '+this.liveService.options.Feedback);
         }*/
       } catch (e) {
-        console.error('itemClick',e);
-        this.cartService.toastAndVibrate(e,this.liveService.messageTypes.localError);
+        console.error('itemClick', e);
+        this.cartService.toastAndVibrate(e, this.liveService.messageTypes.localError);
       }
     } else if ( button.itype ) { //}cssClass=='bfunction') {
       //console.log('richiesta payment: ',button, button.link);

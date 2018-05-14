@@ -196,7 +196,9 @@ export class CartService {
       let self = this;
       cart.empty();
       cart.loading = true;
-
+      self.liveService.connected = false;
+      self.liveService.connectionStatus.connected = false;
+      
       try {
         //, {tableId: table.id} trova modo di aggiungere i parametri.
         // in post li mettiamo altrove ma qui sta a getUrl la responsabilità?
@@ -207,13 +209,10 @@ export class CartService {
         .subscribe(
           res => {
             // console.log('table response from server: ', res);
-            if (res)
-            {
-              if (res.status=='ok') {
+            if (res && res.status=='ok') {
                 // console.log('Risultato ok');
-              }
             }
-
+          
 
             self.liveService.user.table = table;
             self.liveService.user.tableId = table.id;
@@ -236,6 +235,13 @@ export class CartService {
               // console.log('status self',self,'this',this);
               successCallback(res);
             }
+
+            setTimeout(()=>{
+              self.liveService.connected = true;
+              self.liveService.connectionStatus.connected = true;
+              
+            },500);
+              
           },
           err=>{
             console.error('FAIL table response from server: ', err);
@@ -265,6 +271,7 @@ export class CartService {
       var self = this;
       // headers.append('keys', '');
       self.liveService.connected = false;
+      self.liveService.connectionStatus.connected = false;
       try {
         return self.http.get(self.liveService.getUrl('tables', {clerkId: self.liveService.user.clerkId}))
         .map(res => self.liveService.parseResponse(res))
@@ -272,6 +279,9 @@ export class CartService {
           res => {
             // console.log('tables response from server: ', res);
             res.status = res.status?res.status:'ok';
+            self.liveService.connected = true;
+            self.liveService.connectionStatus.connected = true;
+      
             for (let i=0; i< self.liveService.settings.tables.table.length; i++) {
               let table = self.liveService.settings.tables.table[i];
               table.state = res.tableStates[i];
@@ -352,11 +362,111 @@ export class CartService {
   }
   
   /**
+   * Find and return a gutschein / fidelity status and value.
+   * @param code 
+   */
+  async getFidelityInfo(code, successCallback) {
+    let self = this;    
+
+    try {
+      let url = self.liveService.getUrl('get-fidelity-info', 
+        {
+          tableId:  self.liveService.user.tableId, 
+          clerkId: self.liveService.user.clerkId, 
+          code: code
+        });
+      return self.http.get(url)
+      .map(res => self.liveService.parseResponse(res))
+      .subscribe(
+        res => {
+          //console.log('getLastOrders response from server: ', res);
+          if (res)
+          {
+            if (res.status=='ok') {
+              // console.log('Risultato ok');
+            }
+          }
+
+          if (typeof successCallback == "function") {
+             //console.log('getFidelityInfo callback res',res);
+             successCallback(res);
+          }
+        },
+        err=>{
+          console.error('FAIL getLastOrders response from server: ', err);
+          // errore principale se il server node non è raggiungibile:
+          successCallback({status:'ko',error:'Impossibile recuperare ultimi ordini'});
+          //+"\n"+JSON.stringify(err)});
+        },
+        ()=>{
+          // console.log('FINISH status response from server 2')
+        }
+      );
+
+    } catch (e) {
+      // self.error('Richiesta status al server fallita ' + JSON.stringify(e));
+      console.error('Richiesta getLastOrders al server fallita - Error spawning getLastOrders request', e);
+      if (typeof successCallback == "function") {
+        successCallback(self.liveService.connected, {status:'ko',error:'Server non disponibile'});
+      }
+    }
+  }
+  /**
+   * create a new gutschein / fidelity by value.
+   * invokes the webservice which translates to xml and invokes the
+   * backend server
+   * @param code 
+   */
+  createFidelity(amount, successCallback) {
+    let self = this;
+    
+    try {
+      let url = self.liveService.getUrl('create-fidelity', 
+      { tableId:  self.liveService.user.tableId, 
+        clerkId: self.liveService.user.clerkId,
+        importo: amount});
+      return self.http.get(url)
+      .map(res => self.liveService.parseResponse(res))
+      .subscribe(
+        res => {
+          //console.log('getLastOrders response from server: ', res);
+          if (res)
+          {
+            if (res.status=='ok') {
+              // console.log('Risultato ok');
+            }
+          }
+
+          if (typeof successCallback == "function") {
+            // console.log('status self',self,'this',this);
+            successCallback(res);
+          }
+        },
+        err=>{
+          console.error('FAIL getLastOrders response from server: ', err);
+          // errore principale se il server node non è raggiungibile:
+          successCallback({status:'ko',error:'Impossibile recuperare ultimi ordini'});
+          //+"\n"+JSON.stringify(err)});
+        },
+        ()=>{
+          // console.log('FINISH status response from server 2')
+        }
+      );
+
+    } catch (e) {
+      // self.error('Richiesta status al server fallita ' + JSON.stringify(e));
+      console.error('Richiesta getLastOrders al server fallita - Error spawning getLastOrders request', e);
+      if (typeof successCallback == "function") {
+        successCallback(self.liveService.connected, {status:'ko',error:'Server non disponibile'});
+      }
+    }
+  }
+  /**
    * Print a copy of a non-printed document (quittung etc.)
    * @param orderId 
    * @param successCallback 
    */
-  printDoc(orderId, successCallback) {
+  printDoc(orderId, tipoDocumento, successCallback) {
     let self = this;
     try {
       //, {tableId: table.id} trova modo di aggiungere i parametri.
@@ -364,7 +474,8 @@ export class CartService {
       let url = self.liveService.getUrl('printdoc', {
           orderId: orderId, 
           tableId: this.liveService.cart.idTavolo, 
-          clerkId: self.liveService.user.clerkId});
+          clerkId: self.liveService.user.clerkId,
+          docType:tipoDocumento});
       // console.log('url table', url);
       return self.http.get(url)
       .map(res => self.liveService.parseResponse(res))

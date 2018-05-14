@@ -25,7 +25,7 @@ export class BackSlidesComponent {
   private clickCounter : number;
   // https://ionicframework.com/docs/api/components/slides/Slides/
 
-  constructor(private liveService:LiveService,public navCtrl: NavController) {
+  constructor(private liveService:LiveService, public navCtrl: NavController) {
     // console.log('init: ');
     let self = this;
     self.clickCounter = 0;
@@ -44,10 +44,12 @@ export class BackSlidesComponent {
     setTimeout( () => {
       // console.log('start auto (NOT!)' , self.slides.length(), self.slides);
       // console.log(self.liveService.slideshow.length);
-      if (self.slides && (self.slides.length()>0)) {
+      if (self.slides 
+          && self.slides.length
+          && (self.slides.length()>0)) {
         // console.log('starting Slideshow...');
         // this.slides.lockSwipes(true);  //non so perché inchioda tutto!
-        self.slides.autoplay = 6000;
+        self.slides.autoplay = 6000 + Math.random()*300;
         self.slides.startAutoplay();
 
       }

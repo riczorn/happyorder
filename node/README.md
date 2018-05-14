@@ -71,8 +71,17 @@ https://blog.pusher.com/use-typescript-with-node/
 
     Fixed update compatibility issue on Windows.
     
-- 1.3.6
+- 1.3.7
 
     Reprint last order, now showing list.
     
+- 1.3.10 (9/5/2018)
+
+    Added numbered prepaid fidelity support (gutschein)
+    
+- 1.3.11 (10/5/2018)
+
+    Strenghtened the server, updated the docs :8080/help
+    Minor fixes for the functionality in the Happyorder app.
+
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

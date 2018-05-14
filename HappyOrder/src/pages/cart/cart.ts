@@ -17,6 +17,7 @@ import {LoginService} from  '../../services/login.service';
 
 // import { CartComponent } from '../../components/cart/cart';
 import {Cart} from  '../../models/cart';
+import { ConnectionStatusComponent } from '../../components/connection-status/connection-status';
 
 @Component({
   selector: 'page-cart',
@@ -74,14 +75,16 @@ export class CartPage implements OnInit {
     if (this.visible.showCart) {
       return {};
     }
-    let diff:number = (new Date().getTime() - this.slideshowLastUpdate)/1000;
+    let diff:number = (new Date().getTime() - this.slideshowLastUpdate)/1000 ;
 
     let self = this;
     let background = 'background.jpg';
     if (self.liveService.slideshow && self.liveService.slideshow.length ) {
       if (diff>5) {
-        self.slideshowIndex = (self.slideshowIndex+1)%self.liveService.slideshow.length;
-        this.slideshowLastUpdate = new Date().getTime();
+        self.slideshowIndex = Math.round(Math.random()*self.liveService.slideshow.length);
+        //console.log(`new slideshow diff: ${diff} ${self.slideshowIndex} ${self.liveService.slideshow.length}`);
+          // (self.slideshowIndex+1)%self.liveService.slideshow.length;
+        this.slideshowLastUpdate = new Date().getTime()+ Math.random()*300;
       }
       background = self.liveService.slideshow[self.slideshowIndex];
     }

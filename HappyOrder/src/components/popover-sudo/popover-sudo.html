@@ -5,7 +5,7 @@
         </em>
     </ion-list-header>
 
-    <ion-item *ngFor="let clerk of clerks" (tap)="select(clerk)" [class.active]="(clerk.id==selectedClerk.id)">
+    <ion-item *ngFor="let clerk of clerks" (click)="select(clerk)" [class.active]="(clerk.id==selectedClerk.id)">
         {{clerk.name}}
     </ion-item>
     <ion-item id="login-input-login">
@@ -21,10 +21,10 @@
 
 
         <ion-segment>
-            <ion-segment-button class="button-md-light" (tap)=" close('cancel') " value="">
+            <ion-segment-button class="button-md-light" (click)=" close('cancel') " value="">
                 Annulla
             </ion-segment-button>
-            <ion-segment-button class="button-md-secondary" (tap)=" close('storno') " value="">
+            <ion-segment-button class="button-md-secondary" (click)=" close('storno') " value="">
                 Storno
             </ion-segment-button>
         </ion-segment>

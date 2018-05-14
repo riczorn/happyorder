@@ -1,12 +1,14 @@
+/**
+  * HappyOrder app for phones
+  * @package    HappyOrder
+  * @author     Riccardo Zorn <code@fasterjoomla.com>
+  * @copyright  2002 - 2017 Riccardo Zorn
+  * @license    GNU General Public License version 2 or later; see LICENSE.txt
+  */
+
 import { Component } from '@angular/core';
 import { ViewController, NavParams } from 'ionic-angular';// , Platform, NavController, NavParams
 
-/**
- * Generated class for the PopoverLastordersComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
 @Component({
   selector: 'popover-lastorders',
   templateUrl: 'popover-lastorders.html'
@@ -15,7 +17,7 @@ export class PopoverLastordersComponent {
   private orders: any;
   
   constructor(public viewCtrl: ViewController, public navParams:NavParams) {
-    console.log('popover last loading');
+    //console.log('popover last loading');
     this.orders = navParams.data.orders;
   }
 

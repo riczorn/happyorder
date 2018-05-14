@@ -4,6 +4,7 @@
 <ion-content id="cartPage" [ngClass]="liveService.options.Style">
     <!-- [ngStyle]="getSlideshow()" -->
     <back-slides></back-slides>
+
     <div class="cart-content" *ngIf="visible.showCart && cart.totals.totale">
         <cart cartButtonsViewStyle="none"></cart>
         <ion-item class="totals">
@@ -17,7 +18,7 @@
             <div class="totale">{{ lastTotal | number:'1.2' }} €</div>
         </div>
     </div>
-
+    <connection-status></connection-status>
 
 
 </ion-content>

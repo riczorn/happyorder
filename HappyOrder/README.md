@@ -253,12 +253,31 @@ id: app.happyorder.it
 
     Feedback visivo, vibrazione e suono sugli eventi principali.
 
-- 1.3.6 (21/4/2018)
+- 1.3.7 (21/4/2018)
 
     Ristampa ultimo scontrino: ora il tasto Scontrino / Kassazettel mostra un elenco degli ultimi 20 ordini, 
     in ordine decrescente.
     Cliccandone uno questo verrà stampato.
 
+    Abbandonato il tocco a favore del click.
+
     Molteplici ottimizzazioni di codice per velocizzare l'interfaccia.    
 
+- 1.3.9 (24/4/2018)
+
+    Shuffle the slideshow using the Fisher-Yates shuffle
+    
+- 1.3.10 (9/5/2018)
+
+    Added numbered prepaid fidelity support (gutschein)
+    See configuration docs to enable - trigger through the
+    payment button.
+
+- 1.3.11 (10/5/2018)
+
+    Keepalive on socket, and a nice keepalive signal on the main 
+    order and tables and customer cart pages
+    When re-printing an old older, print the document corrensponding
+    to the button pressed.
+    
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

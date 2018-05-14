@@ -1,0 +1,40 @@
+<ion-card *ngIf="modePay">
+    Paga:
+    <ion-item>
+        <ion-label floating>Digita num. gutschein</ion-label>
+        <ion-input type="tel" [(ngModel)]="code"></ion-input>
+    </ion-item>
+
+    <button ion-button (click)="search()">Cerca</button>
+    <button ion-button color="danger" (click)="close('cancel')">Chiudi</button>
+
+    <ion-card>
+        <div *ngIf="fidelity.val>0">
+            {{ fidelity.val | number :'1.2' }}€ disponibili sul Gutschein
+            <b>{{ fidelity.code }}</b>
+            <div *ngIf="fidelity.val>=cart.totals.totale">
+                <button ion-button (click)="close('pay')">Paga {{ cart.totals.totale | number:'1.2' }} €</button>
+            </div>
+            <div *ngIf="fidelity.val<cart.totals.totale">
+                <button ion-button (click)="close('pay')">Paga {{ fidelity.val | number:'1.2' }} € di {{ cart.totals.totale | number:'1.2' }} €</button>
+            </div>
+        </div>
+        <div *ngIf="fidelity.val==0">
+            {{ fidelity._ }}
+        </div>
+
+    </ion-card>
+</ion-card>
+
+<ion-card *ngIf="!modePay">
+    <ion-title>Vendi un gutschein</ion-title>
+
+    <ion-item>
+        <ion-label floating>Digita importo</ion-label>
+        <ion-input type="number" pattern="[0-9\.]*" step="0.1" [(ngModel)]="amount"></ion-input>
+    </ion-item>
+
+    <button [disabled]="amount<=0" ion-button (click)="close('sell')">Vendi e stampa</button>
+    <button ion-button color="danger" (click)="close('cancel')">Chiudi</button>
+
+</ion-card>

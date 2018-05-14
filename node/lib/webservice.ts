@@ -40,7 +40,7 @@ public login (this:WebService, res:any, body: any):number {
   let display:string = body.display;
   let androidVersion:string = body.androidVersion;
 
-  console.log('login',login, password, display, androidVersion);
+  console.log('login',login, display, androidVersion);
   let self: WebService = this;
   this.doGetJSON(res, {action:'login',
                   login:    login,
@@ -139,7 +139,10 @@ public status (this:WebService, res:any): number {
     }
     ,
     function (err: any) {
-        self.error(res,  (typeof err.message==="string"?err.message:'Server remoto irraggiungibile'));
+      let errorString = (typeof err.message==="string"?err.message:'Server remoto irraggiungibile');
+      errorString += " " + self.remoteHost + ":" +self.port;
+        self.error(res,  
+          errorString);
     }
   );
   return 0;
@@ -170,9 +173,10 @@ public update(this:WebService, res:any): void {
     //   sourceFolder[sourceFolder.length-1] = 'apk';
     // }
     filePath = sourceFolder.join(path.sep)+path.sep;
-    console.log('sF', sourceFolder, 'fP', filePath);
     
-    console.log('inside new update',filePath+ file);
+    console.log('Beginning update',filePath+ file);
+    console.log('    sF', sourceFolder, 'fP', filePath);
+   
     fs.exists(filePath+file, function(exists: any){
         if (exists) {
           res.writeHead(200, {
@@ -196,7 +200,7 @@ private updateRemote (this:WebService, res:any): number {
   this.doGetFile(res, '/client/android-release.apk',
     function (data:any) {
       //res: http.ClientRequest
-      console.log('received update callback');
+      console.log('... Received update callback');
       // console.log(typeof data);
       // console.log(data);
 
@@ -245,7 +249,12 @@ public loadSettings (this:WebService, res:any): number {
   return 0;
 }
 
-
+/**
+ * Post a cart to the xml backend.
+ * @param this 
+ * @param res 
+ * @param cart 
+ */
 public sendCart (this:WebService, res:any, cart: any): number {
   // console.log('sendCart');
   // console.log('data: ',cart);
@@ -437,19 +446,24 @@ private cartToXML(cart: any) {
   	*/
 
     let xmlPayments = '';//cart.payments.toXML();
-    console.log('Payments',cart);
+    //console.log('Payments',cart);
     for (let payment of cart.payments) {
       //{ id: 8, itype: 7, name: "2WC", val: 2, fidelity: false, cssClass: "bpayment" }
       // to
       //  <Payments id1="undefined" itype="7" descr="WC" code="undefined" val="1" />
 
       //xmlPayments += '<Payments id1="'+ payment.id +'" itype="'+payment.itype+'" descr="'+payment.name+'" code="'+payment.id+'" val="'+payment.val+'" />';
-      xmlPayments += '<Payments id1="-1" itype="'+payment.id+'" descr="'+payment.name+'" code="'+payment.id+'" val="'+payment.val+'" />\n';
+      if (payment.code&&payment.code>0) {
+        xmlPayments += '<Payments id1="'+payment.id+'" itype="6" descr="'+payment.name+'" code="'+payment.code+'" val="'+payment.val+'" />\n';
+      } else {
+        xmlPayments += '<Payments id1="-1" itype="'+payment.id+'" descr="'+payment.name+'" code="" val="'+payment.val+'" />\n';
+      }
+      
       //                <Payments id1="-1" itype="8" descr="2WC" code="undefined" val="2" />
 
       //                <Payments id1="undefined" itype="7" descr="WC" code="undefined" val="1" />
     }
-    console.log('XMLPayments: ', xmlPayments);
+    //console.log('XMLPayments: ', xmlPayments);
 
   	CartStr='<?xml version="1.0"?>\n'+
   		'<Cart xmlns="unikas.it">\n'+ //xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -584,15 +598,22 @@ openTable(this:WebService, res:any, tableId: number, clerkId: number) {
   return 0;
 }
 
+/**
+ * Elenco degli ultimi ordini, per mostrare una vista all'operatore
+ * cliccando un ordine ne si ristampa lo scontrino.
+ * @param this 
+ * @param res 
+ * @param query 
+ */
 getLastOrders(this:WebService, res:any, query:any) {
-  console.log('>getLastOrders', query);
+  //console.log('>getLastOrders', query);
   let self = this;
   query.action = 'getlastorders';
   this.doGetJSON(
     res, 
     query,
     function (data:any) {
-      console.log('received getLastOrders callback',typeof data);
+      //console.log('received getLastOrders callback',typeof data);
       //console.log(data);
 
       self.decodeXML(res, data, function (err:any, result:any) {
@@ -603,7 +624,7 @@ getLastOrders(this:WebService, res:any, query:any) {
           // header('Access-Control-Allow-Origin: *');
           // header('Content-Type: application/json');
           // header('Access-Control-Allow-Headers: Content-Type');
-          console.log(result);
+          //console.log(result);
           var status = 'ok';
           var command = 'getLastOrders';
           var oResponse = {
@@ -612,7 +633,6 @@ getLastOrders(this:WebService, res:any, query:any) {
             orders: self.makeSureItsAnArray(result.elencoOrdini.elencoOrdine)
           };
           oResponse.orders.splice( 20 );
-          
           
           res.json(oResponse);
 
@@ -626,16 +646,107 @@ getLastOrders(this:WebService, res:any, query:any) {
   );
 }
 
+/**
+ * Restituisce lo stato della fidelity il cui codice è stato passato
+ * nella richiesta:
+ * @param this 
+ * @param res 
+ * @param query 
+ */
+getFidelityInfo(this:WebService, res:any, query:any) {
+  //console.log('>getFidelityInfo', query);
+  let self = this;
+  query.action = 'get-fidelity-info';
+  this.doGetJSON(
+    res, 
+    query,
+    function (data:any) {
+      //console.log('received getFidelityInfo callback',typeof data);
+      //console.log(data);
+
+      self.decodeXML(res, data, function (err:any, result:any) {
+        //console.log('decoded result',result);
+        if (err) {
+          self.error(res, 'Errore nel server remoto getFidelityInfo ' + (typeof err.message==="string"?err.message:JSON.stringify(err)) + "; contenuto della risposta: " + JSON.stringify(data));
+        } else {
+          // header('Access-Control-Allow-Origin: *');
+          // header('Content-Type: application/json');
+          // header('Access-Control-Allow-Headers: Content-Type');
+          //console.log(result);
+          if (result.fidelity.val && result.fidelity.val.replace) {
+            result.fidelity.val = parseFloat(result.fidelity.val.replace(',','.'));
+          }
+          
+          var status = 'ok';
+          var command = 'getFidelityInfo';
+          var oResponse = {
+            status: status,
+            command: command,
+            data: result.fidelity
+          };
+          
+          res.json(oResponse);
+
+          res.end();
+        }
+      })
+    },
+    function (err: any) {
+      self.error(res, 'Errore getFidelityInfo ' + (typeof err.message==="string"?err.message:JSON.stringify(err)));
+    }
+  );
+}
+
+createFidelity(this:WebService, res:any, query:any) {
+  //console.log('>createFidelity', query);
+  let self = this;
+  query.action = 'create-fidelity';
+  this.doGetJSON(
+    res, 
+    query,
+    function (data:any) {
+      //console.log('received createFidelity callback', typeof data);
+      //console.log(data);
+
+      self.decodeXML(res, data, function (err:any, result:any) {
+        //console.log('decoded result',result);
+        if (err) {
+          self.error(res, 'Errore nel server remoto createFidelity ' + (typeof err.message==="string"?err.message:JSON.stringify(err)) + "; contenuto della risposta: " + JSON.stringify(data));
+        } else {
+          // header('Access-Control-Allow-Origin: *');
+          // header('Content-Type: application/json');
+          // header('Access-Control-Allow-Headers: Content-Type');
+          //console.log(result);
+          var status = 'ok';
+          var command = 'createFidelity';
+          var oResponse = {
+            status: status,
+            command: command,
+            data: result //.fidelity ?
+          };
+          
+          res.json(oResponse);
+
+          res.end();
+        }
+      })
+    },
+    function (err: any) {
+      self.error(res, 'Errore createFidelity ' + (typeof err.message==="string"?err.message:JSON.stringify(err)));
+    }
+  );
+}
+
 
 printDoc(this:WebService, res:any, query:any) {
-  console.log('>printDoc', query);
+  //console.log('>printDoc', query);
   let self = this;
   query.action = 'printDoc';
   this.doGetJSON(
     res, 
     query,
     function (data:any) {
-      console.log('received printDoc callback',typeof data);
+      //console.log('received printDoc callback',typeof data);
       //console.log(data);
 
       self.decodeXML(res, data, function (err:any, result:any) {
@@ -646,7 +757,7 @@ printDoc(this:WebService, res:any, query:any) {
           //           header('Access-Control-Allow-Origin: *');
           // header('Content-Type: application/json');
           // header('Access-Control-Allow-Headers: Content-Type');
-          console.log(result);
+          //console.log(result);
           var status = 'ok';
           var command = 'printDoc';
           var oResponse = {
@@ -940,7 +1051,7 @@ public doGet (this:WebService, res:any,  query: string,
           // console.log('response status code: ' + res.statusCode);
         });
         req.on('error', function(error:any) {
-          console.log('Server non raggiungibile  2 ERROR ');//,error);
+          console.error('Server non raggiungibile  2 ERROR ');//,error);
           if (typeof callbackError === "function") {
             // il sito non è raggiungibile. Apache giù oppure indirizzo IP sbagliato nella configurazione di node:
             // console.log('invoking callback ');//,callback);
@@ -1002,7 +1113,7 @@ public doGet (this:WebService, res:any,  query: string,
           // console.log('response: ' + res);
         });
         req.on('error', function(error:any) {
-          console.log('Server non raggiungibile  22 ERROR ');//,error);
+          console.error('Server non raggiungibile  22 ERROR ');//,error);
           if (typeof callbackError === "function") {
             // il sito non è raggiungibile. Apache giù oppure indirizzo IP sbagliato nella configurazione di node:
             // console.log('invoking callback ');//,callback);
@@ -1079,7 +1190,7 @@ public doGet (this:WebService, res:any,  query: string,
       */
       req.on('error', function(error:any) {
         errCallback('Error 119:'+error.message);
-        console.log("Problem with request: "+error.message);
+        console.error("Problem with request: "+error.message);
       });
       // write data to request body
       req.write(body);
@@ -1100,7 +1211,7 @@ public doGet (this:WebService, res:any,  query: string,
     sio.sockets.on('connection', function (socket:any) {
         console.log('IO A socket connected!');
         socket.on('disconnect', function () {
-            console.log('IO A socket disconnected!');
+            console.error('IO A socket disconnected!');
         });
         socket.on('registerClient', function(regdata:any) {
           self.registerClient(socket, regdata, self.sockets);

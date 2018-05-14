@@ -46,6 +46,8 @@ import { PlusMinusButtonComponent } from '../components/plus-minus-button/plus-m
 import { AbsoluteDrag } from '../directives/absolute-drag/absolute-drag';
 import { OrderPageButtons } from '../components/order-page/order-page';
 import { PopoverLastordersComponent } from '../components/popover-lastorders/popover-lastorders';
+import { PopoverFidelityComponent } from '../components/popover-fidelity/popover-fidelity';
+import { ConnectionStatusComponent } from '../components/connection-status/connection-status';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { PopoverLastordersComponent } from '../components/popover-lastorders/pop
     PlusMinusButtonComponent,
     AbsoluteDrag,
     OrderPageButtons,
-    PopoverLastordersComponent
+    PopoverLastordersComponent,
+    PopoverFidelityComponent,
+    ConnectionStatusComponent
   ],
   imports: [
     // CoreModule,
@@ -83,7 +87,9 @@ import { PopoverLastordersComponent } from '../components/popover-lastorders/pop
     CartPage,
     PopoverCartComponent,
     PopoverSudoComponent,
-    PopoverLastordersComponent
+    PopoverLastordersComponent,
+    PopoverFidelityComponent,
+    ConnectionStatusComponent,
   ],
   providers: [
     LiveService,

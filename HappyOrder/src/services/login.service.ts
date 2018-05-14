@@ -19,13 +19,14 @@ import {Observable} from 'rxjs/Observable';
 // import { AppUpdate } from '@ionic-native/app-update';
 
 import {LiveService} from  '../services/live.service';
+import { resolve } from 'dns';
 //import { TavoliPage } from '../pages/tavoli/tavoli';
 
 @Injectable()
 
 export class LoginService {
     private response:any;
-
+    private disconnectTimeout: number;
 
     constructor(private http: Http,
                 private liveService:LiveService,
@@ -176,16 +177,50 @@ export class LoginService {
       // console.log(window["io"]);
       let serverUrl = self.liveService.config.wsUrl;//'ws://'+
 
-      let socket = window["io"](serverUrl, {secure:false, transports: ['websocket'],
+      let socket = window["io"](serverUrl, {secure:false, 
+        transports: ['websocket'],
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax : 5000,
+        reconnectionAttempts: Infinity,
           port:8080 });
         // optional: port:8080
 
         // self.liveService.getUrl('status'));//.connect();
         socket.on('connect', function(){
           // console.log('SOCKET CONNECT event');
+          self.liveService.connectionStatus.socketConnected = true;
+          if (self.disconnectTimeout) {
+            clearTimeout(self.disconnectTimeout);
+            self.disconnectTimeout = null;
+          }
         });
-        socket.on('disconnect', function(){
-            console.log('SOCKET disconnect event');
+        socket.on('disconnect', reason => { 
+          self.liveService.connectionStatus.socketConnected = false;
+          self.liveService.connectionStatus.message = reason;
+          //if(reason === 'io server disconnect') {
+            //you should renew token or do another important things before reconnecting
+          //  socket.connect();
+          //}
+
+          self.disconnectTimeout = window.setInterval(() => {
+            if (self.liveService.connectionStatus.socketConnected) {
+              clearInterval(self.disconnectTimeout);
+              self.disconnectTimeout = null;
+              return;
+            }
+            socket.connect();
+          }, 5000);
+
+            /*console.log('SOCKET disconnect event');
+            self.disconnectTimeout = window.setTimeout( function() {
+              if (self.disconnectTimeout) {
+                clearTimeout(self.disconnectTimeout);
+                self.disconnectTimeout = null;
+              }
+              socket = null;
+              self.connectSocket();
+            }, 5000 );*/
         });
 
       self.liveService.socket = socket;
@@ -290,6 +325,7 @@ export class LoginService {
       var self = this;
         // headers.append('keys', '');
         self.liveService.connected = false;
+        self.liveService.connectionStatus.connected = false;
         try {
             return self.http.get(self.liveService.getUrl('status'))
                 .map(res => self.liveService.parseResponse(res))
@@ -300,6 +336,7 @@ export class LoginService {
                     {
                       if (res.status=='ok') {
                         self.liveService.connected = true;
+                        self.liveService.connectionStatus.connected =true;
                       }
                     }
                      // not logged in!
@@ -383,7 +420,24 @@ export class LoginService {
       // console.log('updating from ', updateUrl);
       // this.appUpdate.checkAppUpdate(updateUrl);
     }
-
+    private shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+    
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+    
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+    
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+    
+      return array;
+    }
     // init and download the list of files for the slideshow
     public initSlideShow() {
       let self = this;
@@ -393,10 +447,11 @@ export class LoginService {
               .subscribe(
                 res => {
                   // console.log('settings response from server: ', res);
-                  if (res)
+                  if (res && (res.length))
                   {
-                    // console.log('storing res');
-                    self.liveService.slideshow=res;
+                    //console.log('storing res ', res);
+                    
+                    self.liveService.slideshow=self.shuffle(res);
                   }
 
                 },

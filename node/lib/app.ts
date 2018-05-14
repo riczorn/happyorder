@@ -12,11 +12,11 @@ var bodyParser     =        require("body-parser");
 var cors = require('cors'); //https://www.npmjs.com/package/cors
 // import hOConfigModule = require('../lib/config');
 // import WebServiceModule from '../lib/webservice';
-console.log('app importing ws');
+//console.log('app importing ws');
 import WebService from '../lib/webservice';
-console.log('/app importing ws');
+//console.log('/app importing ws');
 let webservice =  <WebService> WebService.Instance;
-console.log('app instance ok');
+//console.log('app instance ok');
 var fs = require('fs'),
 path = require('path')
 // Creates and configures an ExpressJS web server.
@@ -88,7 +88,7 @@ class App {
 
     router.get('/', (req:any, res:any, next:any) => {
       res.json({
-        message: 'HappyOrder server - browse to /help for info'
+        message: "HappyOrder backend server - browse to /help for info"
       });
     });
 
@@ -147,7 +147,7 @@ class App {
       }
     });
     router.get('/settings', (req:any, res:any, next:any) => {
-      console.log('enter settings');
+      //console.log('enter settings');
       if (webservice) {
         webservice.loadSettings(res);
       }
@@ -156,7 +156,7 @@ class App {
       }
     });
     router.get('/table', (req:any, res:any, next:any) => {
-      console.log('enter table', req.query);
+      //console.log('enter table', req.query);
       if (webservice) {
         webservice.openTable(res, req.query.tableId, req.query.clerkId);
       }
@@ -165,7 +165,7 @@ class App {
       }
     });
     router.get('/tables', (req:any, res:any, next:any) => {
-      console.log('enter tables');
+      //console.log('enter tables');
       if (webservice) {
         webservice.getTablesStates(res, req.query.clerkId);
       }
@@ -174,7 +174,7 @@ class App {
       }
     });
     router.get('/status', (req:any, res:any, next:any) => {
-      console.log('enter status');
+      //console.log('enter status');
       if (webservice) {
         webservice.status(res);
       }
@@ -194,7 +194,7 @@ class App {
 
     });
     router.get('/update', (req:any, res:any, next:any) => {
-      console.log('enter update', req.query);
+      //console.log('enter update', req.query);
       if (webservice) {
         webservice.update(res);
       }
@@ -231,9 +231,9 @@ class App {
                   }
                   else {
                     // rimpiazziamo i token indirizzo ip del server:
-                    console.log('----ex----',data,'---------');
+                    //console.log('----ex----',data,'---------');
                     let sdata:string = <string>data;
-                    console.log('----SDATA----',sdata,'---------');
+                    //console.log('----SDATA----',sdata,'---------');
 
                     //sdata = sdata.replace('http://localhost:8080/update',
                     //    'http://192.168.11.31:8080/update');
@@ -246,7 +246,7 @@ class App {
           });
     });
     router.get('/get-last-orders', (req:any, res:any, next:any) => {
-        console.log('enter get-last-orders', req.query);
+        //console.log('enter get-last-orders', req.query);
         if (webservice) {
           webservice.getLastOrders(res, req.query);
         }
@@ -254,9 +254,26 @@ class App {
           this.error(res, 'get-last-orders not initialized');
         }
     });
-
+    router.get('/get-fidelity-info', (req:any, res:any, next:any) => {
+      //console.log('enter get-fidelity-info', req.query);
+      if (webservice) {
+        webservice.getFidelityInfo(res, req.query);
+      }
+      else {
+        this.error(res, 'get-fidelity-info not initialized');
+      }
+    });
+    router.get('/create-fidelity', (req:any, res:any, next:any) => {
+      //console.log('enter create-fidelity', req.query);
+      if (webservice) {
+        webservice.createFidelity(res, req.query);
+      }
+      else {
+        this.error(res, 'create-fidelity not initialized');
+      }
+    });
     router.get('/printdoc', (req:any, res:any, next:any) => {
-      console.log('enter printdoc', req.query);
+      //console.log('enter printdoc', req.query);
       if (webservice) {
         webservice.printDoc(res, req.query);
       }

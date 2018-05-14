@@ -1,9 +1,5 @@
-<ion-slides  effect="fade" loop="true" speed="1000" *ngIf="liveService?.slideshow">
-  <ion-slide
-    *ngFor="let slide of liveService.slideshow"
-    (tap)="handleClick();">
-    <img [src]="liveService.config.baseUrl + '/slideshow/' + slide"
-      class="slide-image full-slide"
-      />
-  </ion-slide>
+<ion-slides effect="fade" loop="true" speed="1000" *ngIf="liveService?.slideshow">
+    <ion-slide *ngFor="let slide of liveService.slideshow" (click)="handleClick();">
+        <img [src]="liveService.config.baseUrl + '/slideshow/' + slide" class="slide-image full-slide" />
+    </ion-slide>
 </ion-slides>

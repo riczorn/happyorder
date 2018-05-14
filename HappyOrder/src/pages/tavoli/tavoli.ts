@@ -15,6 +15,7 @@ import { CartService } from  '../../services/cart.service';
 
 import { OrderPage } from '../../pages/order/order';
 import {Cart} from  '../../models/cart';
+import { ConnectionStatusComponent } from '../../components/connection-status/connection-status';
 
 @Component({
   selector: 'page-tavoli',

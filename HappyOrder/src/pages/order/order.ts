@@ -17,6 +17,7 @@ import { CartService } from  '../../services/cart.service';
 import { TavoliPage } from '../../pages/tavoli/tavoli';
 import { OrderPageButtons } from '../../components/order-page/order-page';
 import { CartComponent } from '../../components/cart/cart';
+import { ConnectionStatusComponent } from '../../components/connection-status/connection-status';
 
 // import { OrderButtons } from '../../components/order-buttons/order-buttons';
 // import { CartComponent } from '../../components/cart/cart';

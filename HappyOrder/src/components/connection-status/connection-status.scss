@@ -1,0 +1,29 @@
+connection-status {
+    font-weight: normal;
+    #connectionStatus {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 1rem;
+        text-align: center;
+        background-color: red;
+        border: 3px solid red;
+        transition: 0.3s ease-in-out all;
+        color: white;
+        &.connected {
+            background-color: green;
+        }
+        &.socketConnected {
+            border-color: green;
+        }
+        &.connected.socketConnected {
+            opacity: 0.3;
+        }
+    }
+    #connectionStatusMessage {
+        color: black;
+        background: yellow;
+        border-radius: 0.5rem;
+        border: 1px solid white;
+        padding: 0.5rem 1rem;
+    }
+}

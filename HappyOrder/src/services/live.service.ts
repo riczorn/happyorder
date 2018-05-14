@@ -31,13 +31,23 @@ class Options {
   public Style: string;
   public Feedback: string;
 }
+class ConnectionStatus {
+    public connected: boolean;
+    public socketConnected: boolean;
+    public message: string;
+    constructor() {
+        this.connected = false;
+        this.socketConnected = false;
+        this.message = "";
+    }
+}
 /**
  * The actual service.
  */
 export class LiveService {
     // occhio: variabile aggiornata dal processo di build, build.sh nella root:
     // (lievemente meglio che usare il plugin appVersion che - detto tra noi - manco funzionava!)
-    public versionNumber : string ='1.3.6';
+    public versionNumber : string ='1.3.11';
     public teamListElement:any;
     public user:User;
     public login:any; // the login data
@@ -52,6 +62,7 @@ export class LiveService {
     private urlNames:  Array<string>;
     public slideshow: Array<string>;
     public  connected: boolean;
+    public connectionStatus: ConnectionStatus;
     public  clientId:  number;
     public lastUpdate: number;
     public appType : string;
@@ -71,7 +82,7 @@ export class LiveService {
         this.connected = false;
         this.cart = new Cart();
         this.socket = null;
-
+        this.connectionStatus = new ConnectionStatus();
         this.messageTypes = {
             tick: "tick",
             localError: "localError",
@@ -117,7 +128,8 @@ export class LiveService {
 
         this.urlNames = ['login',
             /*  1- 5 */ 'settings', 'tables', 'cart', 'table', 'status',
-            /*  6-10 */ 'update',   'slideshow', 'get-last-orders', 'printdoc'
+            /*  6-10 */ 'update',   'slideshow', 'get-last-orders', 'printdoc','get-fidelity-info',
+            /*  11.. */ 'create-fidelity'
         ];
         this.urls = {
             local: [
@@ -133,6 +145,9 @@ export class LiveService {
                 {id: 7, url: 'mock/slides.json'},
                 {id: 8, url: 'mock/table.json'},
                 {id: 9, url: 'mock/table.json'},
+                {id: 10, url: 'mock/table.json'},
+
+                {id: 11, url: 'mock/table.json'},
             ],
             remote: [
                 {id: 0, url: '/login'},
@@ -147,6 +162,9 @@ export class LiveService {
                 {id: 7, url: '/slideshow/slides.json'},
                 {id: 8, url: '/get-last-orders'},
                 {id: 9, url: '/printdoc'},
+                {id: 10, url: '/get-fidelity-info'},
+
+                {id: 11, url: '/create-fidelity'},
             ]
         }
         this.lastUpdate = new Date().getTime();

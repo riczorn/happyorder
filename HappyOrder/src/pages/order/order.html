@@ -7,9 +7,9 @@
       </<button-->
             <!--button
           ion-button ion-danger
-          (tap)="askempty()"
+          (click)="askempty()"
           >X</button-->
-            <button ion-button (tap)='sendCart($event)'>
+            <button ion-button (click)='sendCart($event)'>
         <ion-icon *ngIf="cart.items.length==0" name="ios-arrow-dropleft-outline"></ion-icon>
         <ion-icon *ngIf="cart.items.length>0" name="ios-print-outline"></ion-icon>
 
@@ -20,13 +20,13 @@
 
         </ion-buttons>
         <ion-segment [(ngModel)]="visible.active">
-            <ion-segment-button value="0" (tap)="doFlex(1,0)">
+            <ion-segment-button value="0" (click)="doFlex(1,0)">
                 <ion-icon name="ios-map-outline"></ion-icon>
             </ion-segment-button>
-            <ion-segment-button value="1" (tap)="doFlex(1,1)">
+            <ion-segment-button value="1" (click)="doFlex(1,1)">
                 <ion-icon name="ios-code-outline"></ion-icon>
             </ion-segment-button>
-            <ion-segment-button value="2" (tap)="doFlex(0,1)">
+            <ion-segment-button value="2" (click)="doFlex(0,1)">
                 <span class="count" *ngIf="cart.totals.count>0">{{ cart.totals.count }}</span>
                 <ion-icon name="ios-cart-outline"></ion-icon>
             </ion-segment-button>
@@ -34,16 +34,16 @@
 
         <!--button
           ion-button ion-danger
-          (tap)="doFlex(1,0)"
+          (click)="doFlex(1,0)"
           ><ion-icon name="pizza" md="pizza"></ion-icon></button>
 
       <button
           ion-button ion-danger
-          (tap)="doFlex(1,1)"
+          (click)="doFlex(1,1)"
           ><ion-icon name="android-star-half" md="android-star-half"></ion-icon></button>
       <button
         ion-button
-        (tap)="doFlex(0,1)"
+        (click)="doFlex(0,1)"
         ><ion-icon name="cart" md="ios-cart-outline"></ion-icon></button-->
 
         <!--button ion-button icon-left>
@@ -54,6 +54,10 @@
 
         <ion-buttons end>
             <span class="totale" item-end>{{ cart.totals.totale | number:'1.2' }} €</span>
+
+        </ion-buttons>
+        <ion-buttons end>
+            <connection-status></connection-status>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>

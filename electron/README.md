@@ -27,8 +27,22 @@ id: electron.happyorder.it
 
     Feedback visivo, vibrazione e suono sugli eventi principali.
     
-- 1.3.6 (21/4/2018)
+- 1.3.9 (24/4/2018)
 
-    vedi note app android  
+    Shuffle the slideshow using the Fisher-Yates shuffle
     
+- 1.3.10 (9/5/2018)
+
+    Added numbered prepaid fidelity support (gutschein)
+    See configuration docs to enable - trigger through the
+    payment button, which will also contain any other fixed-amount gutscheins.
+
+- 1.3.11 (10/5/2018)
+
+    Keepalive on socket, and a nice keepalive signal on the main 
+    order and tables and customer cart pages
+    When re-printing an old older, print the document corrensponding
+    to the button pressed.
+
+
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

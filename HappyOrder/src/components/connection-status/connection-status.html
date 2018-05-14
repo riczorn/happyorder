@@ -1,0 +1,6 @@
+<div id="connectionStatus" [ngClass]="getClass()" (click)="toggleStatus()">
+    &middot;
+</div>
+<div id="connectionStatusMessage" (click)="toggleStatus()" *ngIf="showStatusMessage">
+    {{ getStatusMessage() }}
+</div>

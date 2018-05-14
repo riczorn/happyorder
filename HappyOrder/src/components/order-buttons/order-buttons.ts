@@ -66,8 +66,8 @@ export class OrderButtons {
       console.log('richiesta azione: ',button.action, button.link);
 
     } else {
-      console.log('button',button);
-      console.log('a section button?',button.action, button.link);
+      //console.log('button',button);
+      console.log('a section button?',button);
     }
   }
 

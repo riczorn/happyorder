@@ -1,4 +1,4 @@
-<button ion-button (tap)="close('cancel',-1)">Chiudi</button>
+<button ion-button (click)="close('cancel',-1)">Chiudi</button>
 <ion-list *ngIf="orders?.orders?.length > 0 ">
 
     <ion-item class="reprint-list reprint-header">
@@ -13,7 +13,7 @@
         </span>
 
     </ion-item>
-    <ion-item *ngFor=" let order of orders.orders " class="reprint-list" (tap)="close('print',order.id)">
+    <ion-item *ngFor=" let order of orders.orders " class="reprint-list" (click)="close('print',order.id)">
         <span class="table">
           t.{{order.tableName}}
         </span>

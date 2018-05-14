@@ -1,13 +1,13 @@
 <ion-content no-padding>
     <ion-buttons>
-        <button ion-button *ngFor=" let page of pages " (tap)=" showTab(page.page) " [class.active]="(page.page.active)">
+        <button ion-button *ngFor=" let page of pages " (click)=" showTab(page.page) " [class.active]="(page.page.active)">
         {{ page.name }}
     </button>
     </ion-buttons>
 
     <ion-card no-padding no-margin class="itemButtonsDiv" (swipe)="swipeEvent($event)">
         <div class="itemButtons">
-            <!--button ion-button  *ngFor=" let button of pageButtons " (tap)="itemClick(button);"
+            <!--button ion-button  *ngFor=" let button of pageButtons " (click)="itemClick(button);"
          [ngClass]="button.cssClass">
 
        {{ button.name }}

@@ -169,7 +169,7 @@ export class Cart {
         self.rigaOrdineSelezionata = self.lastArt;
       }
     }
-    self.updateTotals();
+    self.updateTotals(currentArt);
   }
 
   flagsToAction(doConferma, doElimina, doScontrino) {
@@ -340,7 +340,7 @@ export class Cart {
     if (typeof this.onUpdateTotals === "function") {
       // just the item names, totals, prices, and grand total:
 
-      this.onUpdateTotals(itemComponent);
+      this.onUpdateTotals(itemComponent?itemComponent:null);
     }
   }
 
@@ -358,7 +358,7 @@ export class Cart {
 
   delete(item) {
     
-    console.log('deleting');
+    //console.log('deleting',item);
     let self = this;
     for (let i = 0; i< self.items.length; i++) {
         if (self.items[i] == item) {

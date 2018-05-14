@@ -5,19 +5,19 @@
     </ion-item>
 
     <ion-segment>
-        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (tap)=" close('add') " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('add') " value="">
             <ion-icon name="ios-add-circle-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (tap)=" close('remove') " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('remove') " value="">
             <ion-icon name="ios-remove-circle-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (tap)=" close('delete') " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('delete') " value="">
             <ion-icon name="ios-trash-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button *ngIf="item.idStatoRiga==2" color="primary" (tap)=" close('storno') " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga==2" color="primary" (click)=" close('storno') " value="">
             <ion-icon name="ios-remove-circle-outline"></ion-icon>
             &nbsp; Storno
         </ion-segment-button>
@@ -31,7 +31,7 @@
     </ion-item>
 
     <ion-segment>
-        <ion-segment-button *ngIf="item.idStatoRiga<2 " color="primary" class="icon-only" (tap)=" close('deleteChild')  " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga<2 " color="primary" class="icon-only" (click)=" close('deleteChild')  " value="">
             <ion-icon name="trash-b"></ion-icon>
         </ion-segment-button>
     </ion-segment>

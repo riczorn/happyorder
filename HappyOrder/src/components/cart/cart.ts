@@ -15,6 +15,7 @@ import { TavoliPage } from '../../pages/tavoli/tavoli';
 import { PopoverCartComponent } from '../../components/popover-cart/popover-cart';
 import { PopoverSudoComponent } from '../../components/popover-sudo/popover-sudo';
 import { PopoverLastordersComponent } from '../../components/popover-lastorders/popover-lastorders';
+import { PopoverFidelityComponent } from '../../components/popover-fidelity/popover-fidelity'
 import { List } from 'ionic-angular';
 
 @Component({
@@ -107,7 +108,7 @@ export class CartComponent {
     return false;
   }
 
-  showLastOrders(data:any) {
+  showLastOrders(data:any, tipoDocumento:number) {
     let self = this;
     let event = {status:'useless'};
     let popoverLastOrders = this.popoverCtrl.create(PopoverLastordersComponent, {
@@ -121,7 +122,7 @@ export class CartComponent {
       // console.log('AHA '  + JSON.stringify(popoverData));
       if (popoverData && (popoverData.action=='print')) {
         //alert('print ' + popoverData.docId);
-        self.cartService.printDoc(popoverData.orderId,
+        self.cartService.printDoc(popoverData.orderId,tipoDocumento,
             function(data:any) {
               //console.log('printDoc returned',data);
               self.cartService.toastAndVibrate('Stampato', 
@@ -129,6 +130,56 @@ export class CartComponent {
             }
         );
         // send as docID (capital D)
+      }
+    });
+
+    return false;
+  }
+
+  /**
+   * This behaves differently based on context.
+   * If the cart is empty, show the "sell a new gutschein"
+   * if the cart is full, show the add payment features.
+   * (param modePay of popoverFidelity)
+   */
+  showPaga() {
+    let self = this;
+    let event = {status:'useless'};
+    
+    let popoverFidelity = this.popoverCtrl.create(PopoverFidelityComponent, {
+      cart:self.cart, modePay:self.cart.totals.count !== 0});
+
+      popoverFidelity.present({
+      ev: event
+    });
+
+    popoverFidelity.onDidDismiss ( (popoverData) => {
+      
+      if (popoverData && (popoverData.action=='pay')) {
+        //console.log('popoverFidelity callback',popoverData.fidelity);
+        // paga tutto o solo una parte con fidelity a seconda della disponibilità
+        let amountToPay = Math.min(popoverData.fidelity.val, self.cart.totals.totale);
+        // il formato del pagamento è:
+        let payment = {
+          id: popoverData.fidelity.id,
+           // don't be fooled: popoverData.fidelity.id
+           // is just the db id of the fidelity
+
+          val: amountToPay,
+          code: popoverData.fidelity.code,
+          name: "Gutschein n."+popoverData.fidelity.aname
+        }
+        self.cart.addPayment(payment);
+
+      } else if (popoverData && (popoverData.action=='sell')) {
+        self.cartService.createFidelity(popoverData.amount, (data)=>{
+          //console.log('Fidelity Creata', data);
+          if (data && data.status && data.status=="ok") {
+            self.cartService.toastAndVibrate(data.data._, self.liveService.messageTypes.success );
+          } else {
+            self.cartService.toastAndVibrate('Fidelity non creata', self.liveService.messageTypes.remoteError );
+          }
+        });
       }
     });
 
@@ -270,6 +321,10 @@ export class CartComponent {
       case "Fpagedown":
         console.log('pagedown');
         return;
+      case "Fpaga":
+        //console.log('Paga!');
+        self.showPaga();
+        return;
     }
 
     /*
@@ -281,12 +336,17 @@ export class CartComponent {
      *   (eventually filtering on non-existing orders)
      * - cart full, as usual.
      */
-    if (self.cart.items.length === 0) {
+    let actionConto : boolean;
+    // vediamo se ho premuto un bottone scontrino o simili.
+    let action = self.cart.getAction(button.link);
+    let tipoDocumento = self.cart.doc.tipoDocumento;
+    if (self.cart.items.length === 0 && tipoDocumento>0 && 
+      tipoDocumento!==9 && tipoDocumento!==4) {
       // cart is empty, get a list of orders:
       // window.alert('cart is empty');
       self.cartService.getLastOrders(-1,function(data:any) {
         //console.log('getLastOrders returned',data);
-        self.showLastOrders(data);
+        self.showLastOrders(data, tipoDocumento);
       });
       
     } 

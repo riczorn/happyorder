@@ -130,7 +130,7 @@ export class LoginPage {
 
 
             } else {
-              console.log('Interfaccia client display');
+              //console.log('Interfaccia client display');
               self.navCtrl.setRoot(CartPage);
             }
           } else {

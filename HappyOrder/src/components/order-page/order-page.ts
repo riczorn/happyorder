@@ -47,8 +47,7 @@ export class OrderPageButtons {
     } else if ( button.link ) { //}cssClass=='bfunction') {
       console.log('richiesta azione: ',button.action, button.link);
     } else {
-      console.log('button',button);
-      console.log('a section button?',button.action, button.link);
+      console.log('a section button?',button);
     }
   }
 

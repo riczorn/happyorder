@@ -1,23 +1,119 @@
 <html>
+
 <head>
-  <meta charset="UTF-8">
-  <title>HappyOrder app backend</title>
+    <meta charset="UTF-8">
+    <title>HappyOrder app backend</title>
+    <style>
+        h1,
+        h3,
+        h4,
+        h5 {
+            font-weight: 400;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0 0 0 1rem;
+        }
+        
+        ul li {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+        }
+        
+        ul.calls ul>li {
+            /*list-style-type: circle;*/
+            background-color: #f1f8ff;
+            border: 1px solid #c8e1ff;
+            border-radius: 4px;
+            display: flex;
+        }
+        
+        ul.calls ul>li>* {}
+        
+        ul a {
+            flex-basis: 7rem;
+        }
+        
+        span.desc {}
+        
+        body {
+            padding: 1rem;
+            font-weight: 300;
+            font-family: sans-serif;
+            overflow: visible;
+        }
+    </style>
 </head>
+
 <body>
-  <p>You have reached HappyOrder's app backend.<br>
-     This is a REST service with JSON output.</p>
-  <p>Main entry points:</p>
-  <ul>
-    <li>/status</li>
-    <li>/login</li>
-    <li>/opentable</li>
-    <li>/tables</li>
-    <li>/table</li>
-    <li>/sendcart</li>
-    <li>/update</li>
-    <li>/update.xml</li>
-  </ul>
-  <p>
-    Write code@fasterjoomla.com for info &amp; support</p>
+    <p>You have reached
+        <a href="https://happyorder.it" target="_blank">
+            HappyOrder</a>'s app backend.
+        <br> This service mostly outputs JSON.
+        <br>This is used by the Android and electron applications, download on the play store or
+        <a href="https://happyorder.it/apk" target="_blank">here</a>
+    </p>
+    <h2>Main entry points:</h2>
+    <ul class="calls">
+        <li>
+            <h3>Service calls</h3>
+            <p>
+                Status calls, used by the app to handle communication<br> Service calls, mainly related to app updates
+            </p>
+            <ul>
+                <li><a href="/">/</a>
+                    <span class="desc"> Query the local server and output the status       </span></li>
+                <li><a href="/status">/status</a>
+                    <span class="desc"> Query the remote server and output the status       </span></li>
+                <li><a href="/update">/update</a>
+                    <span class="desc"> Download the bundled android .apk (also check <a href="https://happyorder.it/apk" target="_blank">here</a>)      </span></li>
+                <li><a href="/update.xml">/update.xml</a>
+                    <span class="desc"> XML description of the update path       </span></li>
+
+            </ul>
+        </li>
+        <li>
+            <h3>Main functions</h3>
+            <p>
+                Handle the normal operations, login, view tables, order, documents.
+            </p>
+
+            <ul>
+                <li><a href="/login">/login</a>
+                    <span class="desc"> Post to login       </span></li>
+                <li><a href="/tables">/tables</a>
+                    <span class="desc"> List tables (with state)       </span></li>
+                <li><a href="/table">/table</a>
+                    <span class="desc"> Open table and load/initialise cart       </span></li>
+                <li><a href="/sendcart">/sendcart</a>
+                    <span class="desc"> Send cart (any cart operation is posted here)       </span></li>
+
+            </ul>
+        </li>
+        <li>
+            <h3>More functionality</h3>
+            <p>
+                Minor functionality, for take-away (slideshow), gutschein / fidelity, reprint documents
+            </p>
+            <ul>
+                <li><a href="/customer-display">/customer-display</a>
+                    <span class="desc"> Show the cart view       </span></li>
+                <li><a href="/slideshow:filename">/slideshow:filename</a>
+                    <span class="desc"> Load a slideshow file       </span></li>
+                <li><a href="/get-last-orders">/get-last-orders</a>
+                    <span class="desc"> List the last 20 orders for reprinting       </span></li>
+                <li><a href="/printdoc">/printdoc</a>
+                    <span class="desc"> Print a given document       </span></li>
+                <li><a href="/get-fidelity-info">/get-fidelity-info</a>
+                    <span class="desc"> Retrieve fidelity information (amount and validity)       </span></li>
+                <li><a href="/create-fidelity">/create-fidelity</a>
+                    <span class="desc"> Create (sell) a new fidelity (gutschein)       </span></li>
+            </ul>
+        </li>
+    </ul>
+    <p>
+        Write code@fasterjoomla.com for info &amp; support</p>
 </body>
+
 </html>
