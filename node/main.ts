@@ -15,19 +15,19 @@ var webservice = new WebService(config);
 import App from './lib/app';
 import * as http from 'http';
 
-var port =  8080; // default port, overridden by configuration (/lib/config.ts)
+var port = 8080; // default port, overridden by configuration (/lib/config.ts)
 let localMask = "0.0.0.0";
 webservice.remoteHost = '127.0.0.1'
 
 if (config) {
-  console.log('Read config',config);
- port = config.port;
- localMask = config.localMask ? config.localMask : localMask;
- webservice.remoteHost = config.remoteHost;
- webservice.config = config;
+  console.log('Read config', config);
+  port = config.port + 5;
+  localMask = config.localMask ? config.localMask : localMask;
+  webservice.remoteHost = config.remoteHost;
+  webservice.config = config;
 }
 console.log('Ignition sequence ***********');
-console.log('port',port,'localMask',localMask, 'remoteHost', webservice.remoteHost);
+console.log('port', port, 'localMask', localMask, 'remoteHost', webservice.remoteHost);
 
 App.set('port', port);
 App.set('config', config);
@@ -45,5 +45,5 @@ webservice.setupSocket(server);
 
 //function to note that Express is listening
 function onListening(): void {
- console.log(`Listening on port: ${port}`);
+  console.log(`Listening on port: ${port}`);
 }
