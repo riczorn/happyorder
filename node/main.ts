@@ -21,7 +21,7 @@ webservice.remoteHost = '127.0.0.1'
 
 if (config) {
   console.log('Read config', config);
-  port = config.port + 5;
+  port = config.port;
   localMask = config.localMask ? config.localMask : localMask;
   webservice.remoteHost = config.remoteHost;
   webservice.config = config;

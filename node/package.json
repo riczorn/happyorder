@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "gulp",
+    "start": "node dist/main.js",
     "xric-start": "npm run build:live",
     "xric-build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./app.ts",
     "xric-test": "echo \"Error: no test specified\" && exit 1",
