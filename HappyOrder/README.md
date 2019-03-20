@@ -279,5 +279,10 @@ id: app.happyorder.it
     order and tables and customer cart pages
     When re-printing an old older, print the document corrensponding
     to the button pressed.
+
+- 1.4.01 (19/3/2019)
+
+    Bumped ionic and updated css to handle new behaviour or Chrome for android.
+
     
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

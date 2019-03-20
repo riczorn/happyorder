@@ -273,8 +273,8 @@ export class LoginService {
     });
 
     return this.storage.get('user').then(userString => {
-      // console.log('retrieved user from localStorage ',JSON.stringify(userString));
-      if (userString.length > 0) {
+      console.log('retrieved user from localStorage ', JSON.stringify(userString));
+      if (userString && userString.length) {
         let user = JSON.parse(userString);
         this.liveService.user.login = user.login;
         this.liveService.user.password = user.password;
@@ -320,7 +320,7 @@ export class LoginService {
     if (opts.ColumnCount > 10) opts.ColumnCount = 10;
     if (opts.ButtonHeight < 1) opts.ButtonHeight = 1;
     if (opts.FontSize < 1) opts.FontSize = 1;
-    if (opts.ColumnCount < 2) opts.ColumnCount = 2;
+    if (opts.ColumnCount < 1) opts.ColumnCount = 1;
   }
 
   status(successCallback?: Function) {

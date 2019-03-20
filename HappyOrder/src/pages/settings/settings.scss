@@ -5,4 +5,12 @@ page-settings {
   ion-label {
     white-space:normal;
   }
+  .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] {
+    margin:0;
+  }
+  .number-spinner ion-input input {
+    width:3rem;
+    text-align:center;
+    float:right;
+  }
 }
