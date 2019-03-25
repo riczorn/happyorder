@@ -47,7 +47,7 @@ class ConnectionStatus {
 export class LiveService {
     // occhio: variabile aggiornata dal processo di build, build.sh nella root:
     // (lievemente meglio che usare il plugin appVersion che - detto tra noi - manco funzionava!)
-    public versionNumber: string = '1.4.11';
+    public versionNumber: string ='1.4.12';
     public teamListElement: any;
     public user: User;
     public login: any; // the login data
@@ -111,7 +111,7 @@ export class LiveService {
         this.config = {
             debug: false,
             test: false,
-            baseUrl: 'http://192.168.0.1',
+            baseUrl: 'http://my.happyorder.it/my',
             wsUrl: 'ws://192.168.0.1',
 
         }

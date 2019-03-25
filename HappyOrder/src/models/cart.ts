@@ -250,11 +250,11 @@ export class Cart {
           this.doc.tipoDocumento = 99;
           this.action = this.flagsToAction(false, false, false);
           break;
-        case 'bixolon':
-          this.doc.tipoDocumento = 1;
-          this.action = this.cartActions.orderLocalPrint;
-          return -1;
-          break;
+        // case 'bixolon':
+        //   this.doc.tipoDocumento = 1;
+        //   this.action = this.cartActions.orderLocalPrint;
+        //   return -1;
+
         default:
           // if (linkName.indexOf('servizio')>-1)
           // {

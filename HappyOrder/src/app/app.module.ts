@@ -34,7 +34,9 @@ import { Vibration } from '@ionic-native/vibration';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { Bixolon } from '@ionic-native/bixolon';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 import { HttpModule } from '@angular/http'; // see https://stackoverflow.com/questions/43609853/angular-4-and-ionic-3-no-provider-for-http
 import { IonicStorageModule } from '@ionic/storage';
@@ -103,6 +105,7 @@ import { ConnectionStatusComponent } from '../components/connection-status/conne
     StatusBar,
     SplashScreen,
     Bixolon,
+    BluetoothSerial,
     InAppBrowser,
     // ToastController,
     // Toast,

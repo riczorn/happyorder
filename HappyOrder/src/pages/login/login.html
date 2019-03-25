@@ -56,7 +56,12 @@
                 </ion-label>
                 <ion-input type="text" placeholder="" name="serverUrl" [(ngModel)]="liveService.user.serverUrl"
                     (change)=" loginService.saveStorageSettings() "></ion-input>
+
             </ion-item>
+            <ion-buttons class="presets">
+                <button ion-button (click)="saveServer('192.168.0.1:8080');">192.168.0.1:8080</button>
+                <button ion-button (click)="saveServer('my.happyorder.it/my');">demo</button>
+            </ion-buttons>
             <button id="login-button-connect" type="submit" ion-button color="positive" block>
                 Vai &nbsp;&nbsp; <ion-icon name="connect"></ion-icon>
             </button>
