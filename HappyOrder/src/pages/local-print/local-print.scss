@@ -1,0 +1,18 @@
+page-local-print {
+  ion-content.list{ 
+    max-height:85%;
+    .cartButtons {
+      display:none;
+    }
+  }
+  
+  .cartButtons.localPrint {
+    display:flex;
+    flex-direction:row;
+
+    button {
+      width:50%;
+      height:8rem;
+    }
+  }
+}

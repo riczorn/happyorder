@@ -49,6 +49,7 @@ export class LoginService {
    */
   login(successCallback?: Function) {
     // console.log('login - service');;
+    let self = this;
     let login: string = this.liveService.user.login;
     let password: string = this.liveService.user.password;
     let appVersion: string = this.liveService.versionNumber;
@@ -72,6 +73,14 @@ export class LoginService {
         .subscribe(res => {
           // console.log('login response from server: ', res);
           this.response = res;
+          // in case of a remote settings.json, the login will contain the settings, and need to be applied.
+          console.log('LOGIN', res);
+          if (res.demo && res.settings) {
+            self.liveService.settings = res.settings;
+            self.liveService.settings.demo = true;
+            self.normalizeSettings(self.liveService.settings);
+          }
+
           this.updateLiveServiceWithLoginData();
           // console.log('2');
           if (this.liveService.user.loggedIn) {
@@ -211,7 +220,9 @@ export class LoginService {
           self.disconnectTimeout = null;
           return;
         }
-        socket.connect();
+        if (!self.liveService.settings.demo) {
+          socket.connect();
+        }
       }, 5000);
 
       /*console.log('SOCKET disconnect event');
@@ -488,6 +499,10 @@ export class LoginService {
 
   normalizeSettings(result) {
     let self = this;
+    if (!result.settings) {
+      return;
+    }
+
     result.settings.printLocations = self.extendArray(result.settings.printLocations);
     result.settings.priceLists = self.extendArray(result.settings.priceLists);
     result.settings.documents = self.extendArray(result.settings.documents);

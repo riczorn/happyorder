@@ -14,14 +14,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SettingsPage } from '../pages/settings/settings';
 import { TavoliPage } from '../pages/tavoli/tavoli';
 import { OrderPage } from '../pages/order/order';
+import { LocalPrintPage } from '../pages/local-print/local-print';
 
 // import { HomePage } from '../pages/home/home';
 // import { HelpPage } from '../pages/help/help';
 
 
 import { LoginPage } from '../pages/login/login';
-import { LiveService } from  '../services/live.service';
-import {CartService} from  '../services/cart.service';
+import { LiveService } from '../services/live.service';
+import { CartService } from '../services/cart.service';
 
 
 @Component({
@@ -30,19 +31,19 @@ import {CartService} from  '../services/cart.service';
 })
 export class HappyOrderApp {
   @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = LoginPage;
+  rootPage: any = LoginPage;
 
-  constructor(platform: Platform, 
-    statusBar: StatusBar, splashScreen: SplashScreen, 
+  constructor(platform: Platform,
+    statusBar: StatusBar, splashScreen: SplashScreen,
     private liveService: LiveService,
-    private cartService:CartService) {
+    private cartService: CartService) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       setTimeout(() => {
         splashScreen.hide();
-      },500);
+      }, 500);
     });
   }
   // goToHome(params){
@@ -53,19 +54,19 @@ export class HappyOrderApp {
   //   if (!params) params = {};
   //   this.navCtrl.setRoot(HelpPage);
   // }
-  goToLogin(params){
+  goToLogin(params) {
     if (!params) params = {};
     this.navCtrl.setRoot(LoginPage);
   }
-  goToSettings(params){
+  goToSettings(params) {
     if (!params) params = {};
     this.navCtrl.setRoot(SettingsPage);
   }
-  goToTavoli(params){
+  goToTavoli(params) {
     if (!params) params = {};
     this.navCtrl.setRoot(TavoliPage);
   }
-  goToOrder(params){
+  goToOrder(params) {
     if (!params) params = {};
     if (this.liveService.user && this.liveService.user.table) {
       this.navCtrl.setRoot(OrderPage);

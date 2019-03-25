@@ -47,7 +47,7 @@ class ConnectionStatus {
 export class LiveService {
     // occhio: variabile aggiornata dal processo di build, build.sh nella root:
     // (lievemente meglio che usare il plugin appVersion che - detto tra noi - manco funzionava!)
-    public versionNumber: string ='1.4.11';
+    public versionNumber: string = '1.4.11';
     public teamListElement: any;
     public user: User;
     public login: any; // the login data
@@ -229,7 +229,12 @@ export class LiveService {
 
     }
 
-
+    /**
+     * for bixolon printers, directly print (if enabled in the config)
+     */
+    localPrint() {
+        console.log('bixolon localPrint', this.cart);
+    }
 
     /**
      * Generic error handler for observables.

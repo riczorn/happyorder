@@ -54,14 +54,15 @@ export class Cart {
     this.idTavolo = -1;
     this.clerkId = -1;
     this.totals = { totale: 0, sconto: 0, totaleScontato: 0, count: 0 };
-    this.doc =    { tipoDocumento: 1, intestato: 1 };
+    this.doc = { tipoDocumento: 1, intestato: 1 };
     this.cartActions = {
       orderConfirm: 1,
       orderPrint: 2,
       orderDelete: 4,
       printDocument: 8,
       orderSplit: 16,
-      orderStorno: 32
+      orderStorno: 32,
+      orderLocalPrint: 64,
     };
     this.payments = new Array();
     this.items = new Array();
@@ -249,7 +250,11 @@ export class Cart {
           this.doc.tipoDocumento = 99;
           this.action = this.flagsToAction(false, false, false);
           break;
-        
+        case 'bixolon':
+          this.doc.tipoDocumento = 1;
+          this.action = this.cartActions.orderLocalPrint;
+          return -1;
+          break;
         default:
           // if (linkName.indexOf('servizio')>-1)
           // {
@@ -260,10 +265,10 @@ export class Cart {
           //   this.aggiungiArt(-1,parseInt(fservizio) / 10,1,'Servizio','1','0');
           // }
           // else
-          {
-            console.error('Action non riconosciuta: ', linkName);
-            // this.action = this.flagsToAction(true, false, false);
-          }
+
+          console.error('Action non riconosciuta: ', linkName);
+          // this.action = this.flagsToAction(true, false, false);
+
           this.action = this.flagsToAction(true, false, false);
           break;
       }
@@ -340,7 +345,7 @@ export class Cart {
     if (typeof this.onUpdateTotals === "function") {
       // just the item names, totals, prices, and grand total:
 
-      this.onUpdateTotals(itemComponent?itemComponent:null);
+      this.onUpdateTotals(itemComponent ? itemComponent : null);
     }
   }
 
@@ -357,14 +362,14 @@ export class Cart {
   }
 
   delete(item) {
-    
+
     //console.log('deleting',item);
     let self = this;
-    for (let i = 0; i< self.items.length; i++) {
-        if (self.items[i] == item) {
-          self.items.splice(i,1);
-        }
-    }    
+    for (let i = 0; i < self.items.length; i++) {
+      if (self.items[i] == item) {
+        self.items.splice(i, 1);
+      }
+    }
   }
 
   doStorno(idRigaOrdine, shouldReload) {
@@ -389,8 +394,8 @@ export class Cart {
     let result = false;
     for (let item of this.items) {
       if (
-        (item.idStatoRiga<2)
-        && 
+        (item.idStatoRiga < 2)
+        &&
         (item.quantita !== 0)
       ) {
         result = true;

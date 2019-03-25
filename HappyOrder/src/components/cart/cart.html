@@ -3,7 +3,8 @@
         <div *ngFor=" let item of cart.items ">
             <!--ion-item-sliding-->
             <!--(hold)=" showContext($event, item) "-->
-            <ion-item (click)=" select($event, item)" (swipe)="swipeEvent($event, item)" (hold)=" showContext($event, item);" [ngClass]="getItemClass(item)">
+            <ion-item (click)=" select($event, item)" (swipe)="swipeEvent($event, item)"
+                (hold)=" showContext($event, item);" [ngClass]="getItemClass(item)">
 
                 <ion-label>{{ item.descrizione }}</ion-label>
                 <div item-end>
@@ -45,14 +46,16 @@
 
             <div *ngIf="item.children?.length">
 
-                <ion-item *ngFor=" let child of item.children " (click)=" select( $event, child ) " (hold)=" showContext($event, item, child);" (swipe)="swipeEvent($event, child)" [ngClass]="getItemClass(child)">
+                <ion-item *ngFor=" let child of item.children " (click)=" select( $event, child ) "
+                    (hold)=" showContext($event, item, child);" (swipe)="swipeEvent($event, child)"
+                    [ngClass]="getItemClass(child)">
 
                     <ion-label>{{ child.descrizione }}</ion-label>
                     <div item-end>
                         {{ child.quantita }} * {{ child.prezzo | number:'1.2' }}
                         <button class="iconButton" icon-only (click)="showContext($event, child, item)">
-                <ion-icon name="more"></ion-icon>
-              </button>
+                            <ion-icon name="more"></ion-icon>
+                        </button>
                     </div>
 
 
@@ -85,9 +88,9 @@
 
     </ion-list>
 
-    <ion-buttons>
+    <ion-buttons class="cartButtons">
         <button ion-button *ngFor=" let button of functionButtons " (click)=" sendCartCommand($event, button) ">
-        {{ button?.name }}
-    </button>
+            {{ button?.name }}
+        </button>
     </ion-buttons>
 </ion-content>

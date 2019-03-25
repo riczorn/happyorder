@@ -18,11 +18,12 @@ import { LoginPage } from '../pages/login/login';
 import { SettingsPage } from '../pages/settings/settings';
 import { TavoliPage } from '../pages/tavoli/tavoli';
 import { OrderPage } from '../pages/order/order';
+import { LocalPrintPage } from '../pages/local-print/local-print';
 import { CartPage } from '../pages/cart/cart';
-import {LiveService} from  '../services/live.service';
-import {LoginService} from  '../services/login.service';
+import { LiveService } from '../services/live.service';
+import { LoginService } from '../services/login.service';
 
-import {CartService} from  '../services/cart.service';
+import { CartService } from '../services/cart.service';
 // import { CoreModule } from './core.module';
 
 // import {HomePage} from '../pages/home/home';
@@ -33,8 +34,9 @@ import { Vibration } from '@ionic-native/vibration';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Bixolon } from '@ionic-native/bixolon';
 
-import { HttpModule} from '@angular/http'; // see https://stackoverflow.com/questions/43609853/angular-4-and-ionic-3-no-provider-for-http
+import { HttpModule } from '@angular/http'; // see https://stackoverflow.com/questions/43609853/angular-4-and-ionic-3-no-provider-for-http
 import { IonicStorageModule } from '@ionic/storage';
 import { OrderButtons } from '../components/order-buttons/order-buttons';  //https://stackoverflow.com/questions/44825956/storage-provider-not-working
 import { CartComponent } from '../components/cart/cart';
@@ -55,6 +57,8 @@ import { ConnectionStatusComponent } from '../components/connection-status/conne
     LoginPage,
     SettingsPage,
     TavoliPage,
+
+    LocalPrintPage,
     OrderPage,
     CartPage,
     OrderButtons,
@@ -84,6 +88,7 @@ import { ConnectionStatusComponent } from '../components/connection-status/conne
     SettingsPage,
     TavoliPage,
     OrderPage,
+    LocalPrintPage,
     CartPage,
     PopoverCartComponent,
     PopoverSudoComponent,
@@ -97,13 +102,14 @@ import { ConnectionStatusComponent } from '../components/connection-status/conne
     CartService,
     StatusBar,
     SplashScreen,
+    Bixolon,
     InAppBrowser,
     // ToastController,
     // Toast,
     Vibration,
     // AppUpdate,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
 
   ]
 })
-export class AppModule {}
+export class AppModule { }

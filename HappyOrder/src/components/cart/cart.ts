@@ -8,10 +8,11 @@
 
 import { Component, Input, ViewChild } from '@angular/core';
 import { NavController, Content, PopoverController } from 'ionic-angular';//ViewController , Platform, NavController, NavParams
-import { LiveService } from  '../../services/live.service';
-import { Cart } from  '../../models/cart';
-import { CartService } from  '../../services/cart.service';
+import { LiveService } from '../../services/live.service';
+import { Cart } from '../../models/cart';
+import { CartService } from '../../services/cart.service';
 import { TavoliPage } from '../../pages/tavoli/tavoli';
+import { LocalPrintPage } from '../../pages/local-print/local-print';
 import { PopoverCartComponent } from '../../components/popover-cart/popover-cart';
 import { PopoverSudoComponent } from '../../components/popover-sudo/popover-sudo';
 import { PopoverLastordersComponent } from '../../components/popover-lastorders/popover-lastorders';
@@ -32,18 +33,18 @@ export class CartComponent {
   public resetFunction: Function;
 
   constructor(private cartService: CartService,
-              private liveService: LiveService,
-              public navCtrl: NavController,
-              public popoverCtrl: PopoverController) {
+    private liveService: LiveService,
+    public navCtrl: NavController,
+    public popoverCtrl: PopoverController) {
     let self = this;
     this.cart = this.liveService.cart;
     this.functionButtons = this.liveService.settings.buttons.client.buttonsPreview;
-    this.cart.onUpdateTotals = function(item) {
+    this.cart.onUpdateTotals = function (item) {
       self.onUpdateTotals(item);
     }
   }
 
-  select(event, item:any) {
+  select(event, item: any) {
     if (event.stopPropagation) {
       event.stopPropagation();
     }
@@ -64,16 +65,16 @@ export class CartComponent {
   removePayment(event, payment) {
     //console.log('removePayment',payment)
     if (payment.itype) {
-      this.cart.payments.splice(0,this.cart.payments.length);
+      this.cart.payments.splice(0, this.cart.payments.length);
     }
-  }s
+  } s
 
   // presentPopover(myEvent) {
   //
   // }
 
-/* mostra un menù contestuale su action hold, da testare */
-  showContext(event, item, childParentItem:any) {
+  /* mostra un menù contestuale su action hold, da testare */
+  showContext(event, item, childParentItem: any) {
     let self = this;
     let cart = self.cart;
     if (event && event.stopPropagation) {
@@ -81,21 +82,22 @@ export class CartComponent {
     }
 
     let popover = this.popoverCtrl.create(PopoverCartComponent, {
-      item : item,
-      cart : self.cart});
+      item: item,
+      cart: self.cart
+    });
     // console.log('popover',popover);
     // popover.item = item;
     // popover.cart = this.cart;
     popover.present({
       ev: event
     });
-    popover.onDidDismiss ( (popoverData) => {
+    popover.onDidDismiss((popoverData) => {
       // console.log('popoverData',popoverData);
       switch (popoverData) {
-        case 'add': self.changeQt(cart.items, item, +1);break;
-        case 'remove': self.changeQt(cart.items, item, -1);break;
-        case 'delete': self.deleteChild(cart.items, item);break;
-        case 'storno': self.storno(event, cart.items, item);break;
+        case 'add': self.changeQt(cart.items, item, +1); break;
+        case 'remove': self.changeQt(cart.items, item, -1); break;
+        case 'delete': self.deleteChild(cart.items, item); break;
+        case 'storno': self.storno(event, cart.items, item); break;
         case 'deleteChild': self.deleteChild(childParentItem.children, item); break;
       }
     });
@@ -108,26 +110,27 @@ export class CartComponent {
     return false;
   }
 
-  showLastOrders(data:any, tipoDocumento:number) {
+  showLastOrders(data: any, tipoDocumento: number) {
     let self = this;
-    let event = {status:'useless'};
+    let event = { status: 'useless' };
     let popoverLastOrders = this.popoverCtrl.create(PopoverLastordersComponent, {
-      orders:data});
+      orders: data
+    });
 
-      popoverLastOrders.present({
+    popoverLastOrders.present({
       ev: event
     });
 
-    popoverLastOrders.onDidDismiss ( (popoverData) => {
+    popoverLastOrders.onDidDismiss((popoverData) => {
       // console.log('AHA '  + JSON.stringify(popoverData));
-      if (popoverData && (popoverData.action=='print')) {
+      if (popoverData && (popoverData.action == 'print')) {
         //alert('print ' + popoverData.docId);
-        self.cartService.printDoc(popoverData.orderId,tipoDocumento,
-            function(data:any) {
-              //console.log('printDoc returned',data);
-              self.cartService.toastAndVibrate('Stampato', 
-                self.liveService.messageTypes.success);
-            }
+        self.cartService.printDoc(popoverData.orderId, tipoDocumento,
+          function (data: any) {
+            //console.log('printDoc returned',data);
+            self.cartService.toastAndVibrate('Stampato',
+              self.liveService.messageTypes.success);
+          }
         );
         // send as docID (capital D)
       }
@@ -144,40 +147,41 @@ export class CartComponent {
    */
   showPaga() {
     let self = this;
-    let event = {status:'useless'};
-    
-    let popoverFidelity = this.popoverCtrl.create(PopoverFidelityComponent, {
-      cart:self.cart, modePay:self.cart.totals.count !== 0});
+    let event = { status: 'useless' };
 
-      popoverFidelity.present({
+    let popoverFidelity = this.popoverCtrl.create(PopoverFidelityComponent, {
+      cart: self.cart, modePay: self.cart.totals.count !== 0
+    });
+
+    popoverFidelity.present({
       ev: event
     });
 
-    popoverFidelity.onDidDismiss ( (popoverData) => {
-      
-      if (popoverData && (popoverData.action=='pay')) {
+    popoverFidelity.onDidDismiss((popoverData) => {
+
+      if (popoverData && (popoverData.action == 'pay')) {
         //console.log('popoverFidelity callback',popoverData.fidelity);
         // paga tutto o solo una parte con fidelity a seconda della disponibilità
         let amountToPay = Math.min(popoverData.fidelity.val, self.cart.totals.totale);
         // il formato del pagamento è:
         let payment = {
           id: popoverData.fidelity.id,
-           // don't be fooled: popoverData.fidelity.id
-           // is just the db id of the fidelity
+          // don't be fooled: popoverData.fidelity.id
+          // is just the db id of the fidelity
 
           val: amountToPay,
           code: popoverData.fidelity.code,
-          name: "Gutschein n."+popoverData.fidelity.aname
+          name: "Gutschein n." + popoverData.fidelity.aname
         }
         self.cart.addPayment(payment);
 
-      } else if (popoverData && (popoverData.action=='sell')) {
-        self.cartService.createFidelity(popoverData.amount, (data)=>{
+      } else if (popoverData && (popoverData.action == 'sell')) {
+        self.cartService.createFidelity(popoverData.amount, (data) => {
           //console.log('Fidelity Creata', data);
-          if (data && data.status && data.status=="ok") {
-            self.cartService.toastAndVibrate(data.data._, self.liveService.messageTypes.success );
+          if (data && data.status && data.status == "ok") {
+            self.cartService.toastAndVibrate(data.data._, self.liveService.messageTypes.success);
           } else {
-            self.cartService.toastAndVibrate('Fidelity non creata', self.liveService.messageTypes.remoteError );
+            self.cartService.toastAndVibrate('Fidelity non creata', self.liveService.messageTypes.remoteError);
           }
         });
       }
@@ -196,12 +200,12 @@ export class CartComponent {
   getItemClass(item) {
     let cssClass = '';
 
-    if (item.idTipoArticolo==1) {
+    if (item.idTipoArticolo == 1) {
       cssClass = 'article';
     } else {
       cssClass = 'extra';
     }
-    if (item.idStatoRiga>1) {
+    if (item.idStatoRiga > 1) {
       cssClass += ' saved';
     }
     if (this.isSelected(item)) {
@@ -213,7 +217,7 @@ export class CartComponent {
   deleteChild(collection, item) {
     var index = collection.indexOf(item, 0);
     if (index > -1) {
-       collection.splice(index, 1);
+      collection.splice(index, 1);
     }
     // delete(collection[item]);
     this.updateTotals(item);
@@ -224,7 +228,7 @@ export class CartComponent {
     if (item.quantita === 0) {
       var index = collection.indexOf(item, 0);
       if (index > -1) {
-         collection.splice(index, 1);
+        collection.splice(index, 1);
       }
     }
     // delete(collection[item]);
@@ -237,7 +241,7 @@ export class CartComponent {
     * creato da un supervisore.
 
     */
-  storno (event, collection, item) {
+  storno(event, collection, item) {
     if (this.liveService.user.hasPrivilege('storno')) {
       item.quantita -= 1;
       this.sendCartStorno();
@@ -258,33 +262,34 @@ export class CartComponent {
     // ];
     let clerks = this.liveService.settings.clerks.byPrivilege('storno');
     if (clerks.length == 0) {
-      self.cartService.toastAndVibrate('Nessun cameriere ha il privilegio storno',this.liveService.messageTypes.localError);
+      self.cartService.toastAndVibrate('Nessun cameriere ha il privilegio storno', this.liveService.messageTypes.localError);
       return false;
     } // else
     // console.log('222', clerks);
     let popover = this.popoverCtrl.create(PopoverSudoComponent, {
-      clerks : clerks,
-      cart : self.cart});
+      clerks: clerks,
+      cart: self.cart
+    });
     // console.log('popover',popover);
     // popover.item = item;
     // popover.cart = this.cart;
     popover.present({
       ev: event
     });
-    popover.onDidDismiss ( (popoverData) => {
+    popover.onDidDismiss((popoverData) => {
       //  console.log('popoverData', popoverData);
-       if (popoverData && popoverData) {
-          switch (popoverData.action) {
-            case 'cancel':
-              // console.log('cancel storno');
-              break;
-            case 'storno':
-              // console.log('storno!!!',popoverData);
-              self.cart.clerkId = popoverData.clerkId;
-              item.quantita -= 1;
-              self.sendCartStorno();
-              break;
-          }
+      if (popoverData && popoverData) {
+        switch (popoverData.action) {
+          case 'cancel':
+            // console.log('cancel storno');
+            break;
+          case 'storno':
+            // console.log('storno!!!',popoverData);
+            self.cart.clerkId = popoverData.clerkId;
+            item.quantita -= 1;
+            self.sendCartStorno();
+            break;
+        }
       }
     });
 
@@ -296,12 +301,12 @@ export class CartComponent {
     let self = this;
     if (self.cart.items.length) {
       let action = self.cart.cartActions.orderStorno +
-                   self.cart.cartActions.orderPrint +
-                   self.cart.cartActions.orderConfirm;
+        self.cart.cartActions.orderPrint +
+        self.cart.cartActions.orderConfirm;
       // console.log(' cart ',action);
-      self.cartService.sendCart(self.cart, action, function(data:any) {
-        self.cartService.openTable(self.liveService.user.table, function(tableData) {
-            // console.log('updated cart ',action);
+      self.cartService.sendCart(self.cart, action, function (data: any) {
+        self.cartService.openTable(self.liveService.user.table, function (tableData) {
+          // console.log('updated cart ',action);
         });
       });
     }
@@ -314,16 +319,20 @@ export class CartComponent {
       event.stopPropagation();
     }
     switch (button.link) {
-      case "Fpageup": 
-          console.log('pageup');
-          
-          return;
+      case "Fpageup":
+        console.log('pageup');
+
+        return;
       case "Fpagedown":
         console.log('pagedown');
         return;
       case "Fpaga":
         //console.log('Paga!');
         self.showPaga();
+        return;
+      case "Fbixolon":
+        console.log('processing cart for bixolon');
+        self.navCtrl.setRoot(LocalPrintPage);
         return;
     }
 
@@ -336,29 +345,29 @@ export class CartComponent {
      *   (eventually filtering on non-existing orders)
      * - cart full, as usual.
      */
-    let actionConto : boolean;
+    let actionConto: boolean;
     // vediamo se ho premuto un bottone scontrino o simili.
     let action = self.cart.getAction(button.link);
     let tipoDocumento = self.cart.doc.tipoDocumento;
-    if (self.cart.items.length === 0 && tipoDocumento>0 && 
-      tipoDocumento!==9 && tipoDocumento!==4) {
+    if (self.cart.items.length === 0 && tipoDocumento > 0 &&
+      tipoDocumento !== 9 && tipoDocumento !== 4) {
       // cart is empty, get a list of orders:
       // window.alert('cart is empty');
-      self.cartService.getLastOrders(-1,function(data:any) {
+      self.cartService.getLastOrders(-1, function (data: any) {
         //console.log('getLastOrders returned',data);
         self.showLastOrders(data, tipoDocumento);
       });
-      
-    } 
+
+    }
     else if (self.cart.items.length > 0) {
       if (event && event.target) {
         event.target.disabled = true;
       }
       // getAction also sets the cart.doc.tipoDocumento according to the function.
       let action = self.cart.getAction(button.link);
-    
 
-      self.cartService.sendCart(self.cart, action, function(data:any) {
+
+      self.cartService.sendCart(self.cart, action, function (data: any) {
         console.log('Cart Sent!', data);
         // magari vediamo che risponde?
 
@@ -370,7 +379,7 @@ export class CartComponent {
 
       });
     } else {
-        self.afterOrder(-1);//  self.navCtrl.setRoot(TavoliPage);
+      self.afterOrder(-1);//  self.navCtrl.setRoot(TavoliPage);
     }
   }
 
@@ -379,21 +388,21 @@ export class CartComponent {
     if (self.liveService.user.defaultTableId &&
       (self.liveService.user.defaultTableId == self.liveService.user.tableId)) {
       // self.cart.empty();
-      self.cartService.openTable(self.liveService.user.table, function(tableData) {
-      self.resetOrder({command:'asportoreload'});
-          // console.log('updated cart 2 ',action);
+      self.cartService.openTable(self.liveService.user.table, function (tableData) {
+        self.resetOrder({ command: 'asportoreload' });
+        // console.log('updated cart 2 ',action);
       });
     } else {
       if ((action & this.cart.cartActions.orderDelete) ||
-          (action & this.cart.cartActions.printDocument)) {
-            // if the command is other than a simple confirm, return to
-            // tables.
-            self.navCtrl.setRoot(TavoliPage);
+        (action & this.cart.cartActions.printDocument)) {
+        // if the command is other than a simple confirm, return to
+        // tables.
+        self.navCtrl.setRoot(TavoliPage);
       } else {
         // reload the cart to reflect changes.
-        self.cartService.openTable(self.liveService.user.table, function(tableData) {
-          self.resetOrder({command:'asportoreload'});
-            // console.log('updated cart 2 ',action);
+        self.cartService.openTable(self.liveService.user.table, function (tableData) {
+          self.resetOrder({ command: 'asportoreload' });
+          // console.log('updated cart 2 ',action);
         });
       }
     }
@@ -402,7 +411,7 @@ export class CartComponent {
   /* after an operation, we want to reset the order buttons:
    * the calling page (order.ts) will inject the callback function;
    */
-  resetOrder(data:any) {
+  resetOrder(data: any) {
     // console.log('cart.resetOrder', data);
     let self = this;
     if (typeof self.resetFunction == "function" && self.resetFunction) {
@@ -410,7 +419,7 @@ export class CartComponent {
     }
   }
 
-  updateTotals(item){
+  updateTotals(item) {
     //chiamato dal carrello stesso;
     // le aggiunte da pulsante non triggerano questo evento.
     // console.log('updateTotals',item);
@@ -444,28 +453,28 @@ export class CartComponent {
         let children = this.cartList._elementRef.nativeElement.children;
         // console.log('children',children);
         if (children && children.length) {
-          let elm = children[children.length-1];
+          let elm = children[children.length - 1];
           // console.log('last elm ', elm);
           // no ora selezioniamo l'elemento giusto!
           // potrei controllare se rigaOrdineSelezionata corrisponde?
-          let selectedIndex = children.length-1;
-          for (let i=0; i<this.cart.items.length; i++) {
-            if (this.cart.items[i]==this.cart.rigaOrdineSelezionata) {
+          let selectedIndex = children.length - 1;
+          for (let i = 0; i < this.cart.items.length; i++) {
+            if (this.cart.items[i] == this.cart.rigaOrdineSelezionata) {
               selectedIndex = i;
               // console.log('cart item corrensponds:',i,this.cart.items[i],'=',this.cart.rigaOrdineSelezionata)
               break;
             }
           }
-          if (selectedIndex>children.length-1) {
-            selectedIndex = children.length-1;
+          if (selectedIndex > children.length - 1) {
+            selectedIndex = children.length - 1;
           }
 
           elm = children[selectedIndex];
           // console.log('sel elm ', elm);
           if (elm && elm.scrollIntoView) {
-            setTimeout( () => {
+            setTimeout(() => {
               elm.scrollIntoView();
-            },300 );
+            }, 300);
 
           }
         }
@@ -481,33 +490,33 @@ export class CartComponent {
   }
 
 
-  swipeEvent(e, item:any) {
+  swipeEvent(e, item: any) {
     //console.log('swipe:',e);
-    let minSwipeLength=80;
-    let maxSwipeHeight=30;
-    if (Math.abs(e.deltaX)>minSwipeLength 
-        && Math.abs(e.deltaY)<maxSwipeHeight) {
+    let minSwipeLength = 80;
+    let maxSwipeHeight = 30;
+    if (Math.abs(e.deltaX) > minSwipeLength
+      && Math.abs(e.deltaY) < maxSwipeHeight) {
 
       if (e.stopPropagation) {
         e.stopPropagation();
       }
 
       //console.log('swipe ', e.deltaX<0, e.target);
-      this.handleSwipeLeftRight(e.deltaX<0, item);
-      
+      this.handleSwipeLeftRight(e.deltaX < 0, item);
+
       //this.handleSwipe(e.direction==2) http://www.ionicsync.com/2018/02/how-to-implement-gestures-in-ionic-2.html
     }
   }
 
-  handleSwipeLeftRight(goRight:boolean, item:any) {
+  handleSwipeLeftRight(goRight: boolean, item: any) {
     //console.log('handleSwipeLeftRight',item);
     let self = this;
-    if (item.add && item.idStatoRiga<2) {
-      item.add(goRight?-1:1);
+    if (item.add && item.idStatoRiga < 2) {
+      item.add(goRight ? -1 : 1);
       this.updateTotals(item);
-    }    
-    if (item.quantita==0) {
-      item.timeout = setTimeout(function() {
+    }
+    if (item.quantita == 0) {
+      item.timeout = setTimeout(function () {
         self.cart.delete(item);
       }, 2000);
     }
