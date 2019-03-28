@@ -35,9 +35,9 @@ import { Vibration } from '@ionic-native/vibration';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { Bixolon } from '@ionic-native/bixolon';
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-
+// import { Bixolon } from '@ionic-native/bixolon';
+// import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { Printer } from '@ionic-native/printer';
 import { HttpModule } from '@angular/http'; // see https://stackoverflow.com/questions/43609853/angular-4-and-ionic-3-no-provider-for-http
 import { IonicStorageModule } from '@ionic/storage';
 import { OrderButtons } from '../components/order-buttons/order-buttons';  //https://stackoverflow.com/questions/44825956/storage-provider-not-working
@@ -52,6 +52,7 @@ import { OrderPageButtons } from '../components/order-page/order-page';
 import { PopoverLastordersComponent } from '../components/popover-lastorders/popover-lastorders';
 import { PopoverFidelityComponent } from '../components/popover-fidelity/popover-fidelity';
 import { ConnectionStatusComponent } from '../components/connection-status/connection-status';
+
 
 @NgModule({
   declarations: [
@@ -104,8 +105,9 @@ import { ConnectionStatusComponent } from '../components/connection-status/conne
     CartService,
     StatusBar,
     SplashScreen,
-    Bixolon,
-    BluetoothSerial,
+    Printer,
+    // Bixolon,
+    // BluetoothSerial,
     InAppBrowser,
     // ToastController,
     // Toast,

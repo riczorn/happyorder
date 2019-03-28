@@ -10,17 +10,17 @@
         h5 {
             font-weight: 400;
         }
-        
+
         ul {
             list-style-type: none;
             padding: 0 0 0 1rem;
         }
-        
+
         ul li {
             margin-bottom: 0.5rem;
             padding: 0.5rem;
         }
-        
+
         ul.calls ul>li {
             /*list-style-type: circle;*/
             background-color: #f1f8ff;
@@ -28,15 +28,15 @@
             border-radius: 4px;
             display: flex;
         }
-        
+
         ul.calls ul>li>* {}
-        
+
         ul a {
             flex-basis: 7rem;
         }
-        
+
         span.desc {}
-        
+
         body {
             padding: 1rem;
             font-weight: 300;
@@ -63,13 +63,14 @@
             </p>
             <ul>
                 <li><a href="/">/</a>
-                    <span class="desc"> Query the local server and output the status       </span></li>
+                    <span class="desc"> Query the local server and output the status </span></li>
                 <li><a href="/status">/status</a>
-                    <span class="desc"> Query the remote server and output the status       </span></li>
+                    <span class="desc"> Query the remote server and output the status </span></li>
                 <li><a href="/update">/update</a>
-                    <span class="desc"> Download the bundled android .apk (also check <a href="https://happyorder.it/apk" target="_blank">here</a>)      </span></li>
+                    <span class="desc"> Download the bundled android .apk (also check <a
+                            href="https://happyorder.it/apk" target="_blank">here</a>) </span></li>
                 <li><a href="/update.xml">/update.xml</a>
-                    <span class="desc"> XML description of the update path       </span></li>
+                    <span class="desc"> XML description of the update path </span></li>
 
             </ul>
         </li>
@@ -81,13 +82,15 @@
 
             <ul>
                 <li><a href="/login">/login</a>
-                    <span class="desc"> Post to login       </span></li>
+                    <span class="desc"> Post to login </span></li>
+                <li><a href="/settings">/settings</a>
+                    <span class="desc"> Download settings.json </span></li>
                 <li><a href="/tables">/tables</a>
-                    <span class="desc"> List tables (with state)       </span></li>
+                    <span class="desc"> List tables (with state) </span></li>
                 <li><a href="/table">/table</a>
-                    <span class="desc"> Open table and load/initialise cart       </span></li>
+                    <span class="desc"> Open table and load/initialise cart </span></li>
                 <li><a href="/sendcart">/sendcart</a>
-                    <span class="desc"> Send cart (any cart operation is posted here)       </span></li>
+                    <span class="desc"> Send cart (any cart operation is posted here) </span></li>
 
             </ul>
         </li>
@@ -98,17 +101,17 @@
             </p>
             <ul>
                 <li><a href="/customer-display">/customer-display</a>
-                    <span class="desc"> Show the cart view       </span></li>
+                    <span class="desc"> Show the cart view </span></li>
                 <li><a href="/slideshow:filename">/slideshow:filename</a>
-                    <span class="desc"> Load a slideshow file       </span></li>
+                    <span class="desc"> Load a slideshow file </span></li>
                 <li><a href="/get-last-orders">/get-last-orders</a>
-                    <span class="desc"> List the last 20 orders for reprinting       </span></li>
+                    <span class="desc"> List the last 20 orders for reprinting </span></li>
                 <li><a href="/printdoc">/printdoc</a>
-                    <span class="desc"> Print a given document       </span></li>
+                    <span class="desc"> Print a given document </span></li>
                 <li><a href="/get-fidelity-info">/get-fidelity-info</a>
-                    <span class="desc"> Retrieve fidelity information (amount and validity)       </span></li>
+                    <span class="desc"> Retrieve fidelity information (amount and validity) </span></li>
                 <li><a href="/create-fidelity">/create-fidelity</a>
-                    <span class="desc"> Create (sell) a new fidelity (gutschein)       </span></li>
+                    <span class="desc"> Create (sell) a new fidelity (gutschein) </span></li>
             </ul>
         </li>
     </ul>

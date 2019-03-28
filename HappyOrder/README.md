@@ -284,9 +284,12 @@ id: app.happyorder.it
 
     Bumped ionic and updated css to handle new behaviour or Chrome for android.
 
-- 1.4.12 (25/3/2019)
+- 1.4.13 (25/3/2019)
 
     Added bluetooth serial printer support (alpha, add a custom button in config with code Fbixolon)
 
+- 1.4.14 ( 28/3/2019 )
+
+    Added default cordova printing mechanisms
 
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"
