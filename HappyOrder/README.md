@@ -288,8 +288,5 @@ id: app.happyorder.it
 
     Added bluetooth serial printer support (alpha, add a custom button in config with code Fbixolon)
 
-- 1.4.14 ( 28/3/2019 )
-
-    Added default cordova printing mechanisms
 
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

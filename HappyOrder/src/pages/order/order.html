@@ -10,13 +10,13 @@
           (click)="askempty()"
           >X</button-->
             <button ion-button (click)='sendCart($event)'>
-                <ion-icon *ngIf="cart.items.length==0" name="ios-arrow-dropleft-outline"></ion-icon>
-                <ion-icon *ngIf="cart.items.length>0" name="ios-print-outline"></ion-icon>
+        <ion-icon *ngIf="cart.items.length==0" name="ios-arrow-dropleft-outline"></ion-icon>
+        <ion-icon *ngIf="cart.items.length>0" name="ios-print-outline"></ion-icon>
 
-                <span class="tav-name">
-                    {{ liveService.user.table.descrizione }}
-                </span>
-            </button>
+        <span class="tav-name">
+          {{ liveService.user.table.descrizione }}
+        </span>
+      </button>
 
         </ion-buttons>
         <ion-segment [(ngModel)]="visible.active">

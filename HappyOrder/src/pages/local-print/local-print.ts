@@ -6,10 +6,10 @@ import { CartService } from '../../services/cart.service';
 // import { bixolon } from 'cordova-plugin-bixolon-print';
 import { CartComponent } from '../../components/cart/cart';
 import { OrderPage } from '../../pages/order/order';
-//import { Bixolon } from '@ionic-native/bixolon';
+// import { Bixolon } from '@ionic-native/bixolon';
 //import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-//import { Printer } from '@ionic-native/printer';
-import { StarPRNT } from '@ionic-native/star-prnt';
+// import { Socket } from 'cordova-plugin-socket-tcp';
+//import { Socket } from 'cordova-chrome-net';
 /**
  * Generated class for the LocalPrintPage page.
  *
@@ -17,21 +17,23 @@ import { StarPRNT } from '@ionic-native/star-prnt';
  * Ionic pages and navigation.
  */
 import { Cart } from '../../models/cart';
-import { templateJitUrl } from '@angular/compiler';
+// import { Socket } from 'net';
+// import { SocketsForCordova } from 'cordova-plugin-socket-tcp';
+
+var net = require('cordova-chrome-net');
+
 
 @Component({
   selector: 'page-local-print',
   templateUrl: 'local-print.html',
 })
 export class LocalPrintPage {
-  public debugInfo: any;
-  private printer: any;
   // @ViewChild(CartComponent) cartComponent: CartComponent;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private liveService: LiveService,
     private cartService: CartService,
     private loginService: LoginService,
-    private starprnt: StarPRNT,
+    // private socket: Socket,
     // private bixolon: Bixolon,
     //private bluetoothSerial: BluetoothSerial
   ) {
@@ -49,85 +51,42 @@ export class LocalPrintPage {
   writeFail(err) {
     console.error('write FAIL', err);
   }
+
   print() {
-    console.log('printing');
-    console.log(this.starprnt);
-    let printObj = {
-      text: "Star Clothing Boutique\n123 Star Road\nCity, State 12345\n\n",
-      cutReceipt: true,
-      openCashDrawer: false
-    }
-
-    this.starprnt.printRawText('TCP:192.168.10.61', 'EscPosMobile', printObj)
-      .then(result => {
-        console.log('Success!');
-      })
-
-  }
-  printChromeSocket() {
-    (<any>window).chrome.sockets.tcp.create({}, createInfo => {
-      let socketTcpId = createInfo.socketId;
-      (<any>window).chrome.sockets.tcp.connect(socketTcpId, "192.168.10.61", 9100, result => {
-        console.log("Connected to printerXXX");
-      });
+    console.log('XSprinting', net);
+    var client = new net.Socket();
+    client.connect(9100, '192.168.10.61', function () {
+      console.log('Connected');
+      client.write('oriva\nprova');
     });
-  }
-  printSocketIo() {
-    let socket = window["io"]('192.168.10.61', {
+
+    client.on('data', function (data) {
+      console.log('Received: ' + data);
+      client.destroy(); // kill client after server's response
+    });
+    //console.log(this.socket);
+    /*let socket = window["io"]('http://192.168.10.61:9100', {
       secure: false,
-      port: 9100
+      transports: ['websocket'],
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      reconnectionAttempts: Infinity,
+      port: 9100,
     });
-    socket.on('connect', function () {
-      console.log('Print SOCKET CONNECT event');
-
-    });
+    console.log('socket', socket);*/
   }
-
-
   printX() {
     console.log('beginning local print');
     let self = this;
     //console.log(this.bixolon);
-    // if (window.plugins.printer) {
-    //   //let res = this.printer.check();//;
-    //   this.debugInfo = JSON.stringify(this.printer);//res);
-    //   //.write('hello world').then(self.writeSuccess).catch(err => { self.writeFail(err); });
-    // }
-
-    if (this.printer) {
-      //let res = this.printer.check();//;
-      console.error('printer found');
-      this.debugInfo = JSON.stringify(this.printer);//res);
-      console.log('printer found', this.printer);
-      if (this.printer.isAvailable()) {
-        console.log('printer is available');
-        let printout = 'prima riga\n';
-        this.liveService.cart.items.forEach(item => {
-          printout += (item.descrizione + ' ' + item.prezzo + '\n');
-        });
-        printout += ('-----------');
-        printout += ('ultima riga');
-        this.printer.print(printout, { name: 'document.txt', printerId: 'TCP:192.168.10.61' });
-      }
-      else {
-        console.log('printer is not available');
-        this.cartService.toastAndVibrate('Stampante non disponibile', this.liveService.messageTypes.localError);
-
-      }
-      //.write('hello world').then(self.writeSuccess).catch(err => { self.writeFail(err); });
-    }
-    else {
-      console.error('printer package not available');
-      this.debugInfo = 'printer package not available';
-    }
+    /*if (this.bluetoothSerial && this.bluetoothSerial.write) {
+      this.bluetoothSerial.write('hello world').then(self.writeSuccess).catch(err => { self.writeFail(err); });
+    } else {
+      console.error('bluetoothSerial not available');
+    }*/
   }
   back() {
     this.navCtrl.setRoot(OrderPage);
-  }
-
-  pick() {
-    if (this.printer && this.printer.pick) {
-      this.printer.pick();
-    }
   }
 }
