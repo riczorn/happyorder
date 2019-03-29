@@ -37,7 +37,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 // import { Bixolon } from '@ionic-native/bixolon';
 // import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-import { Printer } from '@ionic-native/printer';
+//import { Printer } from '@ionic-native/printer';
+import { StarPRNT } from '@ionic-native/star-prnt';
 import { HttpModule } from '@angular/http'; // see https://stackoverflow.com/questions/43609853/angular-4-and-ionic-3-no-provider-for-http
 import { IonicStorageModule } from '@ionic/storage';
 import { OrderButtons } from '../components/order-buttons/order-buttons';  //https://stackoverflow.com/questions/44825956/storage-provider-not-working
@@ -105,7 +106,7 @@ import { ConnectionStatusComponent } from '../components/connection-status/conne
     CartService,
     StatusBar,
     SplashScreen,
-    Printer,
+    StarPRNT,
     // Bixolon,
     // BluetoothSerial,
     InAppBrowser,

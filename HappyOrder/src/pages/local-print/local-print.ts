@@ -8,7 +8,8 @@ import { CartComponent } from '../../components/cart/cart';
 import { OrderPage } from '../../pages/order/order';
 //import { Bixolon } from '@ionic-native/bixolon';
 //import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-import { Printer } from '@ionic-native/printer';
+//import { Printer } from '@ionic-native/printer';
+import { StarPRNT } from '@ionic-native/star-prnt';
 /**
  * Generated class for the LocalPrintPage page.
  *
@@ -24,12 +25,13 @@ import { templateJitUrl } from '@angular/compiler';
 })
 export class LocalPrintPage {
   public debugInfo: any;
+  private printer: any;
   // @ViewChild(CartComponent) cartComponent: CartComponent;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private liveService: LiveService,
     private cartService: CartService,
     private loginService: LoginService,
-    private printer: Printer,
+    private starprnt: StarPRNT,
     // private bixolon: Bixolon,
     //private bluetoothSerial: BluetoothSerial
   ) {
@@ -47,8 +49,42 @@ export class LocalPrintPage {
   writeFail(err) {
     console.error('write FAIL', err);
   }
-
   print() {
+    console.log('printing');
+    console.log(this.starprnt);
+    let printObj = {
+      text: "Star Clothing Boutique\n123 Star Road\nCity, State 12345\n\n",
+      cutReceipt: true,
+      openCashDrawer: false
+    }
+
+    this.starprnt.printRawText('TCP:192.168.10.61', 'EscPosMobile', printObj)
+      .then(result => {
+        console.log('Success!');
+      })
+
+  }
+  printChromeSocket() {
+    (<any>window).chrome.sockets.tcp.create({}, createInfo => {
+      let socketTcpId = createInfo.socketId;
+      (<any>window).chrome.sockets.tcp.connect(socketTcpId, "192.168.10.61", 9100, result => {
+        console.log("Connected to printerXXX");
+      });
+    });
+  }
+  printSocketIo() {
+    let socket = window["io"]('192.168.10.61', {
+      secure: false,
+      port: 9100
+    });
+    socket.on('connect', function () {
+      console.log('Print SOCKET CONNECT event');
+
+    });
+  }
+
+
+  printX() {
     console.log('beginning local print');
     let self = this;
     //console.log(this.bixolon);
@@ -71,7 +107,7 @@ export class LocalPrintPage {
         });
         printout += ('-----------');
         printout += ('ultima riga');
-        this.printer.print(printout);
+        this.printer.print(printout, { name: 'document.txt', printerId: 'TCP:192.168.10.61' });
       }
       else {
         console.log('printer is not available');
