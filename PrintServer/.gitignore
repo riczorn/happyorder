@@ -1,0 +1,6 @@
+.atom
+node_modules
+dist
+# ignore .js.map files
+*.js.map
+#dist

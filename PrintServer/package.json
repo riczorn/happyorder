@@ -1,0 +1,17 @@
+{
+  "name": "HappyOrderPrintServer",
+  "version": "1.4.25",
+  "author": "Riccardo Zorn",
+  "homepage": "http://happyorder.it/",
+  "description": "HappyOrder Print Server",
+  "private": true,
+  "scripts": {
+    "start": "node ./src/joomlaUpdate",
+    "stripe-jgive": "node ./src/stripe-jgive",
+    "stripe-jticketing": "node ./src/stripe-jticketing"
+  },
+  "dependencies": {
+    "encoding": "^0.1.12",
+    "express": "^4.16.4"
+  }
+}
