@@ -129,7 +129,7 @@ export class LocalPrintPage {
       let itemPrint = {
         qt: this.makeLen(item.quantita, 8),
         desc: this.makeLen(item.descrizione, 22),
-        price: this.makeLen(this.makeNum(item.prezzo), 9)
+        price: this.makeLen(this.makeNum(item.prezzo * item.quantita), 9)
       }
       printout += `${itemPrint.qt}${itemPrint.desc} ${itemPrint.price}  ${totals.vatp}\n`;
     });

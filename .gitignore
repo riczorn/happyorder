@@ -75,3 +75,5 @@ typings/
 # dotenv environment variables file
 .env
 
+HappyOrder-printtests/
+PrinterTest/
