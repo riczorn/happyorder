@@ -288,5 +288,7 @@ id: app.happyorder.it
 
     Added bluetooth serial printer support (alpha, add a custom button in config with code Fbixolon)
 
+- 1.4.22 
+    Added suppport for HappyOrder Printserver - based printing.
 
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"
