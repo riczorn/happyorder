@@ -8,17 +8,17 @@
 
 import * as express from 'express';
 //var express = require ('express');
-var bodyParser     =        require("body-parser");
+var bodyParser = require("body-parser");
 var cors = require('cors'); //https://www.npmjs.com/package/cors
 // import hOConfigModule = require('../lib/config');
 // import WebServiceModule from '../lib/webservice';
 //console.log('app importing ws');
 import WebService from '../lib/webservice';
 //console.log('/app importing ws');
-let webservice =  <WebService> WebService.Instance;
+let webservice = <WebService>WebService.Instance;
 //console.log('app instance ok');
 var fs = require('fs'),
-path = require('path')
+  path = require('path')
 // Creates and configures an ExpressJS web server.
 class App {
   // ref to Express instance
@@ -34,12 +34,12 @@ class App {
     this.express.use(bodyParser.raw());
 
     let corsOptions = {
-        "origin": "*",
-        "methods": "GET,POST",//HEAD,PUT,PATCH,POST,DELETE",
-        "preflightContinue": false,
-        "credentials": true,
-        "optionsSuccessStatus": 204
-      }
+      "origin": "*",
+      "methods": "GET,POST",//HEAD,PUT,PATCH,POST,DELETE",
+      "preflightContinue": false,
+      "credentials": true,
+      "optionsSuccessStatus": 204
+    }
 
     this.express.use(cors(corsOptions));
     // this.express.use(bodyParser.json());
@@ -58,7 +58,7 @@ class App {
 
     * Configure Express middleware.
     */
-  private middleware(server:any): void {
+  private middleware(server: any): void {
     // // this.webservice.login('pino','mino');
     // console.log('setting up sockets');
     // // this.webservice.io = this.app.io;
@@ -86,7 +86,7 @@ class App {
     //https://stackoverflow.com/questions/11569181/serve-static-files-on-a-dynamic-route-using-express
 
 
-    router.get('/', (req:any, res:any, next:any) => {
+    router.get('/', (req: any, res: any, next: any) => {
       res.json({
         message: "HappyOrder backend server - browse to /help for info"
       });
@@ -94,7 +94,7 @@ class App {
 
     router.get('/slideshow/:filename', function (req, res) {
       var filename = req.params.filename;
-      res.sendFile(path.join(__dirname , '../../www/slideshow/'+filename));
+      res.sendFile(path.join(__dirname, '../../www/slideshow/' + filename));
       // res.end('Password: ' + filename);
     });
     // app.use( express.static('/www/slideshow'));
@@ -110,43 +110,43 @@ class App {
       // response.end();
     });
 
-// var urlencodedParser = bodyParser.urlencoded({ extended: true });
+    // var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
     router.post('/login',
-    // urlencodedParser,
+      // urlencodedParser,
       (request: any, response: any, next: any) => {
-      if (webservice && (request.method == 'POST')) {
-        console.log('router login', JSON.stringify(request.body));
-        // response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
-        webservice.login(response,
-          request.body
-        );
-        // response.end();
+        if (webservice && (request.method == 'POST')) {
+          console.log('router login', JSON.stringify(request.body));
+          // response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+          webservice.login(response,
+            request.body
+          );
+          // response.end();
 
 
-      }
-      else {
-        this.error(response, 'login not initialized');
-        // response.end();
-      }
-    });
+        }
+        else {
+          this.error(response, 'login not initialized');
+          // response.end();
+        }
+      });
     router.post('/cart',
-    // urlencodedParser,
+      // urlencodedParser,
       (request: any, response: any, next: any) => {
-      if (webservice && (request.method == 'POST')) {
-        // console.log('router cart post', request );
-        // response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
-        webservice.sendCart(response, request.body);
-        // response.end();
+        if (webservice && (request.method == 'POST')) {
+          // console.log('router cart post', request );
+          // response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+          webservice.sendCart(response, request.body);
+          // response.end();
 
 
-      }
-      else {
-        this.error(response, 'cart not initialized');
-        // response.end();
-      }
-    });
-    router.get('/settings', (req:any, res:any, next:any) => {
+        }
+        else {
+          this.error(response, 'cart not initialized');
+          // response.end();
+        }
+      });
+    router.get('/settings', (req: any, res: any, next: any) => {
       //console.log('enter settings');
       if (webservice) {
         webservice.loadSettings(res);
@@ -155,7 +155,7 @@ class App {
         self.error(res, 'settings not initialized');
       }
     });
-    router.get('/table', (req:any, res:any, next:any) => {
+    router.get('/table', (req: any, res: any, next: any) => {
       //console.log('enter table', req.query);
       if (webservice) {
         webservice.openTable(res, req.query.tableId, req.query.clerkId);
@@ -164,7 +164,7 @@ class App {
         this.error(res, 'table not initialized');
       }
     });
-    router.get('/tables', (req:any, res:any, next:any) => {
+    router.get('/tables', (req: any, res: any, next: any) => {
       //console.log('enter tables');
       if (webservice) {
         webservice.getTablesStates(res, req.query.clerkId);
@@ -173,7 +173,7 @@ class App {
         this.error(res, 'tables not initialized');
       }
     });
-    router.get('/status', (req:any, res:any, next:any) => {
+    router.get('/status', (req: any, res: any, next: any) => {
       //console.log('enter status');
       if (webservice) {
         webservice.status(res);
@@ -183,7 +183,7 @@ class App {
       }
     });
 
-    router.get('/customer-display', (req:any, res:any, next:any) => {
+    router.get('/customer-display', (req: any, res: any, next: any) => {
       if (webservice) {
         webservice.broadCast(res, req);
       }
@@ -193,7 +193,7 @@ class App {
 
 
     });
-    router.get('/update', (req:any, res:any, next:any) => {
+    router.get('/update', (req: any, res: any, next: any) => {
       //console.log('enter update', req.query);
       if (webservice) {
         webservice.update(res);
@@ -202,59 +202,59 @@ class App {
         this.error(res, 'update not initialized');
       }
     });
-    router.get('/help', (req:any, res:any, next:any) => {
+    router.get('/help', (req: any, res: any, next: any) => {
 
       fs.readFile('www/index.html',
-          (err:any, data:any) => {
+        (err: any, data: any) => {
+          if (err) {
+            // res.writeHead(500);
+            self.error(res, 'Error loading index.html');
+            // return res.end('Error loading index.html');
+          }
+          else {
+            res.writeHead(200);
+            res.end(data);
+          }
+        });
+
+    });
+    router.get('/update.xml', (req: any, res: any, next: any) => {
+      let filePath = 'www/update.xml';
+      fs.exists(filePath, function (exists: any) {
+        if (exists) { // results true
+          fs.readFile(filePath, 'utf-8',
+            (err: any, data: any) => {
               if (err) {
-                  // res.writeHead(500);
-                  self.error(res,'Error loading index.html');
-                  // return res.end('Error loading index.html');
+                // res.writeHead(500);
+                self.error(res, 'Error loading ' + filePath);
+                // return res.end('Error loading index.html');
               }
               else {
+                // rimpiazziamo i token indirizzo ip del server:
+                //console.log('----ex----',data,'---------');
+                let sdata: string = <string>data;
+                //console.log('----SDATA----',sdata,'---------');
+
+                //sdata = sdata.replace('http://localhost:8080/update',
+                //    'http://192.168.11.31:8080/update');
+                console.log('@TODO: unfinished needs real IP')
                 res.writeHead(200);
-                res.end(data);
+                res.end(sdata);
               }
-          });
-
-    });
-    router.get('/update.xml', (req:any, res:any, next:any) => {
-      let filePath = 'www/update.xml';
-      fs.exists(filePath, function(exists:any){
-         if(exists){ // results true
-          fs.readFile(filePath, 'utf-8',
-              (err:any, data:any) => {
-                  if (err) {
-                      // res.writeHead(500);
-                      self.error(res,'Error loading '+filePath);
-                      // return res.end('Error loading index.html');
-                  }
-                  else {
-                    // rimpiazziamo i token indirizzo ip del server:
-                    //console.log('----ex----',data,'---------');
-                    let sdata:string = <string>data;
-                    //console.log('----SDATA----',sdata,'---------');
-
-                    //sdata = sdata.replace('http://localhost:8080/update',
-                    //    'http://192.168.11.31:8080/update');
-                    console.log('@TODO: unfinished needs real IP')
-                    res.writeHead(200);
-                    res.end(sdata);
-                  }
-              });
-            }
-          });
-    });
-    router.get('/get-last-orders', (req:any, res:any, next:any) => {
-        //console.log('enter get-last-orders', req.query);
-        if (webservice) {
-          webservice.getLastOrders(res, req.query);
+            });
         }
-        else {
-          this.error(res, 'get-last-orders not initialized');
-        }
+      });
     });
-    router.get('/get-fidelity-info', (req:any, res:any, next:any) => {
+    router.get('/get-last-orders', (req: any, res: any, next: any) => {
+      //console.log('enter get-last-orders', req.query);
+      if (webservice) {
+        webservice.getLastOrders(res, req.query);
+      }
+      else {
+        this.error(res, 'get-last-orders not initialized');
+      }
+    });
+    router.get('/get-fidelity-info', (req: any, res: any, next: any) => {
       //console.log('enter get-fidelity-info', req.query);
       if (webservice) {
         webservice.getFidelityInfo(res, req.query);
@@ -263,8 +263,8 @@ class App {
         this.error(res, 'get-fidelity-info not initialized');
       }
     });
-    router.get('/create-fidelity', (req:any, res:any, next:any) => {
-      //console.log('enter create-fidelity', req.query);
+    router.get('/create-fidelity', (req: any, res: any, next: any) => {
+      console.log('enter create-fidelity', req.query);
       if (webservice) {
         webservice.createFidelity(res, req.query);
       }
@@ -272,7 +272,7 @@ class App {
         this.error(res, 'create-fidelity not initialized');
       }
     });
-    router.get('/printdoc', (req:any, res:any, next:any) => {
+    router.get('/printdoc', (req: any, res: any, next: any) => {
       //console.log('enter printdoc', req.query);
       if (webservice) {
         webservice.printDoc(res, req.query);
@@ -280,17 +280,25 @@ class App {
       else {
         this.error(res, 'printdoc not initialized');
       }
-  });
-
+    });
+    router.get('/fatturaelettronica', (req: any, res: any, next: any) => {
+      console.log('enter  fatturaElettronica', req.query);
+      if (webservice) {
+        webservice.fatturaElettronica(res, req.query);
+      }
+      else {
+        this.error(res, 'fatturaElettronica not initialized');
+      }
+    });
     this.express.use('/', router);
   }
 
-  private error(res:any, errorMessage: string): void {
+  private error(res: any, errorMessage: string): void {
     //res.writeHead(500);
     res.json({
-      id:500,
-      status:'ko',
-      error:'server Error - ' + errorMessage
+      id: 500,
+      status: 'ko',
+      error: 'server Error - ' + errorMessage
     });
 
     res.end();

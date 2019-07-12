@@ -17,7 +17,7 @@ import * as http from 'http';
 
 var port = 8080; // default port, overridden by configuration (/lib/config.ts)
 let localMask = "0.0.0.0";
-webservice.remoteHost = '127.0.0.1'
+webservice.remoteHost = '127.0.0.1';
 
 if (config) {
   console.log('Read config', config);

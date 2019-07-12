@@ -10,6 +10,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { NavController, Content, PopoverController } from 'ionic-angular';//ViewController , Platform, NavController, NavParams
 import { LiveService } from '../../services/live.service';
 import { Cart } from '../../models/cart';
+import { OrderItem } from '../../models/order-item';
 import { CartService } from '../../services/cart.service';
 import { TavoliPage } from '../../pages/tavoli/tavoli';
 import { LocalPrintPage } from '../../pages/local-print/local-print';
@@ -63,11 +64,11 @@ export class CartComponent {
   }
 
   removePayment(event, payment) {
-    //console.log('removePayment',payment)
-    if (payment.itype) {
-      this.cart.payments.splice(0, this.cart.payments.length);
-    }
-  } s
+    console.log('removePayment', payment)
+    //if (payment.itype) {
+    this.cart.payments.splice(0, this.cart.payments.length);
+    //}
+  }
 
   // presentPopover(myEvent) {
   //
@@ -94,7 +95,9 @@ export class CartComponent {
     popover.onDidDismiss((popoverData) => {
       // console.log('popoverData',popoverData);
       switch (popoverData) {
+        case 'cancel': self.cancelItem(item); break;
         case 'add': self.changeQt(cart.items, item, +1); break;
+        case 'edit': self.editItem(item); break; // done in popoverCart
         case 'remove': self.changeQt(cart.items, item, -1); break;
         case 'delete': self.deleteChild(cart.items, item); break;
         case 'storno': self.storno(event, cart.items, item); break;
@@ -108,6 +111,23 @@ export class CartComponent {
     //   'translate3d(-70px,0,0)');
 
     return false;
+  }
+
+
+  cancelItem(item: OrderItem) {
+    console.log('cancel item');
+    item.changedPrezzo = item.prezzo;
+    // this.editItem(item);
+  }
+  /**
+   * invoked on an unconfirmed cart item, allows (if privileges are granted) to 
+   * superseded? now in popoverCart.
+   * @param item 
+   */
+  editItem(item: OrderItem) {
+    console.log('editItem', item);
+    item.prezzo = item.changedPrezzo;
+    this.updateTotals(item);
   }
 
   showLastOrders(data: any, tipoDocumento: number) {
@@ -145,12 +165,19 @@ export class CartComponent {
    * if the cart is full, show the add payment features.
    * (param modePay of popoverFidelity)
    */
-  showPaga() {
+  showPaga(gutscheinId?) {
     let self = this;
     let event = { status: 'useless' };
+    // popoverFidelity shows a Sell Gutschein if the cart is empty, and 
+    // pay with gutschein if the cart is full.
+
+    if (self.cart.items.length > 0 && self.cart.payments.length > 0) {
+      self.cartService.toastAndVibrate('Max un gutschein per ordine', self.liveService.messageTypes.remoteError);
+      return;
+    }
 
     let popoverFidelity = this.popoverCtrl.create(PopoverFidelityComponent, {
-      cart: self.cart, modePay: self.cart.totals.count !== 0
+      cart: self.cart, modePay: self.cart.items.length > 0, gutscheinId: (gutscheinId ? gutscheinId : 0)
     });
 
     popoverFidelity.present({
@@ -176,7 +203,7 @@ export class CartComponent {
         self.cart.addPayment(payment);
 
       } else if (popoverData && (popoverData.action == 'sell')) {
-        self.cartService.createFidelity(popoverData.amount, (data) => {
+        self.cartService.createFidelity(popoverData.amount, popoverData.code, (data) => {
           //console.log('Fidelity Creata', data);
           if (data && data.status && data.status == "ok") {
             self.cartService.toastAndVibrate(data.data._, self.liveService.messageTypes.success);
@@ -188,6 +215,20 @@ export class CartComponent {
     });
 
     return false;
+  }
+
+  payWithGutschein(gutscheinId) {
+    let self = this;
+    // il formato del pagamento è:
+    let payment = {
+      id: gutscheinId,
+      // this is just the db id of the fidelity;
+
+      val: self.cart.totals.totale,
+      code: gutscheinId,
+      name: "Gutschein"
+    }
+    self.cart.addPayment(payment);
   }
 
   /**
@@ -335,6 +376,20 @@ export class CartComponent {
         self.navCtrl.setRoot(LocalPrintPage);
         return;
     }
+    if (button.link.indexOf('Fpaga:') === 0) {
+      /** qui abbiamo un pagamento con gutschein automatico;
+       *  il formato dell'action è Fpaga:7 dove 7 è l'id di un gutschein con sufficiente credito.
+       */
+      let gutscheinId = button.link.split(':').pop();
+      if (self.cart.totals.count !== 0) {
+        //console.log('add payment with gutscheinId:', gutscheinId);
+        self.showPaga(gutscheinId);
+      } else {
+        self.showPaga(gutscheinId);
+      }
+      return;
+    }
+
 
     /*
      * note: a cart with length 0 will reprint 

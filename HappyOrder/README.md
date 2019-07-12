@@ -174,14 +174,22 @@ id: app.happyorder.it
 
 - 1.0.56 
 
-   Node release
+   Node release: server.listen to wildcard.
+
+       Linux defaults server.listen(port) to server.listen(port,'0.0.0.0')
+       Windows defaults to server.listen(port,'127.0.0.1') I guess.
+
+       The default mask can be set in the configuration id.json file.
 
 - 1.0.57 
 
-   Node release
+    Node release
        Il tavolo asporto viene ora aperto con l'eventuale contenuto.
        Gli extra sono nuovamente visualizzati dopo la conferma.
        Attenzione: Richiede l'aggiornamento di Node 1.0.57.
+
+    Fixed bug ordini aperti senza extra.
+    Distribuito con HappyOrder 1.9.8.14       
 
 - 1.0.58 + Node release
 
@@ -219,6 +227,8 @@ id: app.happyorder.it
     Move table 
     Spostatavolo
 
+    Server: Updated all packages (a full distro is required to update);
+
 - 1.2.3
     Choose your style
 
@@ -236,6 +246,8 @@ id: app.happyorder.it
 - 1.3.1  (15/03/2018)
    
     App update fixed on node server running on Windows 
+
+    Server: Fixed update compatibility issue on Windows.
 
 - 1.3.2  (22/03/2018)
    
@@ -263,6 +275,8 @@ id: app.happyorder.it
 
     Molteplici ottimizzazioni di codice per velocizzare l'interfaccia.    
 
+    Server: Reprint last order, now showing list.
+
 - 1.3.9 (24/4/2018)
 
     Shuffle the slideshow using the Fisher-Yates shuffle
@@ -273,12 +287,17 @@ id: app.happyorder.it
     See configuration docs to enable - trigger through the
     payment button.
 
+    Server: Added numbered prepaid fidelity support (gutschein)
+
 - 1.3.11 (10/5/2018)
 
     Keepalive on socket, and a nice keepalive signal on the main 
     order and tables and customer cart pages
     When re-printing an old older, print the document corrensponding
     to the button pressed.
+
+    Server:     Strenghtened the server, updated the docs :8080/help
+                Minor fixes for the functionality in the Happyorder app.
 
 - 1.4.01 (19/3/2019)
 
@@ -288,7 +307,31 @@ id: app.happyorder.it
 
     Added bluetooth serial printer support (alpha, add a custom button in config with code Fbixolon)
 
-- 1.4.22 
+- 1.4.32 
     Added suppport for HappyOrder Printserver - based printing.
+
+- 1.4.34
+    Added support for custom direct gutscheine (see docs)
+
+- 1.5.01
+    bumped minSdkVersion to 17 to support Android 9
+
+-1.5.02
+    re-bumped minSdkVersion back down to 16, as it was useless;
+    added support for variable prices and description and custom discount
+    distro: 1.9.8.54
+    
+- 1.5.03
+    node: added support for fatturaElettronica
+    
+- 1.5.04
+    app: the total now includes the gutschein payments.
+
+- 1.5.05
+    app: added +- buttons on the fidelity pages        
+
+---
+    #NO:now online demo user logs in to the same-named account in the json and inherits privileges
+
 
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

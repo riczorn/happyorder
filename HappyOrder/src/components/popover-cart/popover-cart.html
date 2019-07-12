@@ -4,20 +4,85 @@
         {{ item.descrizione }}
     </ion-item>
 
+    <ion-card *ngIf="editing" class="editing">
+        <ion-item>
+            <ion-label>
+
+                Descrizione
+            </ion-label>
+
+            <ion-input name='itemDescription' item-end type="text" [(ngModel)]="item.descrizione">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+
+
+
+            <ion-label>
+
+                Prezzo
+
+            </ion-label>
+
+
+            <ion-input name='itemPrice' item-end type="number" [(ngModel)]="item.changedPrezzo">
+
+            </ion-input>
+
+        </ion-item>
+        <div class="editing">
+            <ion-label>
+
+                Sconto percentuale
+
+            </ion-label>
+            <div class="percentPrice">
+                <ion-input type="number" name="itemPercent" [(ngModel)]="percentPrice"></ion-input>
+
+                <button (click)=" pricePercent() ">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+
+                </button>
+
+            </div>
+        </div>
+        <div class="editing">
+
+            <div class="percentPrice">
+                <button ion-button color="danger" (click)=" close( 'cancel' ) ">
+                    <ion-icon name="undo"></ion-icon>
+
+                </button>
+                <button ion-button (click)=" close( 'edit' ) ">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+
+                </button>
+
+            </div>
+        </div>
+    </ion-card>
+
     <ion-segment>
-        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('add') " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="danger" (click)=" toggleEdit() " value="">
+            <ion-icon name="create"></ion-icon>
+        </ion-segment-button>
+
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('add') "
+            value="">
             <ion-icon name="ios-add-circle-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('remove') " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('remove') "
+            value="">
             <ion-icon name="ios-remove-circle-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('delete') " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="primary" class="icon-only" (click)=" close('delete') "
+            value="">
             <ion-icon name="ios-trash-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button *ngIf="item.idStatoRiga==2" color="primary" (click)=" close('storno') " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga>=2" color="primary" (click)=" close('storno') " value="">
             <ion-icon name="ios-remove-circle-outline"></ion-icon>
             &nbsp; Storno
         </ion-segment-button>
@@ -31,7 +96,11 @@
     </ion-item>
 
     <ion-segment>
-        <ion-segment-button *ngIf="item.idStatoRiga<2 " color="primary" class="icon-only" (click)=" close('deleteChild')  " value="">
+        <ion-segment-button *ngIf="item.idStatoRiga<2" color="danger" (click)=" toggleEdit() " value="">
+            <ion-icon name="create"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="item.idStatoRiga<2 " color="primary" class="icon-only"
+            (click)=" close('deleteChild')  " value="">
             <ion-icon name="trash-b"></ion-icon>
         </ion-segment-button>
     </ion-segment>

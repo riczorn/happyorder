@@ -1,4 +1,29 @@
 popover-cart {
+  .editing  {
+    .input-wrapper{
+    flex-direction:column;}
+    .item-md  {
+      [item-left], [item-right], [item-start], [item-end] {
+      margin:5px 0 !important;
+    }
+      .label {
+        align-self:first baseline;
+      }
+
+    }
+    .mainPriceContainer {
+      display:flex;
+      flex-direction:column;
+    }
+    .percentPrice {
+      display:flex;
+      flex-direction:row;
+      ion-input {
+        width:auto;
+        max-width:60%;
+      }
+    }
+  }
   .segment-md .segment-button ion-icon {
     font-size:3.3em;
     line-height:1.3em;

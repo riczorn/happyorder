@@ -39,7 +39,7 @@ Libs: Ionic 3, Angular 4, Typescript 2
 Starts in ./electron
 Build in ./electron/HappyOrder-linux-x64
 
-The app is also published as a .tar.gz on https://happyorder.it/files/happyorder-linux-1.3.1.tar.gz
+The app is also published as a .tar.gz on https://happyorder.it/files/happyorder-linux-1.2.3.tar.gz
 
 [Electron Readme](electron/README.md)
 

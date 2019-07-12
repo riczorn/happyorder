@@ -435,9 +435,11 @@ export class CartService {
    * create a new gutschein / fidelity by value.
    * invokes the webservice which translates to xml and invokes the
    * backend server
+   * 
+   * gutscheinCode is passed only for fixed-fidelity (unnumbered) where all fidelity cards default back to one.
    * @param code 
    */
-  createFidelity(amount, successCallback) {
+  createFidelity(amount, gutscheinCode, successCallback) {
     let self = this;
 
     try {
@@ -445,6 +447,7 @@ export class CartService {
         {
           tableId: self.liveService.user.tableId,
           clerkId: self.liveService.user.clerkId,
+          code: gutscheinCode,
           importo: amount
         });
       return self.http.get(url)

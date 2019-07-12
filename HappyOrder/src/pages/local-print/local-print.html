@@ -12,6 +12,17 @@
 
 <ion-content padding>
   <cart cartButtonsViewStyle="list"></cart>
+
+  <ion-item>
+
+    <ion-label>n. articoli {{ liveService.cart.totals.count }}</ion-label>
+    <div item-end>
+      {{ liveService.cart.totals.totale | number:'1.2' }}
+
+    </div>
+
+  </ion-item>
+
   <ion-buttons class="cartButtons localPrint">
     <button ion-button (click)="back();">
       Annulla

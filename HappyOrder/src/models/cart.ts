@@ -203,6 +203,7 @@ export class Cart {
     // console.log('.adding', quantita, nosdoppia);
     let self = this;
     self.payments.push(payment);
+    self.updateTotals();
   }
 
   getAction(linkName?: string) {
@@ -327,6 +328,9 @@ export class Cart {
           quantita: extra.quantita
         });
       }
+    }
+    for (let payment of this.payments) {
+      totale -= payment.val;
     }
     this.totals.totale = totale;
     this.totals.count = count;

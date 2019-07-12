@@ -20,11 +20,13 @@ export class Config {
 
   // the address of the HappyOrder/unikas installation
   public remoteHost: string;
+  public fullConfig: any;
 
   constructor() {
-    this.port=8080;
+    this.port = 8080;
     this.remoteHost = "127.0.0.1";
     this.localMask = "0.0.0.0";
+    this.fullConfig = {};
     this.loadConfig();
   }
 
@@ -45,7 +47,7 @@ export class Config {
       if (jContents.web.localMask) {
         this.localMask = jContents.web.localMask;
       }
-
+      this.fullConfig = jContents;
     }
     // console.log('a2:',JSON.stringify(jContents));
 
