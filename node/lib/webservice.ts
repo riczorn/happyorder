@@ -857,7 +857,7 @@ class WebService {
     var self = this;
     // console.log('fatturaElettronica 1', query);
     console.log('fattureList 1');// , query.file);
-    console.log('fattureList 2', self.config.fullConfig.fatturaElettronica);
+    //console.log('fattureList 2', self.config.fullConfig.fatturaElettronica);
 
     if (!query) {
       query = {};
@@ -872,11 +872,17 @@ class WebService {
     let fatture = [];
 
     for (let m = query.mese; m > 0; m--) {
+      // let bottom = query.mese - 3;
+      // if (bottom < 1) { bottom = 1; }
+      // for (let m = query.mese; m > bottom; m--) {
       let aResponse = await <any>self.fattureGetMonth(query.anno, m);
       console.log('  received fatt. ' + aResponse.fatture.length);
       let newFatture = aResponse.fatture;
       fatture.splice(0, 0, ...newFatture);
     }
+
+    fatture = this.processFatture(fatture);
+    //console.log('fatture lengh', fatture.length);
     let oResponse = {
       status: 'ok',
       fatture: fatture,
@@ -1040,20 +1046,43 @@ class WebService {
     fatture.sort((a, b) => {
       return a.numero - b.numero;
     });
-    console.log('fatt2', fatture.length);
+    //console.log('fatt2', fatture.length);
     let fattureOk = [];
+    for (let i = 0; i < 200; i++) {
+      fattureOk[i] = false;
+    }
     // ora mi faccio un elenco delle fatture OK, così elimino le scartate corrispondenti.
-    fatture.forEach(fattura => {
+    fatture.forEach((fattura, index) => {
+      //console.log('      OK', index, ', num:', fattura.numero, ', ric.cons.', fattura.RicevutaConsegna);
       if (fattura.RicevutaConsegna) {
         fattureOk[fattura.numero] = true;
       }
     });
 
+    //console.log('    ricevutaConsegna:', fattureOk);
+
+    let errorsToDelete = []; // index of fatture which were eventually sent.
+    fatture.forEach((fattura, index) => {
+      //console.log('      ERR', index, ', num:', fattura.numero,
+      //  ', ok:', fattureOk[fattura.numero], ', ric.cons.', fattura.RicevutaConsegna);
+      if (fattureOk[fattura.numero] && !fattura.RicevutaConsegna) {
+        errorsToDelete.push(index);
+      }
+    });
+
+    //console.log('the following can be deleted', errorsToDelete);
+
+    //errorsToDelete.sort();
+    for (let i = errorsToDelete.length - 1; i >= 0; i--) {
+      fatture.splice(errorsToDelete[i], 1);
+    }
+
+
     // if (fattureOk[fattura.numero] && fattura.RicevutaConsegna) {
     // }
 
-    console.log('fatt', fattureOk.length);
-
+    //console.log('fatt3', fatture.length);
+    return fatture;
   }
 
   formatFatture(fattureJsonAsString) {
