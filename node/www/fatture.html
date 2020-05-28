@@ -71,7 +71,7 @@
     }
 
     .fattura .name {
-      flex-grow: 20;
+      flex-grow: 6;
     }
 
     .fattura .state {
@@ -125,27 +125,13 @@
       } else {
 
         data.fatture.forEach(fattura => {
-          let num = fattura.numero
-          let ddate = new Date(fattura.DataFattura);
-          let pdate = ddate.getDate() + '/' + (ddate.getMonth() + 1) + '/' + ddate.getFullYear();
-          let amount = fattura.Importo.toLocaleString('it-IT', { minimumFractionDigits: 2 });
-          let esito = 'ko';
-
-          if (fattura.Inviato) {
-            esito = 'scartata';
-          }
-          if (fattura.RicevutaConsegna) {
-            esito = 'ok';
-          }
-
-
           markup += `
           <div class="fattura">
-            <div class="num">${num}</div>
-            <div class="date">${pdate}</div>
-            <div class="name">${fattura.DenominazioneCessionario}</div>
-            <div class="amount">${amount}</div>
-            <div class="state ${esito}">${esito}</div>
+            <div class="num">${fattura.numero}</div>
+            <div class="date">${fattura.date}</div>
+            <div class="name">${fattura.nome}</div>
+            <div class="amount">${fattura.amount}</div>
+            <div class="state ${fattura.status}">${fattura.status}</div>
           </div>
         `;
         });

@@ -306,20 +306,42 @@ class App {
 
     });
 
-    router.get('/fatturelist', (req: any, res: any, next: any) => {
-      console.log('enter  fatture - list (Fattura Elettronica)', req.query);
-      if (webservice) {
-        webservice.fattureList(res, req.query);
+    router.get('/fattureAlerts', (req: any, res: any, next: any) => {
+      try {
+        console.log('enter  fatture - fattureAlerts (Fattura Elettronica)', req.query);
+        if (webservice) {
+          webservice.fattureAlerts(res, req.query);
+        }
+        else {
+          this.error(res, 'fatture not initialized');
+        }
+      } catch (e) {
+        this.error(res, e);
       }
-      else {
-        this.error(res, 'fatture not initialized');
+    });
+
+    router.get('/fatturelist', (req: any, res: any, next: any) => {
+      try {
+        console.log('enter  fatture - list (Fattura Elettronica)', req.query);
+        if (webservice) {
+          webservice.fattureList(res, req.query);
+        }
+        else {
+          this.error(res, 'fatture not initialized');
+        }
+      } catch (e) {
+        this.error(res, e);
       }
     });
     this.express.use('/', router);
   }
 
-  private error(res: any, errorMessage: string): void {
+
+  private error(res: any, errorMessage: any): void {
     //res.writeHead(500);
+    if (typeof errorMessage !== "string") {
+      errorMessage = JSON.stringify(errorMessage);
+    }
     res.json({
       id: 500,
       status: 'ko',

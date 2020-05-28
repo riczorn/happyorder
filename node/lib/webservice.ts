@@ -6,12 +6,13 @@
   * @license    GNU General Public License version 2 or later; see LICENSE.txt
   */
 
-var http = require("http");
-var querystring = require('querystring');
-var io = require('socket.io');
-var path = require('path');
-var fs = require('fs');
-var url = require('url');
+const http = require("http");
+const querystring = require('querystring');
+const io = require('socket.io');
+const path = require('path');
+const fs = require('fs');
+const url = require('url');
+const nodemailer = require("nodemailer");
 import hOConfigModule = require('../lib/config');
 // var express = require("express");
 
@@ -821,7 +822,7 @@ class WebService {
             oResponse.output = oResponse.output + chunk;
           });
           resp.on('end', () => {
-            console.log('No more data in response.');
+            console.log('  end of data.');
             res.json(oResponse);
             res.end();
           });
@@ -851,6 +852,140 @@ class WebService {
 
     // res.json(oResponse);
     // res.end();
+
+  }
+
+  getMailStyle() {
+    return `
+    <style>
+    .fattura {
+      display: flex;
+
+    }
+
+    button {
+      padding: 10px;
+      font-size: 120%;
+    }
+
+    .fattura:hover {
+      background-color: #ddc;
+    }
+
+    .fattura>* {
+      padding: 5px;
+    }
+
+    .fattura .num {
+      flex-basis: 3rem;
+    }
+
+    .fattura .date {
+      flex-basis: 6rem;
+    }
+
+    .fattura .name {
+      flex-grow: 6;
+    }
+
+    .fattura .state {
+      font-weight: bold;
+      flex-basis: 5rem;
+    }
+
+    .fattura .state.ko {
+      color: red;
+    }
+
+    .fattura .state.scartata {
+      color: red;
+    }
+
+    .fattura .state.ok {
+      color: green;
+    }
+    </style>
+    `
+  }
+
+  async fattureAlerts(this: WebService, res: any, query: any) {
+    let self = this;
+    let response = { status: 'ok', errors: 0, fatture: [], totFatture: 0 };
+    let year = new Date().getFullYear();
+    let fatture = await self.fattureGetYear(year, new Date().getMonth() + 1);
+    response.totFatture = fatture.length;
+    let errors = 0;
+    let errorLines = [];
+    fatture.forEach((fattura) => {
+      if (!fattura.RicevutaConsegna) {
+        //if (new Date(fattura.DataFattura).getFullYear() == year) {
+        errors += 1;
+
+        //}
+        errorLines.push(fattura);
+      }
+    });
+    if (errors > 0 || query.includeAll) {
+      // send mail report
+      response.status = errors > 0 ? 'ko' : 'ok';
+      response.errors = errors;
+      if (query.includeAll) {
+        response.fatture = fatture;
+      } else {
+        response.fatture = errorLines;
+      }
+
+      let messageHTML = self.formatMessage(response);
+      let messageText = messageHTML.replace(/<\/div>/gi, "\n").replace(/<[^>]>/gi, "\t");
+      let url = 'http://fe.happyorder.it/fatture';
+      messageText += `\n${url}`;
+      messageHTML += '<div><a href="http://fe.happyorder.it/fattureAlerts" target="_blank">Vedi online</a></div>';
+
+      // create reusable transporter object using the default SMTP transport
+      let transporter = nodemailer.createTransport({
+        host: "mail.fasterjoomla.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: 'fatture@happyorder.it', // generated ethereal user
+          pass: ']adeJump30', // generated ethereal password
+        },
+      });
+
+
+      // send mail with defined transport object
+      let info = await transporter.sendMail({
+        from: '"HappyOrder Server" <fatture@happyorder.it>', // sender address
+        to: "Piergiovanni Carocari <p.carocari1@virgilio.it>", // list of receivers
+        subject: `${errors} Fatture in errore`, // Subject line
+        text: messageText, // plain text body
+        html: self.getMailStyle() + messageHTML, // html body
+      });
+
+      console.log("Message sent: %s", info.messageId, info);
+    }
+    res.json(response);
+    res.end();
+  }
+
+  formatMessage(response) {
+    let message = [];
+
+    message.push(`<h1>${response.errors} errori su ${response.totFatture} fatture</h1>`);
+    response.fatture.forEach(fattura => {
+      let date = new Date(fattura.DataFattura);
+      message.push(`
+        <div class="fattura">
+          <div class="num">${fattura.numero}</div>
+          <div class="date">${fattura.date}</div>
+          <div class="name">${fattura.nome}</div>
+          <div class="amount">${fattura.amount}</div>
+          <div class="state ${fattura.status}">${fattura.status}</div>
+        </div>
+    `);
+
+    });
+    return message.join("\n");
   }
 
   async fattureList(this: WebService, res: any, query: any) {
@@ -869,28 +1004,35 @@ class WebService {
       query.mese = (new Date().getMonth() + 1);
     }
 
+    let oResponse = {
+      status: 'ok',
+      fatture: await self.fattureGetYear(query.anno, query.mese),
+      command: 'fattureInviate',
+      output: '',
+    };
+
+
+
+    res.json(oResponse);
+    res.end();
+  }
+
+  async fattureGetYear(anno, mese) {
+    let self = this;
     let fatture = [];
 
-    for (let m = query.mese; m > 0; m--) {
-      // let bottom = query.mese - 3;
-      // if (bottom < 1) { bottom = 1; }
-      // for (let m = query.mese; m > bottom; m--) {
-      let aResponse = await <any>self.fattureGetMonth(query.anno, m);
+    for (let m = mese; m > 0; m--) {
+      // let bottom = mese - 3;
+      // // if (bottom < 1) { bottom = 1; }
+      // for (let m = mese; m > bottom; m--) {
+      let aResponse = await <any>self.fattureGetMonth(anno, m);
       console.log('  received fatt. ' + aResponse.fatture.length);
       let newFatture = aResponse.fatture;
       fatture.splice(0, 0, ...newFatture);
     }
 
-    fatture = this.processFatture(fatture);
+    return this.processFatture(fatture);
     //console.log('fatture lengh', fatture.length);
-    let oResponse = {
-      status: 'ok',
-      fatture: fatture,
-      command: 'fattureInviate',
-      output: '',
-    };
-    res.json(oResponse);
-    res.end();
   }
 
   async fattureGetMonth(year, month) {
@@ -931,7 +1073,7 @@ class WebService {
           oResponse.output = oResponse.output + chunk;
         });
         resp.on('end', () => {
-          console.log('No more data in response.');
+          console.log('  end of data.');
           if (oResponse.output) {
             oResponse.status = 'ok';
             oResponse.fatture = self.formatFatture(oResponse.output);
@@ -1093,24 +1235,37 @@ class WebService {
       let fatture = JSON.parse(fattureJsonAsString);
       //console.log('fatt', fatture.length);
       fatture.forEach(fattura => {
-        let num = 1 * fattura.numeroFattura;
-        fattura.numero = num;
+
       });
 
 
 
       fatture.forEach(fattura => {
         // leviamo gli invii errati quando siamo riusciti a correggere:
+        let status = 'ko';
+        if (fattura.Inviato) {
+          status = 'scartata';
+        }
+        if (fattura.RicevutaConsegna) {
+          status = 'ok';
+        }
+
+
+        let ddate = new Date(fattura.DataFattura);
+
+
         response.push({
           IdFatturaSDI: fattura.IdFatturaSDI,
-          numero: fattura.numero,
-          DenominazioneCessionario: fattura.DenominazioneCessionario,
-          Importo: fattura.Importo,
           DataOraInserimento: fattura.DataOraInserimento,
           DataFattura: fattura.DataFattura,
           RicevutaConsegna: fattura.RicevutaConsegna,
           Esito: fattura.Esito,
           Inviato: fattura.Inviato,
+          numero: 1 * fattura.numeroFattura,
+          nome: fattura.DenominazioneCessionario,
+          amount: fattura.Importo.toLocaleString('it-IT', { minimumFractionDigits: 2 }),
+          date: ddate.getDate() + '/' + (ddate.getMonth() + 1) + '/' + ddate.getFullYear(),
+          status: status
         });
 
       });
@@ -1587,7 +1742,7 @@ class WebService {
       id: ID Client, è lo stesso per il terminale ed il customer display
       isCustomerDisplay:true/false
       message:'HOclientconnected' }
-
+  
       quindi: se isCustomerDisplay, aggiungo il socket al pool.
     */
     if (regdata && regdata.isCustomerDisplay) {
