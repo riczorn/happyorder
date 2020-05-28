@@ -290,6 +290,31 @@ class App {
         this.error(res, 'fatturaElettronica not initialized');
       }
     });
+
+    router.get('/fatture', (req: any, res: any, next: any) => {
+
+      fs.readFile('www/fatture.html',
+        (err: any, data: any) => {
+          if (err) {
+            self.error(res, 'Error loading fatture.html');
+          }
+          else {
+            res.writeHead(200);
+            res.end(data);
+          }
+        });
+
+    });
+
+    router.get('/fatturelist', (req: any, res: any, next: any) => {
+      console.log('enter  fatture - list (Fattura Elettronica)', req.query);
+      if (webservice) {
+        webservice.fattureList(res, req.query);
+      }
+      else {
+        this.error(res, 'fatture not initialized');
+      }
+    });
     this.express.use('/', router);
   }
 

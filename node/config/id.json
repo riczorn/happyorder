@@ -1,7 +1,7 @@
 {
     "web": {
         "port": 8080,
-        "remoteHost": "192.168.10.130",
+        "remoteHost": "192.168.10.171",
         "localMask": "0.0.0.0"
     },
     "identification": {
@@ -13,14 +13,15 @@
         "showComplete": true
     },
     "fatturaElettronica": {
-        "sdiURI": "http://fattext.seac.it/test/invoice",
+        "sdiURI": "http://fattext.seac.it",
         "auth": {
             "username": "3200CRCPGV72",
             "password": "2SX7IG9IX1MY"
         },
         "params": {
             "ClientId": "GKoUyagOtRfkdW5l1GtDseDQ2URcbTIV",
-            "Content-Type": "application/xml"
+            "Content-Type": "application/xml",
+            "PartitaIva": "01094360250"
         }
     }
 }

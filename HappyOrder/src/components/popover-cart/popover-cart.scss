@@ -1,3 +1,11 @@
+.item-edit-pop .popover-content {
+  top: unset !important;
+  bottom: 0 !important;
+}
+.popover-content {
+  /*top:unset!important;*/
+}  
+
 popover-cart {
   .editing  {
     .input-wrapper{

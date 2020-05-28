@@ -43,5 +43,4 @@ The app is also published as a .tar.gz on https://happyorder.it/files/happyorder
 
 [Electron Readme](electron/README.md)
 
-
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

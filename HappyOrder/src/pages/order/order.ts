@@ -11,8 +11,8 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, Content } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 
-import { LiveService } from  '../../services/live.service';
-import { CartService } from  '../../services/cart.service';
+import { LiveService } from '../../services/live.service';
+import { CartService } from '../../services/cart.service';
 
 import { TavoliPage } from '../../pages/tavoli/tavoli';
 import { OrderPageButtons } from '../../components/order-page/order-page';
@@ -21,7 +21,7 @@ import { ConnectionStatusComponent } from '../../components/connection-status/co
 
 // import { OrderButtons } from '../../components/order-buttons/order-buttons';
 // import { CartComponent } from '../../components/cart/cart';
-import {Cart} from  '../../models/cart';
+import { Cart } from '../../models/cart';
 
 @Component({
   selector: 'page-order',
@@ -34,19 +34,19 @@ export class OrderPage implements OnInit {
   // debugText: string;
   private cart: Cart;
   private visible: any;
-  constructor(public liveService:LiveService,
-              private cartService: CartService,
-              public navCtrl: NavController,
-              public platform: Platform  ) {
-      this.cart = this.liveService.cart;
-      this.visible = {cart:1, order:1, cssClass:'default', active:1};
+  constructor(public liveService: LiveService,
+    private cartService: CartService,
+    public navCtrl: NavController,
+    public platform: Platform) {
+    this.cart = this.liveService.cart;
+    this.visible = { cart: 1, order: 1, cssClass: 'default', active: 1 };
   }
   ngOnInit() {
     let selfOrder = this;
     this.doFlex(this.visible.order, this.visible.cart);
     this.content.resize();
 
-    this.cartComponent.resetFunction = function(data) {
+    this.cartComponent.resetFunction = function (data) {
       // console.log('order.resetOrder Screen ',data);
 
       // now reset the first page of the buttonbar:
@@ -73,32 +73,31 @@ export class OrderPage implements OnInit {
     if (event && event.stopPropagation) {
       event.stopPropagation();
     }
-    if (self.cart.items.length == 0 || !self.cart.hasNewItemsThatNeedSending())
-    {
+    if (self.cart.items.length == 0 || !self.cart.hasNewItemsThatNeedSending()) {
       self.navCtrl.setRoot(TavoliPage);
       return false;
     }
 
+    if (event && event.target) {
+      event.target.disabled = true;
+    }
+    let action = self.cart.getAction();
+    if (self.liveService.user.defaultTableId == self.liveService.user.tableId) {
+      // su asporto, conferma elimina è il default.
+      // quindi, il primo getAction senza parametri invoca flagsToAction(true,false,false)
+      action = self.cart.flagsToAction(true, true, false);
+    }
+    self.cartService.sendCart(self.cart, action, function (data: any) {
+      // console.log('Cart Sent!', data);
+      // magari vediamo che risponde?
+
       if (event && event.target) {
-        event.target.disabled = true;
+        event.target.disabled = false;
       }
-      let action = self.cart.getAction();
-      if   (self.liveService.user.defaultTableId == self.liveService.user.tableId) {
-        // su asporto, conferma elimina è il default.
-        // quindi, il primo getAction senza parametri invoca flagsToAction(true,false,false)
-        action = self.cart.flagsToAction(true, true, false);
-      }
-      self.cartService.sendCart(self.cart, action, function(data:any) {
-        // console.log('Cart Sent!', data);
-        // magari vediamo che risponde?
 
-        if (event && event.target) {
-          event.target.disabled = false;
-        }
+      self.afterOrder(action);
 
-        self.afterOrder(action);
-
-      });
+    });
 
   }
 
@@ -114,7 +113,7 @@ export class OrderPage implements OnInit {
     }
   }
 
-  doFlex(order:number,cart:number) {
+  doFlex(order: number, cart: number) {
     this.visible.order = order;
     this.visible.cart = cart;
     // if (order+cart>1)
@@ -125,15 +124,15 @@ export class OrderPage implements OnInit {
     //   this.visible.active = 2;
     // }
     this.visible.cssClass = this.liveService.options.Style;
-    if ((order+cart)>=2) {
+    if ((order + cart) >= 2) {
       this.visible.cssClass += ' half';
     }
     // redundant, using css queries for flex-direction on #orderPage
-      // if (this.platform.isPortrait()) {
-      //   this.visible.cssClass = 'portrait';
-      // } else {
-      //   this.visible.cssClass = 'landscape'
-      // }
+    // if (this.platform.isPortrait()) {
+    //   this.visible.cssClass = 'portrait';
+    // } else {
+    //   this.visible.cssClass = 'landscape'
+    // }
 
   }
 
@@ -141,15 +140,15 @@ export class OrderPage implements OnInit {
     * return an appropriate css class based on the current options:
     */
   getStyle() {
-    let style='';
+    let style = '';
     let opts = this.liveService.options;
     if (opts.PagesVertical) {
       style = 'vertical';
     }
 
-    style += ' cols-'+opts.ColumnCount;
-    style += ' font-'+opts.FontSize;
-    style += ' bheight-'+opts.ButtonHeight;
+    style += ' cols-' + opts.ColumnCount;
+    style += ' font-' + opts.FontSize;
+    style += ' bheight-' + opts.ButtonHeight;
     return style;
   }
 }

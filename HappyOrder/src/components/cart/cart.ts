@@ -75,23 +75,28 @@ export class CartComponent {
   // }
 
   /* mostra un menù contestuale su action hold, da testare */
-  showContext(event, item, childParentItem: any) {
+  async showContext(event, item, childParentItem: any) {
     let self = this;
     let cart = self.cart;
     if (event && event.stopPropagation) {
       event.stopPropagation();
     }
 
-    let popover = this.popoverCtrl.create(PopoverCartComponent, {
-      item: item,
-      cart: self.cart
-    });
+    const popover = await this.popoverCtrl.create(PopoverCartComponent,
+      {
+        item: item,
+        cart: self.cart,
+      },
+      {
+        cssClass: 'item-edit-pop krz-item',
+      });
     // console.log('popover',popover);
     // popover.item = item;
     // popover.cart = this.cart;
-    popover.present({
+    await popover.present({
       ev: event
     });
+
     popover.onDidDismiss((popoverData) => {
       // console.log('popoverData',popoverData);
       switch (popoverData) {

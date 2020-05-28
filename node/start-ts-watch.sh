@@ -1,18 +1,19 @@
 # HappyOrder - vedi il README.txt
 
-echo "Running gulp for transpiling typescript"
-sourcedir=/rixx/DeV/HappyOrder/node
+echo "Running tsc for transpiling typescript"
+sourcedir=/rixx/DeV/HappyOrder/node/
 cd "$sourcedir"
-sourcedir=$sourcedir/*.ts
+# sourcedir=$sourcedir/*.ts
 echo -e "Watching $sourcedir for changes\n----------------------------------"
 sleep 1
-/usr/bin/inotifywait -r -m -e modify $sourcedir | 
+/usr/bin/inotifywait -r -m --exclude '.js' -e modify "$sourcedir" | 
   while read path _ file; do
-	echo "  >> $path$file modified, invoking push <<"
-	cd /rixx/DeV/HappyOrder/node
-  tsc
+	echo "  >> $path$file modified, invoking tsc <<"
+	cd "$sourcedir"
+  /usr/local/bin/tsc
+  echo "       done";
   # exit
-  done
+  done 
 echo "exiting now"
 sleep 2
 

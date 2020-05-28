@@ -6,7 +6,7 @@
   * @license    GNU General Public License version 2 or later; see LICENSE.txt
   */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ViewController, NavParams } from 'ionic-angular';// , Platform, NavController, NavParams
 
 
@@ -20,7 +20,7 @@ export class PopoverCartComponent implements OnInit {
   private editing: boolean;
   private percentPrice: number;
 
-  constructor(public viewCtrl: ViewController, public navParams: NavParams) {
+  constructor(private hostElement: ElementRef, public viewCtrl: ViewController, public navParams: NavParams) {
     this.item = navParams.data.item;
     this.cart = navParams.data.cart;
     this.editing = false;
@@ -38,16 +38,21 @@ export class PopoverCartComponent implements OnInit {
     this.viewCtrl.dismiss(param);
   }
 
-  toggleEdit() {
+  toggleEdit(event) {
+    event = event ? event : window.event;
+    console.log('toggleEdit event:', event);
     this.editing = !this.editing;
     if (this.editing) {
       this.item.changedPrezzo = 1 * this.item.prezzo;
+      // this.hostElement.nativeElement.offsetTop = -54;
+      console.warn('popover component:', this.hostElement.nativeElement);
+      // this.hostElement.nativeElement.outerHTML
     }
   }
 
 
   pricePercent() {
     console.log('pricePercent!');
-    this.item.changedPrezzo = this.item.prezzo * (1 + (this.percentPrice / 100));
+    this.item.changedPrezzo = Math.round(this.item.prezzo * (100 + this.percentPrice)) / 100;
   }
 }

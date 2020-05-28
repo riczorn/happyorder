@@ -304,7 +304,7 @@ id: app.happyorder.it
     Bumped ionic and updated css to handle new behaviour or Chrome for android.
 
 - 1.4.13 (25/3/2019)
-
+    Online demo user logs in to the same-named account in the json and inherits privileges
     Added bluetooth serial printer support (alpha, add a custom button in config with code Fbixolon)
 
 - 1.4.32 
@@ -330,8 +330,13 @@ id: app.happyorder.it
 - 1.5.05
     app: added +- buttons on the fidelity pages        
 
----
-    #NO:now online demo user logs in to the same-named account in the json and inherits privileges
+- 1.5.06
+    exit from table : fixed message;
+
+- 1.6
+    funzioni reportistica fattura elettronica
+    
+
 
 
 [logo]: https://github.com/riczorn/happyorder/raw/master/HappyOrder/resources/android/icon/drawable-xxxhdpi-icon.png "HappyOrder logo"

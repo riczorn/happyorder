@@ -13,7 +13,7 @@
     "showComplete": true
   },
   "fatturaElettronica": {
-    "endpoint": "http://fattext.seac.it/test/invoice",
+    "endpoint": "http://fattext.seac.it/test",
     "auth": {
       "Username": "3200CRCPGV72",
       "Password": "2SX7IG9IX1MY"

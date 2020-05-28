@@ -794,7 +794,7 @@ class WebService {
         // now data contains the xml invoice
         console.log('letta fattura: ');// + postData);
 
-        var sdiUri = url.parse(self.config.fullConfig.fatturaElettronica.sdiURI);
+        var sdiUri = url.parse(self.config.fullConfig.fatturaElettronica.sdiURI + '/invoice');
         console.log('sdiUri', sdiUri);
 
         var auth = 'Basic ' + Buffer.from(self.config.fullConfig.fatturaElettronica.auth.username + ':' + self.config.fullConfig.fatturaElettronica.auth.password).toString('base64');
@@ -851,6 +851,242 @@ class WebService {
 
     // res.json(oResponse);
     // res.end();
+  }
+
+  async fattureList(this: WebService, res: any, query: any) {
+    var self = this;
+    // console.log('fatturaElettronica 1', query);
+    console.log('fattureList 1');// , query.file);
+    console.log('fattureList 2', self.config.fullConfig.fatturaElettronica);
+
+    if (!query) {
+      query = {};
+    }
+    if (!query.anno) {
+      query.anno = new Date().getFullYear();
+    }
+    if (!query.mese) {
+      query.mese = (new Date().getMonth() + 1);
+    }
+
+    let fatture = [];
+
+    for (let m = query.mese; m > 0; m--) {
+      let aResponse = await <any>self.fattureGetMonth(query.anno, m);
+      console.log('  received fatt. ' + aResponse.fatture.length);
+      let newFatture = aResponse.fatture;
+      fatture.splice(0, 0, ...newFatture);
+    }
+    let oResponse = {
+      status: 'ok',
+      fatture: fatture,
+      command: 'fattureInviate',
+      output: '',
+    };
+    res.json(oResponse);
+    res.end();
+  }
+
+  async fattureGetMonth(year, month) {
+    return new Promise((resolve, reject) => {
+      let oResponse = {
+        status: 'ko',
+        fatture: [],
+        command: 'fattureInviate',
+        output: '',
+      };
+
+      let self = this;
+      var sdiUri = url.parse(self.config.fullConfig.fatturaElettronica.sdiURI
+        + '/sentInvoices?codiceFiscale=' + self.config.fullConfig.fatturaElettronica.params.PartitaIva
+        + '&anno=' + year
+        + '&mese=' + month);
+
+      var auth = 'Basic ' + Buffer.from(self.config.fullConfig.fatturaElettronica.auth.username + ':' + self.config.fullConfig.fatturaElettronica.auth.password).toString('base64');
+
+      var options = {
+        hostname: sdiUri.hostname,
+        port: sdiUri.port || (sdiUri.protocol == 'http:' ? 80 : 443),
+        path: sdiUri.path,
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': auth,
+          'ClientId': self.config.fullConfig.fatturaElettronica.params.ClientId,
+        }
+      };
+      //console.log('http options', options);
+      let sdiReq = http.request(options, function (resp) {
+        console.log('STATUS: ' + resp.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(resp.headers));
+        resp.setEncoding('utf8');
+        resp.on('data', function (chunk) {
+          //console.log('BODY: ' + chunk);
+          oResponse.output = oResponse.output + chunk;
+        });
+        resp.on('end', () => {
+          console.log('No more data in response.');
+          if (oResponse.output) {
+            oResponse.status = 'ok';
+            oResponse.fatture = self.formatFatture(oResponse.output);
+            resolve(oResponse);
+          } else {
+            resolve(oResponse);
+          }
+
+        });
+      });
+
+      sdiReq.on('error', function (e) {
+        console.error('problem with request: ' + e.message);
+        oResponse.status = 'ko';
+        oResponse.output = e.message;
+        reject(oResponse);
+        //return oResponse;
+      });
+      sdiReq.end();
+      console.log('returning ', month, '=> # fatt ', oResponse.fatture.length);
+      //return await oResponse;
+    });
+    // write data to request body
+    // sdiReq.write(postData) ;
+
+  }
+
+  fattureListOld(this: WebService, res: any, query: any) {
+    var self = this;
+    // console.log('fatturaElettronica 1', query);
+    /*   console.log('fattureList 1');// , query.file);
+       console.log('fattureList 2', self.config.fullConfig.fatturaElettronica);
+   
+       var oResponse = {
+         status: 'ok',
+         fatture: [],
+         command: 'fattureInviate',
+         output: ''
+       };
+       if (!query) {
+         query = {};
+       }
+       if (!query.anno) {
+         query.anno = new Date().getFullYear();
+       }
+       if (!query.mese) {
+         query.mese = (new Date().getMonth() + 1);
+       }
+   
+       var sdiUri = url.parse(self.config.fullConfig.fatturaElettronica.sdiURI
+         + '/sentInvoices?codiceFiscale=' + self.config.fullConfig.fatturaElettronica.params.PartitaIva
+         + '&anno=' + query.anno
+         + '&mese=' + query.mese);
+   
+       var auth = 'Basic ' + Buffer.from(self.config.fullConfig.fatturaElettronica.auth.username + ':' + self.config.fullConfig.fatturaElettronica.auth.password).toString('base64');
+   
+       var options = {
+         hostname: sdiUri.hostname,
+         port: sdiUri.port || (sdiUri.protocol == 'http:' ? 80 : 443),
+         path: sdiUri.path,
+         method: 'GET',
+         headers: {
+           'Accept': 'application/json',
+           'Authorization': auth,
+           'ClientId': self.config.fullConfig.fatturaElettronica.params.ClientId
+         }
+       };
+       console.log('http options', options);
+       var sdiReq = http.request(options, function (resp) {
+         console.log('STATUS: ' + resp.statusCode);
+         console.log('HEADERS: ' + JSON.stringify(resp.headers));
+         resp.setEncoding('utf8');
+         resp.on('data', function (chunk) {
+           // console.log('BODY: ' + chunk);
+           oResponse.output = oResponse.output + chunk;
+         });
+         resp.on('end', () => {
+           console.log('No more data in response.');
+           if (oResponse.output) {
+             let response = self.formatFatture(oResponse.output);
+             res.json(response);
+           } else {
+             oResponse.status = 'ko';
+             res.json([]);
+           }
+           //res.json(JSON.parse(oResponse.output));
+   
+           res.end();
+         });
+       });
+   
+       sdiReq.on('error', function (e) {
+         console.error('problem with request: ' + e.message);
+         oResponse.status = 'ko';
+         oResponse.output = e.message;
+         res.json(oResponse);
+         res.end();
+       });
+   
+       // write data to request body
+       // sdiReq.write(postData);
+       sdiReq.end();
+       // res.end not invoked here, but in the callbacks from the provider
+   
+   */
+
+    // res.json(oResponse);
+    // res.end();
+  }
+
+  processFatture(fatture) {
+    fatture.sort((a, b) => {
+      return a.numero - b.numero;
+    });
+    console.log('fatt2', fatture.length);
+    let fattureOk = [];
+    // ora mi faccio un elenco delle fatture OK, così elimino le scartate corrispondenti.
+    fatture.forEach(fattura => {
+      if (fattura.RicevutaConsegna) {
+        fattureOk[fattura.numero] = true;
+      }
+    });
+
+    // if (fattureOk[fattura.numero] && fattura.RicevutaConsegna) {
+    // }
+
+    console.log('fatt', fattureOk.length);
+
+  }
+
+  formatFatture(fattureJsonAsString) {
+    //console.log('fatt1');
+    let response = [];
+
+    if (fattureJsonAsString.length > 3) {
+      let fatture = JSON.parse(fattureJsonAsString);
+      //console.log('fatt', fatture.length);
+      fatture.forEach(fattura => {
+        let num = 1 * fattura.numeroFattura;
+        fattura.numero = num;
+      });
+
+
+
+      fatture.forEach(fattura => {
+        // leviamo gli invii errati quando siamo riusciti a correggere:
+        response.push({
+          IdFatturaSDI: fattura.IdFatturaSDI,
+          numero: fattura.numero,
+          DenominazioneCessionario: fattura.DenominazioneCessionario,
+          Importo: fattura.Importo,
+          DataOraInserimento: fattura.DataOraInserimento,
+          DataFattura: fattura.DataFattura,
+          RicevutaConsegna: fattura.RicevutaConsegna,
+          Esito: fattura.Esito,
+          Inviato: fattura.Inviato,
+        });
+
+      });
+    }
+    return response;
   }
 
   fixItem(item: any) {

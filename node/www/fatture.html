@@ -1,0 +1,167 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>HappyOrder app backend</title>
+  <style>
+    h1,
+    h3,
+    h4,
+    h5 {
+      font-weight: 400;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0 0 0 1rem;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+    }
+
+    ul.calls ul>li {
+      /*list-style-type: circle;*/
+      background-color: #f1f8ff;
+      border: 1px solid #c8e1ff;
+      border-radius: 4px;
+      display: flex;
+    }
+
+    ul.calls ul>li>* {}
+
+    ul a {
+      flex-basis: 7rem;
+    }
+
+    span.desc {}
+
+    body {
+      padding: 1rem;
+      font-weight: 300;
+      font-family: sans-serif;
+      overflow: visible;
+    }
+
+    .fattura {
+      display: flex;
+
+    }
+
+    button {
+      padding: 10px;
+      font-size: 120%;
+    }
+
+    .fattura:hover {
+      background-color: #ddc;
+    }
+
+    .fattura>* {
+      padding: 5px;
+    }
+
+    .fattura .date {
+      flex-basis: 6rem;
+    }
+
+    .fattura .name {
+      flex-grow: 20;
+    }
+
+    .fattura .state {
+      font-weight: bold;
+    }
+
+    .fattura .state.ko {
+      color: red;
+    }
+
+    .fattura .state.scartata {
+      color: red;
+    }
+
+    .fattura .state.ok {
+      color: green;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <h1>Elenco fatture</h1>
+  <div id="flist"></div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+<script>
+  jQuery(() => {
+    $('#flist').html('carico...');
+    loadInvoices(new Date().getFullYear(), new Date().getMonth() + 1);
+  });
+  function loadInvoices(year, month) {
+    let uri = []
+    if (month) {
+      uri.push('mese=' + month);
+
+    }
+    if (year) {
+      uri.push('anno=' + year);
+    }
+    uri = '/fattureList?' + uri.join('&');
+    console.log('open ', uri);
+    $.get(uri, (data) => {
+      console.log(data);
+      let markup = "";
+      if (!data || !data.fatture || !data.fatture.forEach) {
+        markup = 'n/d';
+      } else {
+
+        data.fatture.forEach(fattura => {
+          let num = fattura.numero
+          let ddate = new Date(fattura.DataFattura);
+          let pdate = ddate.getDate() + '/' + (ddate.getMonth() + 1) + '/' + ddate.getFullYear();
+          let amount = fattura.Importo.toLocaleString('it-IT', { minimumFractionDigits: 2 });
+          let esito = 'ko';
+
+          if (fattura.Inviato) {
+            esito = 'scartata';
+          }
+          if (fattura.RicevutaConsegna) {
+            esito = 'ok';
+          }
+
+
+          markup += `
+          <div class="fattura">
+            <div class="num">${num}</div>
+            <div class="date">${pdate}</div>
+            <div class="name">${fattura.DenominazioneCessionario}</div>
+            <div class="amount">${amount}</div>
+            <div class="state ${esito}">${esito}</div>
+          </div>
+        `;
+        });
+      }
+      $('.prev').off('click', '.prev');
+      $('.next').off('click', '.next');
+
+      $('#flist').html(`
+        <div class="header"><h2>Fatture ${year}</h2>
+          <div class="buttons"><button class="prev">${ year - 1}</button>
+            <button class="next">${ year + 1}</button></div>
+        </div>
+        <div class="invoices">
+          ${markup}
+        </div>
+      `);
+      $('.prev').click(function () { $('#flist').html('carico...'); loadInvoices(year - 1, 12); });
+      $('.next').click(function () { $('#flist').html('carico...'); loadInvoices(year + 1, 12); });
+
+    });
+  }
+</script>
+
+</html>
