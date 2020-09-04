@@ -32,7 +32,7 @@
         "cordova-plugin-bixolon-print": "^1.0.18",
         "cordova-plugin-console": "1.1.0",
         "cordova-plugin-device": "1.1.7",
-        "cordova-plugin-inappbrowser": "1.7.2",
+        "cordova-plugin-inappbrowser": "3.1.0",
         "cordova-plugin-socket-tcp": "1.5.4",
         "cordova-plugin-splashscreen": "4.1.0",
         "cordova-plugin-statusbar": "2.4.1",
