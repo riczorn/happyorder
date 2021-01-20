@@ -30,7 +30,7 @@
     "gulp-typescript": "^5.0.0",
     "mime": "^2.4.0",
     "nodemailer": "^6.4.8",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
