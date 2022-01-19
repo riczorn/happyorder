@@ -30,6 +30,8 @@
 <ion-card *ngIf="modePay && (gutscheinId !== 0) ">
     Paga con Gutschein:
     <ion-input type="number" pattern="[0-9\.]*" step="0.1" [(ngModel)]="amount"></ion-input>
+    <!--ion-input type="number" pattern="[0-9\.]*" step="0.1" [(ngModel)]="amount"></ion-input>
+    <ion-input inputmode="decimal" type="text" pattern="[0-9\.]*" [(ngModel)]="amount"></ion-input-->
 
     <ion-item>
         <button class="operations" ion-button (click)="incAmount(-1);">--</button>

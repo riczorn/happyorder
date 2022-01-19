@@ -12,7 +12,25 @@ const io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-const nodemailer = require("nodemailer");
+var nodemailer;
+try {
+  nodemailer = require("nodemailer");
+} catch (e) {
+  console.log('mock nodemailer');
+  nodemailer = {
+    createTransport: function (obj) {
+      console.log('mock createTransport', obj);
+      return {
+        sendMail: function (obj) {
+          console.log('mock sendMail', obj);
+        }
+      }
+    }
+  };
+
+}
+
+import { exit } from 'process';
 import hOConfigModule = require('../lib/config');
 // var express = require("express");
 
@@ -793,7 +811,17 @@ class WebService {
     fs.readFile(query.file, { encoding: 'utf-8' }, function (err, postData) {
       if (!err) {
         // now data contains the xml invoice
-        console.log('letta fattura: ');// + postData);
+        console.log('letta fattura: ');// + postData); 
+
+        if (self.config.fullConfig.fatturaElettronica == undefined
+          || self.config.fullConfig.fatturaElettronica.sdiURI == undefined
+          || self.config.fullConfig.fatturaElettronica.sdiURI == "") {
+          console.error('fattura: non inviata - configurazione mancante', self.config.fullConfig.fatturaElettronica);
+          res.json(oResponse);
+          res.end();
+          return true;
+        }
+
 
         var sdiUri = url.parse(self.config.fullConfig.fatturaElettronica.sdiURI + '/invoice');
         console.log('sdiUri', sdiUri);
@@ -1496,6 +1524,18 @@ class WebService {
       'Content-Type': 'application/json'
       // 'Content-Length': jsonBody.length
     };
+    // this.remoteHost could include a path; if so I need to fix it
+    console.log('22 remote host: ', this.remoteHost);
+    const hasPath = this.remoteHost.match(/http:\/\/[0-9a-z_\.\-]+\/(.*)$/);
+    if (hasPath) {
+      console.log(this.remoteHost, 'contains a path; query: ', query);
+      console.log(hasPath);
+      const pathPart = hasPath[1];
+      const hostPart = this.remoteHost.replace(pathPart, '');
+      this.remoteHost = hostPart;
+      query = pathPart.replace(/\/$/, '') + query;
+      console.log('updated ', this.remoteHost, 'contains a path; query: ', query);
+    }
 
     var options = {
       host: encodeURI(this.remoteHost),

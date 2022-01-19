@@ -1,0 +1,24 @@
+{
+    "status": "ok",
+    "command": "login",
+    "demo": true,
+    "clerk": {
+        "id": 25,
+        "name": "Johnny",
+        "privileges": {
+            "bill": true,
+            "accounting": true,
+            "emptytable": true,
+            "transfer": true,
+            "storno": true,
+            "changeprice": true
+        }
+    },
+    "client": {
+        "ip": "",
+        "id": 1
+    },
+    "tableId": 1,
+    "orderId": -1
+}
+

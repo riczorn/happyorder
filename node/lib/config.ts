@@ -51,7 +51,7 @@ export class Config {
     }
     // console.log('a2:',JSON.stringify(jContents));
 
-    this.remoteHost = encodeURIComponent(this.remoteHost);
+    // this.remoteHost = encodeURIComponent(this.remoteHost);
 
   }
 }
