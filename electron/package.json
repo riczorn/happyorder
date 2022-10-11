@@ -13,6 +13,6 @@
     "repository": "https://github.com/electron/electron-quick-start",
     "devDependencies": {
         "electron": "~1.8.2",
-        "electron-packager": "^11.1.0"
+        "electron-packager": "^16.0.0"
     }
 }
